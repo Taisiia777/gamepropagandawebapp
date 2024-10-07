@@ -24,13 +24,7 @@
   gap: 7.5px;
 }
 
-@media (max-width: 991px) {
-  .imageGrid {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-}
+
 
 .imageWrapper {
   display: flex;
@@ -39,11 +33,7 @@
   margin-left: 0;
 }
 
-@media (max-width: 991px) {
-  .imageWrapper {
-    width: 100%;
-  }
-}
+
 
 .smallImageContainer {
   display: flex;
@@ -79,11 +69,6 @@
   width: max-content;
 }
 
-@media (max-width: 991px) {
-  .mainImageWrapper {
-    width: 100%;
-  }
-}
 
 .mainImage {
   aspect-ratio: 0.65;
