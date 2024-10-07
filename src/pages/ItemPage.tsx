@@ -1,4 +1,3 @@
-import React from "react";
 import MainComponent from "../components/MainComponent/MainComponent";
 import ProductCardContainer from "../components/ProductCard/ProductCardContainer";
 function ItemPage() {
