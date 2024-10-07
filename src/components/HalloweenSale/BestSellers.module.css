@@ -1,0 +1,118 @@
+
+.bestSellers {
+  max-width: none !important;
+}
+
+.container {
+  margin-top: 50px;
+  border-radius: 0;
+  margin-left: 20px;
+  display: flex;
+  max-width: 320px;
+  width: 320px;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-x: hidden;
+}
+
+.title {
+  color: #e7e7e7;
+  letter-spacing: -0.28px;
+  z-index: 10;
+  font: 700 28px/1 Onest, sans-serif;
+}
+
+.productList {
+  display: flex;
+  margin-top: 24px;
+  width: 468px;
+  max-width: 468px;
+  gap: 6px;
+}
+
+.productCard {
+  width: 152px;
+  height: 252px;
+  border-radius: 10px;
+  background-color: #232323;
+  display: flex;
+  padding-bottom: 8px;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Onest, sans-serif;
+}
+
+.productImage {
+  border-radius: 5px;
+  background-color: #fff;
+  width: 144px;
+  height: 144px;
+}
+
+.productInfo {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 16px 0 8px;
+}
+
+.productName {
+  color: #e7e7e7;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  text-align: start;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.priceContainer {
+  align-self: flex-start;
+  display: flex;
+  margin-top: 26px;
+  align-items: center;
+  gap: 8px 4px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  justify-content: flex-start;
+}
+
+.oldPrice {
+  color: #7a7a7a;
+  text-decoration-line: line-through;
+  align-self: stretch;
+  margin: auto 0;
+}
+
+.newPrice {
+  color: #e7e7e7;
+  align-self: stretch;
+  margin: auto 0;
+}
+
+.catalogButton {
+  align-self: stretch;
+  border-radius: 50px;
+  background-color: #232323;
+  margin-top: 16px;
+  min-height: 50px;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  padding: 12px 25px;
+  font: 500 14px/26px Onest, -apple-system, Roboto, Helvetica, sans-serif;
+  width: 320px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

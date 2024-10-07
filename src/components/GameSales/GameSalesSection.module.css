@@ -1,0 +1,36 @@
+
+.salesSection {
+  max-width: 441px;
+  padding-right: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sectionTitle {
+  color: #e7e7e7;
+  letter-spacing: -0.28px;
+  font: 700 28px/1 Onest, sans-serif;
+  margin-bottom: 24px;
+}
+
+.gameCardContainer {
+  display: flex;
+  width: 100%;
+  max-width: 340px;
+  gap: 6px;
+}
+
+.viewAllButton {
+  align-self: stretch;
+  border-radius: 50px;
+  background-color: #232323;
+  margin-top: 16px;
+  min-height: 50px;
+  color: #ffffff;
+  text-align: center;
+  padding: 12px 25px;
+  font: 500 14px/26px Onest, -apple-system, Roboto, Helvetica, sans-serif;
+  border: none;
+  cursor: pointer;
+}

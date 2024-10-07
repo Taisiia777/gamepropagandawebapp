@@ -1,0 +1,14 @@
+
+.container {
+  display: flex;
+  max-width: 360px;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.divider {
+  background-color: #232323;
+  min-height: 1px;
+  margin-top: 10px;
+  width: 100%;
+}

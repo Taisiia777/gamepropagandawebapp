@@ -1,0 +1,56 @@
+
+.gameCard {
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  padding-bottom: 8px;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Onest, sans-serif;
+}
+
+.imageWrapper {
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  width: 144px;
+  height: 144px;
+}
+
+.content {
+  display: flex;
+  margin-top: 12px;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 16px 0 8px;
+}
+
+.gameName {
+  color: #222;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.priceInfo {
+  align-self: flex-start;
+  display: flex;
+  margin-top: 26px;
+  align-items: center;
+  gap: 8px 4px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.oldPrice {
+  color: #bdbdbd;
+  align-self: stretch;
+  margin: auto 0;
+}
+
+.newPrice {
+  color: #333;
+  align-self: stretch;
+  margin: auto 0;
+}
