@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "./BestSellers.module.css";
 import ProductCard from "./ProductCard";
+import { Link } from 'react-router-dom';
 
 const products = [
   {
@@ -20,7 +21,7 @@ const products = [
   },
   {
     imageSrc:
-      "img/anime.png",
+    "img/anime.png",
     name: "Doki Doki Literature Club Plus!...",
     oldPrice: "1 690 ₽",
     newPrice: "",
@@ -37,7 +38,10 @@ const BestSellers: React.FC = () => {
             <ProductCard key={index} {...product} />
           ))}
         </div>
-        <button className={styles.catalogButton}>Смотреть весь каталог</button>
+        <Link to="/catalog">
+      <button className={styles.catalogButton}>Смотреть весь каталог</button>
+    </Link>
+        {/* <button className={styles.catalogButton}>Смотреть весь каталог</button> */}
       </div>
     </section>
   );
