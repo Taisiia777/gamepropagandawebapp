@@ -1,4 +1,3 @@
-import React from "react";
 import MainComponent from "../components/MainComponent/MainComponent";
 import Cart from "../components/CartComponents/Cart";
 import OrderForm from "../components/OrderForm/OrderForm";
