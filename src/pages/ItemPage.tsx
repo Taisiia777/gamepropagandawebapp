@@ -1,21 +1,4 @@
-// import  { useEffect } from "react";
-// import MainComponent from "../components/MainComponent/MainComponent";
-// import ProductCardContainer from "../components/ProductCard/ProductCardContainer";
-// function ItemPage() {
-//   // Example data for cartItems and recommendations
-//     useEffect(() => {
-//         // Прокрутка страницы вверх при загрузке компонента
-//         window.scrollTo(0, 0);
-//     }, []);
-//   return (
-//     <div>
-//       <MainComponent />
-//       <ProductCardContainer/>
-//     </div>
-//   );
-// }
-//
-// export default ItemPage;
+
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -36,6 +19,7 @@ function ItemPage() {
                 .then((response) => response.json())
                 .then((data) => {
                     setProduct({
+                        id: id,
                         imageUrl: `https:${data.media[0]?.Uri}`, // добавляем https
                         title: data.name || "Товар",
                         price: data.discounted_price || data.base_price,

@@ -131,6 +131,7 @@
 .swiperContainer {
   width: 100%;
   max-width: 360px;
+  height: 252px;
 }
 
 .slide {
@@ -138,8 +139,6 @@
   justify-content: center;
   width: 160px; /* Ширина одного слайда */
   box-sizing: border-box;
-  height: 242px;
-  max-height: 242px;
 }
 .container {
   margin: 0px;
@@ -147,7 +146,6 @@
   display: flex;
   max-width: 360px;
   width: 360px;
-
   flex-direction: column;
   align-items: flex-start;
   overflow-x: hidden;
@@ -261,3 +259,7 @@
   white-space: nowrap;
   border: 0;
 }
+
+
+
+

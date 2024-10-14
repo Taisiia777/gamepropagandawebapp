@@ -1,61 +1,23 @@
-// import MainComponent from "../components/MainComponent/MainComponent";
-// import Cart from "../components/CartComponents/Cart";
-// import OrderForm from "../components/OrderForm/OrderForm";
-// import OrderSummary from "../components/OrderSummary/OrderSummary";
-// function CartPage() {
-//   // Example data for cartItems and recommendations
-//   const cartItems = [
-//     {
-//       id: "1",
-//       title: "ELDEN RING Shadow of the Erdtree",
-//       subtitle: "Дополнение | PS4 PS5",
-//       price: 6435,
-//       image: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-//     }
-//   ];
-//
-//   const recommendations = [
-//     {
-//       id: "1",
-//       title: "The Last of Us Part II",
-//       price: 2999,
-//       image: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-//     },
-//     {
-//       id: "2",
-//       title: "The Last of Us Part II",
-//       price: 2999,
-//       image: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-//     },
-//     {
-//       id: "3",
-//       title: "The Last of Us Part II",
-//       price: 2999,
-//       image: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-//     }
-//     // Add more recommendation items as needed
-//   ];
-//   const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
-//   const currency = "₽"; // Define your currency here
-//   return (
-//     <div>
-//       <MainComponent />
-//       <Cart cartItems={cartItems} recommendations={recommendations} />
-//       <OrderForm/>
-//       <OrderSummary totalAmount={totalAmount} currency={currency} />
-//     </div>
-//   );
-// }
-//
-// export default CartPage;
+
 import { useEffect, useState } from "react";
 import MainComponent from "../components/MainComponent/MainComponent";
 import Cart from "../components/CartComponents/Cart";
 import OrderForm from "../components/OrderForm/OrderForm";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks.ts";
+import { fetchProducts } from "../utils/productsSlice.ts";
 
 function CartPage() {
-  // Состояние для хранения товаров корзины
+  const dispatch = useAppDispatch();
+  const products = useAppSelector((state) => state.products.items);
+  const productStatus = useAppSelector((state) => state.products.status);
+
+  useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(fetchProducts());
+    }
+  }, [productStatus, dispatch]);
+
   const [cartItems, setCartItems] = useState<Array<{
     id: string;
     title: string;
@@ -64,38 +26,28 @@ function CartPage() {
     imageUrl: string;
   }>>([]);
 
-  // Пример рекомендованных товаров
-  const recommendations = [
-    {
-      id: "1",
-      title: "The Last of Us Part II",
-      price: 2999,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-    },
-    {
-      id: "2",
-      title: "The Last of Us Part II",
-      price: 2999,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-    },
-    {
-      id: "3",
-      title: "The Last of Us Part II",
-      price: 2999,
-      imageUrl: "https://cdn.builder.io/api/v1/image/assets/TEMP/e860ae8a5f047e9ef2ce92799a48728f7484de3ba38eae97367cbbea988bdbb1",
-    },
-    // Добавьте другие рекомендации, если необходимо
-  ];
+  // Преобразуем `products` в нужный формат
+  const recommendations = products.map((product: any) => ({
+    id: product.id,
+    price: product.discounted_price || product.base_price, // Выберите подходящее свойство для цены
+    imageSrc: product.media?.[0]?.Uri || 'img/default.png', // Подставьте изображение или значение по умолчанию
+    name: product.name,
+  }));
 
-  // Загружаем корзину из localStorage при монтировании компонента
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartItems(storedCart);
   }, []);
 
-  // Рассчитываем общую сумму товаров в корзине
-  const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
-  const currency = "₽"; // Определяем валюту
+  const calculateTotal = () => {
+    return cartItems.reduce((sum, item) => {
+      const price = item.price === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("₽", "").trim());
+      return sum + (isNaN(price) ? 0 : price);
+    }, 0);
+  };
+
+  const totalAmount = calculateTotal();
+  const currency = "₽";
 
   return (
       <div>

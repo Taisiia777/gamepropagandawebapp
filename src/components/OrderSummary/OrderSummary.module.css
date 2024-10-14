@@ -1,5 +1,6 @@
 
 .orderSummary {
+  margin: 0 auto;
   border-radius: 50px;
   display: flex;
   max-width: 320px;
@@ -8,6 +9,8 @@
 }
 
 .submitButton {
+  width: 320px;
+  box-sizing: border-box;
   align-self: stretch;
   border-radius: 50px;
   background-color: rgba(197, 255, 0, 1);
@@ -28,12 +31,17 @@
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
-  text-decoration-line: underline;
+  text-decoration-line: none;
   align-self: start;
   z-index: 10;
   margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: left;
 }
-
+.privacyPolicy a {
+  color: #7a7a7a;
+  text-decoration: underline;
+}
 .boldText {
   font-weight: 700;
   color: rgba(35, 35, 35, 1);

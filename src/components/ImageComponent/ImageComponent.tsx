@@ -6,9 +6,10 @@ interface ImageComponentProps {
   src: string;
   alt: string;
   size: "small" | "medium" | "large";
+  id?: string
 }
 
-const ImageComponent: React.FC<ImageComponentProps> = ({ src, alt, size }) => {
+const ImageComponent: React.FC<ImageComponentProps> = ({ src, alt, size, id }) => {
   const sizeClass = {
     small: styles.smallImage,
     medium: styles.mediumImage,
@@ -21,6 +22,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({ src, alt, size }) => {
       alt={alt}
       className={`${styles.image} ${sizeClass}`}
       loading="lazy"
+      {...(id ? { id } : {})} // Условно добавляем id только если оно задано
     />
   );
 };

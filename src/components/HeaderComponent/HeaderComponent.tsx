@@ -32,12 +32,15 @@ const HeaderComponent: React.FC = () => {
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/67c7c8046a64f55a9a58df4d8198fb23627937744d63f32cbadf9d4b2308b99b?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c"
                     alt="Action icon 1"
                     size="medium"
+
                 />
                 <Link style={{ marginTop: "10px" }} to="/cart">
                     <ImageComponent
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/9c47a50b52cf899bb3a03f76311f482348d60b266c40a6f68116e869e5b20c4f?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c"
                         alt="Action icon 2"
                         size="medium"
+                        id="cartIcon" // Добавляем ID для запуска анимации
+
                     />
                 </Link>
             </div>

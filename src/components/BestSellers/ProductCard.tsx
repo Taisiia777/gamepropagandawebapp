@@ -21,8 +21,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className={styles.productInfo}>
           <h3 className={styles.productName}>{name}</h3>
           <div className={styles.priceContainer}>
-            {oldPrice && <span className={styles.oldPrice}>{oldPrice}</span>}
-            {newPrice && <span className={styles.newPrice}>{newPrice}</span>}
+
+              {(!newPrice || newPrice === "") && (!oldPrice || oldPrice === "") ? (
+                  <span className={styles.newPrice}>Бесплатно</span>
+              ) : (
+                  <>
+                      {/*{oldPrice && <span className={styles.oldPrice}>{oldPrice} ₽</span>}*/}
+                      {/*{newPrice && <span className={styles.newPrice}>{newPrice} ₽</span>}*/}
+                      {oldPrice && <span className={styles.oldPrice}>{oldPrice}</span>}
+                      {newPrice && <span className={styles.newPrice}>{newPrice}</span>}
+                  </>
+              )}
           </div>
         </div>
       </article>

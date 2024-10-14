@@ -40,3 +40,45 @@
 .read-the-docs {
   color: #888;
 }
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  15% {
+    transform: translateY(-20px); /* Основной прыжок */
+    animation-timing-function: cubic-bezier(0.3, 1, 0.5, 1.4);
+  }
+  30% {
+    transform: translateY(0); /* Возврат на землю */
+    animation-timing-function: cubic-bezier(0.3, 1, 0.5, 1);
+  }
+  45% {
+    transform: translateY(-10px); /* Второй отскок */
+    animation-timing-function: cubic-bezier(0.3, 1, 0.5, 1.2);
+  }
+  60% {
+    transform: translateY(0); /* Возврат на землю */
+    animation-timing-function: cubic-bezier(0.3, 1, 0.5, 1);
+  }
+  75% {
+    transform: translateY(-5px); /* Третий отскок */
+    animation-timing-function: cubic-bezier(0.3, 1, 0.5, 1.1);
+  }
+  90% {
+    transform: translateY(0); /* Возврат на землю */
+    animation-timing-function: ease-in;
+  }
+  95% {
+    transform: translateY(-2px); /* Финальный маленький отскок */
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0); /* Окончательное приземление */
+  }
+}
+
+.bounce {
+  animation: bounce 1.5s ease-out !important;
+}
+
+

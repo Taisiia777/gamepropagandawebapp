@@ -27,21 +27,15 @@ const BestSellers: React.FC = () => {
           <h2 className={styles.title}>Лидеры продаж</h2>
           <Swiper
               modules={[Autoplay]}
-              spaceBetween={20}
+              spaceBetween={0}
               slidesPerView={'auto'}
-              centeredSlides={true}
+              centeredSlides={false}
               loop={true}
               autoplay={{ delay: 2500, disableOnInteraction: false }}
               className={styles.swiperContainer}
           >
             {products.map((product) => (
                 <SwiperSlide key={product.id} className={styles.slide}>
-                  {/*<ProductCard*/}
-                  {/*    imageSrc={product.media[0]?.Uri || 'img/default.png'}*/}
-                  {/*    name={product.name}*/}
-                  {/*    oldPrice={product.base_price}*/}
-                  {/*    newPrice={product.discounted_price}*/}
-                  {/*/>*/}
                   <Link to={`/item/${product.id}`} className={styles.productLink}>
                     <ProductCard
                         imageSrc={product.media[0]?.Uri || 'img/default.png'}
