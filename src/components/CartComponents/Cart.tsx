@@ -48,13 +48,14 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
     };
 
-    // Функция для подсчета итоговой суммы
     const calculateTotal = () => {
         return newCartItems.reduce((total, item) => {
-            const itemPrice = item.price === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("₽", "").trim());
+            // Преобразуем цену в строку и удаляем "₽", если она есть, затем пытаемся привести к числу
+            const itemPrice = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("₽", "").trim());
             return total + (isNaN(itemPrice) ? 0 : itemPrice);
         }, 0);
     };
+
 
     const totalAmount = calculateTotal();
     console.log(JSON.stringify(recommendations));
