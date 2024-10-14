@@ -3,7 +3,7 @@
  */
 import React from "react";
 import CatalogHeader from "./CatalogHeader";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import CategoryList from "./CategoryList";
 import CatalogControls from "./CatalogControls";
 import styles from "./GameCatalog.module.css";
