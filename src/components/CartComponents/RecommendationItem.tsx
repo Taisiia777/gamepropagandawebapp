@@ -5,17 +5,17 @@ import styles from "./Cart.module.css";
 interface RecommendationItemProps {
   title: string;
   price: number;
-  image: string;
+  imageUrl: string;
 }
 
 const RecommendationItem: React.FC<RecommendationItemProps> = ({
   title,
   price,
-  image,
+  imageUrl,
 }) => {
   return (
     <article className={styles.recommendationItem}>
-      <img src={image} alt={title} className={styles.recommendationImage} />
+      <img src={imageUrl} alt={title} className={styles.recommendationImage} />
       <h3 className={styles.recommendationTitle}>{title}</h3>
       <p className={styles.recommendationPrice}>
         <span className={styles.cartPriceHighlight}>{price}</span>{" "}

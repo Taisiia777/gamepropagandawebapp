@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/item" element={<ItemPage />} />
+          <Route path="/item/:id" element={<ItemPage />} /> {/* Поддержка параметра id */}
         <Route path="/catalog" element={<CatalogPage />} />
 
       </Routes>

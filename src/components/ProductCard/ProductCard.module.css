@@ -6,13 +6,21 @@
   flex-direction: column;
   font: 600 28px Onest, sans-serif;
 }
-
-.productImage {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 100%;
+.productImageContainer {
+  width: 360px;
+  height: 360px;
+  overflow: hidden;
+  border-radius: 5px; /* закругленные края контейнера */
 }
+
+.productImageMain {
+  width: 360px;
+  height: 360px;
+  object-fit: cover; /* Заполняет контейнер, сохраняя пропорции */
+  object-position: center; /* Центрирует изображение */
+}
+
+
 
 .cardContent {
   border-radius: 30px;
@@ -22,37 +30,54 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 25px 0 25px 20px;
+  box-sizing: border-box;
+  margin-top: -30px;
 }
 
 .productTitle {
-  color: #fff;
-  font-weight: 700;
-  line-height: 28px;
-  letter-spacing: -0.28px;
-  width: 281px;
+  font-family: 'Onest', sans-serif; /* Использование шрифта Onest */
+  font-weight: 700; /* Жирный текст */
+  font-size: 28px; /* Размер шрифта */
+  line-height: 28px; /* Межстрочный интервал */
+  letter-spacing: -0.01em; /* Межбуквенный интервал, чтобы получить -1% */
+  color: #fff; /* Белый цвет текста */
+  width: 281px; /* Ширина блока */
+  text-align: left; /* Выравнивание текста по левому краю */
 }
 
 .productPrice {
   color: #c5ff00;
   line-height: 1;
   letter-spacing: -0.56px;
-  margin-top: 20px;
+  margin: 0px;
 }
 
 .divider {
-  margin-top: 13px;
+  margin: 15px 0;
   width: 320px;
   max-width: 100%;
   height: 1px;
   border: 1px solid #fff;
+  opacity: 0.2;
+
 }
 
 .productDetails {
-  color: #fff;
   font-size: 14px;
   line-height: 20px;
   align-self: stretch;
-  margin-top: 20px;
+  margin-top: 0;
+  text-align: left; /* Выровнять текст по левому краю */
+}
+
+.productDetails__title {
+  font-weight: 400;
+  color: #fff;
+  opacity: 0.2;
+}
+.productDetails__value {
+  font-weight: 400;
+
 }
 
 .addToCartButton {
@@ -71,6 +96,158 @@
   padding: 12px 51px;
   border: 1px solid #c5ff00;
   cursor: pointer;
+  max-width: 320px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.description{
+
+}
+
+.description__text {
+  font-family: 'Onest', sans-serif; /* Шрифт Onest */
+  font-weight: 400; /* Вес Regular */
+  font-size: 14px; /* Размер шрифта */
+  line-height: 18px; /* Межстрочный интервал */
+  letter-spacing: 0; /* Межбуквенный интервал 0% */
+  text-align: left; /* Выравнивание по левому краю */
+  color: #fff; /* Цвет текста белый */
+  opacity: 0.5; /* Прозрачность 50% */
+}
+
+.bestSellers {
+  max-width: none !important;
+}
+.swiperContainer {
+  width: 100%;
+  max-width: 360px;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+  width: 160px; /* Ширина одного слайда */
+  box-sizing: border-box;
+  height: 242px;
+  max-height: 242px;
+}
+.container {
+  margin: 0px;
+  border-radius: 0;
+  display: flex;
+  max-width: 360px;
+  width: 360px;
+
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-x: hidden;
+  margin-bottom:50px;
+}
+
+.title {
+  color: #e7e7e7;
+  letter-spacing: -0.28px;
+  z-index: 10;
+  font: 700 28px/1 Onest, sans-serif;
+}
+
+.productList {
+  display: flex;
+  margin-top: 24px;
+  width: 468px;
+  max-width: 468px;
+  height: 242px;
+  max-height: 242px;
+  gap: 6px;
+  box-sizing: border-box;
+  transition: transform 0.5s ease-in-out; /* плавное перемещение */
+}
+
+.productCard {
+  width: 152px;
+  height: 242px;
+  max-height: 242px;
+  border-radius: 10px;
+  background-color: #232323;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Onest, sans-serif;
+  box-sizing: border-box;
+}
+
+.productImage {
+  width: 136px !important;
+  margin: 8px auto; /* Отступ сверху и по бокам */
+  border-radius: 5px;
+  background-color: #fff;
+
+}
+
+.productInfo {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 16px 0 8px;
+}
+
+.productName {
+  color: #e7e7e7;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  text-align: start;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.priceContainer {
+  align-self: flex-start;
+  display: flex;
+  margin-top: 26px;
+  align-items: center;
+  gap: 8px 4px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  justify-content: flex-start;
+}
+
+.oldPrice {
+  color: #7a7a7a;
+  text-decoration-line: line-through;
+  align-self: stretch;
+  margin: auto 0;
+}
+
+.newPrice {
+  color: #e7e7e7;
+  align-self: stretch;
+  margin: auto 0;
+}
+
+.catalogButton {
+  align-self: stretch;
+  border-radius: 50px;
+  background-color: #232323;
+  margin-top: 16px;
+  min-height: 50px;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  padding: 12px 25px;
+  font: 500 14px/26px Onest, -apple-system, Roboto, Helvetica, sans-serif;
+  width: 320px;
 }
 
 .visually-hidden {

@@ -2,7 +2,16 @@
 .bestSellers {
   max-width: none !important;
 }
+.swiperContainer {
+  width: 100%;
+  max-width: 320px;
+}
 
+.slide {
+  display: flex;
+  justify-content: center;
+  width: 160px; /* Ширина одного слайда */
+}
 .container {
   margin-top: 50px;
   border-radius: 0;
@@ -28,11 +37,13 @@
   width: 468px;
   max-width: 468px;
   gap: 6px;
+  transition: transform 0.5s ease-in-out; /* плавное перемещение */
 }
 
 .productCard {
   width: 152px;
-  height: 252px;
+  height: 242px;
+  max-height: 242px;
   border-radius: 10px;
   background-color: #232323;
   display: flex;
@@ -43,17 +54,25 @@
 }
 
 .productImage {
+  width: 136px;
+  height: 136px;
+  margin: 8px auto; /* Отступ сверху и по бокам */
   border-radius: 5px;
   background-color: #fff;
-  width: 144px;
-  height: 144px;
+  object-fit: cover;
+  object-position: center;
+  box-sizing: border-box;
 }
+
 
 .productInfo {
   display: flex;
   width: 100%;
   flex-direction: column;
   padding: 0 16px 0 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
 }
 
 .productName {
@@ -64,6 +83,11 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
+  height: 40px;
+  overflow: hidden;
+  max-width: 136px;
+  margin: 0;
+
 }
 
 .priceContainer {
