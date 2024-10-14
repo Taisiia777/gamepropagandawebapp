@@ -67,6 +67,10 @@ const ProductElenent: React.FC<ProductElenentProps> = ({  id,
 
     // Сохраняем обновлённую корзину в localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
+      window.scrollTo({
+          top: 0,
+          behavior: "smooth" // Добавляет плавную анимацию
+      });
       // Запускаем анимацию с проверкой наличия элемента
       const cartIcon = document.getElementById("cartIcon");
       if (cartIcon) {
@@ -79,6 +83,7 @@ const ProductElenent: React.FC<ProductElenentProps> = ({  id,
           // Затем добавляем класс bounce для перезапуска анимации
           cartIcon.classList.add("bounce");
       }
+
   };
 
   return (
