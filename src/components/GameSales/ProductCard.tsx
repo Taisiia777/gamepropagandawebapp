@@ -5,7 +5,7 @@ import styles from "./BestSellers.module.css";
 interface ProductCardProps {
   imageSrc: string;
   name: string;
-  oldPrice: string;
+  oldPrice?: string;
   newPrice: string;
 }
 

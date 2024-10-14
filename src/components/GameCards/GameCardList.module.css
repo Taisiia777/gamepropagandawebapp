@@ -18,3 +18,16 @@
 .row + .row {
   margin-top: 24px;
 }
+.container {
+  padding: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Две карточки в ряду */
+  gap: 16px; /* Расстояние между карточками */
+}
+
+.productLink {
+  text-decoration: none;
+}

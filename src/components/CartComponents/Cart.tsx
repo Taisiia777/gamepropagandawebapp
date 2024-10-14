@@ -80,7 +80,7 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
             <h2 className={styles.recommendationsTitle}>Эксклюзивно для тебя</h2>
             <Swiper
                 modules={[Autoplay]}
-                spaceBetween={10}
+                spaceBetween={30}
                 slidesPerView={'auto'}
                 centeredSlides={false}
                 loop={true}

@@ -12,7 +12,7 @@ const GameCatalog: React.FC = () => {
   return (
     <main className={styles.catalogContainer}>
       <CatalogHeader totalGames={2341} />
-      <SearchBar />
+      {/*<SearchBar />*/}
       <CategoryList />
       <div className={styles.separator} />
       <CatalogControls />

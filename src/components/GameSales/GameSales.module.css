@@ -7,6 +7,8 @@
   align-items: flex-start;
   margin-top: 50px;
   margin-bottom: 20px;
+  height: 350px;
+  box-sizing: border-box;
 }
 
 .saleCard {
@@ -20,6 +22,8 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-sizing: border-box;
   overflow-x: hidden;
+  height: 350px;
+  padding-bottom: 0;
 }
 
 .titleWrapper {
@@ -30,6 +34,7 @@
   white-space: nowrap;
   letter-spacing: -0.28px;
   font: 700 22px/1 Onest, sans-serif;
+  margin-bottom: 20px;
 }
 
 .titleIcon {
@@ -43,6 +48,7 @@
 .title {
   flex-basis: auto;
   margin: auto 0;
+  font-size: 28px;
 }
 
 .productGrid {
