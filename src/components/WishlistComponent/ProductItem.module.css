@@ -1,0 +1,83 @@
+
+.productItem {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    position: relative;
+    max-width: 300px; /* Ширина карточки */
+    margin-top: 30px;
+}
+
+.productImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.productTitle {
+    font-family: 'Onest', sans-serif; /* Убедитесь, что шрифт подключен */
+    font-weight: 600; /* SemiBold */
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.productDate, .productPrice {
+    font-size: 14px;
+    color: #bbbbbb;
+    margin: 5px 0;
+}
+
+.addToCartButton {
+    margin-top: 12px;
+    background-color: #C5FF00; /* Цвет фона, соответствующий коду из Figma */
+    color: #000000; /* Черный цвет текста */
+    font-size: 14px;
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border: none;
+    border-radius: 50px; /* Закругленные углы */
+    cursor: pointer;
+    width: 312px; /* Ширина кнопки */
+    height: 50px; /* Высота кнопки */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s; /* Плавный переход при наведении */
+    font-family: 'Onest', sans-serif; /* Шрифт, используемый в дизайне */
+    font-weight: 400; /* Полужирный текст */
+}
+
+.addToCartButton:hover {
+    background-color: #B0E500; /* Цвет при наведении */
+}
+
+.deleteIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+.productTitle {
+    font-family: 'Onest', sans-serif; /* Убедитесь, что шрифт подключен */
+    font-weight: 400; /* Regular */
+    font-size: 16px;
+    line-height: 26px; /* Высота строки */
+    color: #E7E7E7; /* Цвет текста */
+    text-align: left;
+    margin: 5px 0;
+}
+
+.productDate, .productPrice {
+    font-family: 'Onest', sans-serif; /* Убедитесь, что шрифт подключен */
+    font-weight: 400; /* Regular */
+    font-size: 16px;
+    line-height: 26px; /* Высота строки */
+    color: #E7E7E7; /* Цвет текста */
+    margin: 5px 0;
+}

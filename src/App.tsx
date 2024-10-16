@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
 import ItemPage from './pages/ItemPage';
 import CatalogPage from './pages/CatalogPage';
-
+import WishList from "./pages/WishList.tsx";
 function App() {
   return (
     <Router>
@@ -16,6 +16,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
           <Route path="/item/:id" element={<ItemPage />} /> {/* Поддержка параметра id */}
         <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/wishlist" element={<WishList />} />
 
       </Routes>
     </Router>

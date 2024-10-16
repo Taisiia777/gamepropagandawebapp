@@ -5,7 +5,7 @@ import { fetchProducts, searchProductsByName } from "../../utils/productsSlice.t
 import ProductCard from "../BestSellers/ProductCard";
 import SearchBar from "../CatalogComponents/SearchBar.tsx";
 import styles from "./GameCardList.module.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const GameCardList: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -47,14 +47,15 @@ const GameCardList: React.FC = () => {
                         ref={index === visibleProducts - 1 ? lastProductRef : null}
                         key={product.id}
                     >
-                        <Link to={`/item/${product.id}`} className={styles.productLink}>
+                        {/*<Link to={`/item/${product.id}`} className={styles.productLink}>*/}
                             <ProductCard
+                                id={product.id} // Передаем id продукта
                                 imageSrc={product.media?.[0]?.Uri || "img/default.png"}
                                 name={product.name}
                                 oldPrice={product.base_price ? `${product.base_price} ₽` : ""}
                                 newPrice={product.discounted_price ? `${product.discounted_price} ₽` : "Бесплатно"}
                             />
-                        </Link>
+                        {/*</Link>*/}
                     </div>
                 ))}
             </div>
