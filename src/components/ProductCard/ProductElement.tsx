@@ -137,6 +137,7 @@ const ProductElenent: React.FC<ProductElenentProps> = ({  id,
               {products.map((product) => (
                   <SwiperSlide key={product.id} className={styles.slide}>
                     <ProductCard
+                        id={product.id}
                         imageSrc={product.media[0]?.Uri || 'img/default.png'}
                         name={product.name}
                         oldPrice={product.base_price}
