@@ -36,7 +36,7 @@ const CartItem: React.FC<CartItemProps> = ({
             <img src={imageUrl} alt="" className={styles.cartImage} />
             <p className={styles.cartPrice}>
               <span className={styles.cartPriceHighlight}>{price}</span>{" "}
-              {price > 0 && <span className={styles.cartPriceCurrency}>₽</span>}
+              {price > 0 && <span className={styles.cartPriceCurrency}>Р</span>}
             </p>
           </div>
           <div className={styles.cartTotal}>

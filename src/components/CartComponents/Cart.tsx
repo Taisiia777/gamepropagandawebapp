@@ -66,7 +66,7 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
                     <h1 className={styles.cartTitle}>Корзина</h1>
                 </div>
                 <div className={styles.cartTotal}>
-                    <p>{totalAmount.toLocaleString("ru-RU")} ₽</p>
+                    <p>{totalAmount.toLocaleString("ru-RU")} Р</p>
                 </div>
             </header>
             {newCartItems.length > 0 ? (

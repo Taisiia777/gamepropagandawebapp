@@ -54,7 +54,7 @@ const RecommendationItem: React.FC<RecommendationItemProps> = ({
                 {price ? (
                     <>
                         <span className={styles.cartPriceHighlight}>{price}</span>{" "}
-                        <span className={styles.cartPriceCurrency}>₽</span>
+                        <span className={styles.cartPriceCurrency}>Р</span>
                     </>
                 ) : (
                     <span className={styles.cartPriceHighlight}>Бесплатно</span>
