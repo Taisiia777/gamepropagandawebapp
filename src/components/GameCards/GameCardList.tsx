@@ -172,7 +172,7 @@
 //
 
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState} from "react";
 import CategoryList from "../CatalogComponents/CategoryList.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchProducts, searchProductsByName, fetchProductsByCategory } from "../../utils/productsSlice.ts";
@@ -200,7 +200,7 @@ const GameCardList: React.FC = () => {
     const [visibleProducts, setVisibleProducts] = useState<number>(24);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [hasMore, setHasMore] = useState<boolean>(true);
-
+    console.log(hasMore)
     useEffect(() => {
         if (productStatus === "idle") {
             dispatch(fetchProducts(currentPage));
