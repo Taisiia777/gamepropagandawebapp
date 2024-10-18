@@ -15,7 +15,10 @@ function ItemPage() {
 
         if (id) {
             setLoading(true);
-            fetch(`http://localhost:3001/products/${id}`)
+            // fetch(`http://localhost:3001/products/${id}`)
+            const apiUrl = process.env.REACT_APP_API_URL; // Получаем URL из .env
+            alert(apiUrl)
+            fetch(`${apiUrl}/products/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setProduct({
