@@ -4,14 +4,14 @@ import axios from "axios";
 import { Product } from "../types/Product";
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-    const response = await axios.get<Product[]>("http://localhost:3001/products");
+    const response = await axios.get<Product[]>("https://e350-95-161-221-131.ngrok-free.app/products");
     return response.data;
 });
 
 export const searchProductsByName = createAsyncThunk(
     "products/searchProductsByName",
     async (name: string) => {
-        const response = await axios.get<Product[]>(`http://localhost:3001/products/`, {
+        const response = await axios.get<Product[]>(`https://e350-95-161-221-131.ngrok-free.app/products/`, {
             params: { name },
         });
         return response.data;

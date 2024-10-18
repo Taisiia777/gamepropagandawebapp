@@ -15,7 +15,7 @@ function ItemPage() {
 
         if (id) {
             setLoading(true);
-            fetch(`http://localhost:3001/products/${id}`)
+            fetch(`https://e350-95-161-221-131.ngrok-free.app/products/${id}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setProduct({
