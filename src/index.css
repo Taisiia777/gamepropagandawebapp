@@ -12,18 +12,7 @@
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff; /* Убедитесь, что background-color задается так, как вам нужно */
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+
 a {
   font-weight: 500;
   color: #646cff;

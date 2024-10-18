@@ -13,8 +13,8 @@
 .swiper-slide {
   display: flex;
   justify-content: center;
-  width: 150px;
-  max-width: 150px;
+  width: 150px !important;
+  max-width: 150px !important;
   flex-shrink: 0; /* предотвращает изменение размера слайда */
 }
 

@@ -1,0 +1,10 @@
+.swiperContainer {
+    width: 100%;
+    max-width: 340px;
+}
+
+.slide {
+    display: flex;
+    justify-content: center;
+    width: 160px; /* Ширина одного слайда */
+}
