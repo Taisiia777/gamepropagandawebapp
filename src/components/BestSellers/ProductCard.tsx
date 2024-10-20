@@ -13,9 +13,10 @@ interface ProductCardProps {
     name: string;
     oldPrice: string | null;
     newPrice: string | null;
+    isLightTheme?: boolean; // Новый пропс для светлой темы
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice, newPrice }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice, newPrice, isLightTheme }) => {
     const [isLiked, setIsLiked] = useState(false);
     // Загружаем статус избранного из localStorage при монтировании компонента
     useEffect(() => {
@@ -41,9 +42,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice,
             setIsLiked(true);
         }
     };
+    const shouldShowSale = oldPrice && newPrice && oldPrice !== newPrice;
 
     return (
-        <article className={styles.productCard}>
+        <article className={`${styles.productCard} ${isLightTheme ? styles.lightTheme : ""}`}>
             <div onClick={handleLikeClick} style={{ cursor: "pointer" }}>
                 <img
                     src={isLiked ? "img/unlike.svg" : "img/like.svg"}
@@ -53,20 +55,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice,
             </div>
             <Link to={`/item/${id}`} className={styles.productLink}>
 
-            <img src={imageSrc} alt={name} className={styles.productImage} />
-            <div className={styles.productInfo}>
-                <h3 className={styles.productName}>{name}</h3>
-                <div className={styles.priceContainer}>
-                    {(!newPrice || newPrice === "") && (!oldPrice || oldPrice === "") ? (
-                        <span className={styles.newPrice}>Бесплатно</span>
-                    ) : (
-                        <>
-                            {oldPrice && <span className={styles.oldPrice}>{oldPrice}</span>}
-                            {newPrice && <span className={styles.newPrice}>{newPrice}</span>}
-                        </>
-                    )}
+                {shouldShowSale && (
+                    <img src="img/sale.svg" alt="sale" className={styles.productSale}/>
+
+                )}
+                {shouldShowSale && (
+                    <span className={styles.productSaleSpan}>
+        -{Math.round(((Number(oldPrice) - Number(newPrice)) / Number(oldPrice)) * 100)}%
+    </span>
+                )}
+
+                <img src={imageSrc} alt={name} className={styles.productImage}/>
+                <div className={styles.productInfo}>
+                    <h3 className={`${styles.productName} ${isLightTheme ? styles.lightText : ""}`}>{name}</h3>
+                    <div className={styles.priceContainer}>
+
+                        {(!newPrice || newPrice === "") && (!oldPrice || oldPrice === "") ? (
+                            <span
+                                className={`${styles.newPrice} ${isLightTheme ? styles.lightText : ""}`}>Бесплатно</span>
+                        ) : (
+                            <>
+                                {shouldShowSale && oldPrice && (
+                                    <span
+                                        className={`${styles.oldPrice} ${isLightTheme ? styles.lightTextOld : ""}`}>{oldPrice} ₽</span>
+                                )}
+                                <span className={`${styles.newPrice} ${isLightTheme ? styles.lightText : ""}`}>{newPrice} ₽</span>
+                            </>
+                        )}
+                    </div>
                 </div>
-            </div>
             </Link>
         </article>
     );

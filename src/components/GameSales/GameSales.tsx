@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 // import { Autoplay } from "swiper/modules";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchProducts } from "../../utils/productsSlice";
+import { fetchProductsInPriceRange } from "../../utils/productsSlice";
 // import GameCard from "./GameCard";
 import styles from "./GameSales.module.css";
 // import { Link } from "react-router-dom";
@@ -19,12 +19,12 @@ interface Product {
 }
 const GameSales: React.FC = () => {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items) as unknown as Product[];
-  const productStatus = useAppSelector((state) => state.products.status);
+  const products = useAppSelector((state) => state.products.priceRange) as unknown as Product[];
+  const productStatus = useAppSelector((state) => state.products.status.fetchProductsInPriceRange);
 
   useEffect(() => {
     if (productStatus === "idle") {
-      dispatch(fetchProducts());
+      dispatch(fetchProductsInPriceRange());
     }
   }, [productStatus, dispatch]);
 
@@ -34,32 +34,11 @@ const GameSales: React.FC = () => {
           <header className={styles.titleWrapper}>
             <h2 className={styles.title}>До 500 рублей</h2>
           </header>
-          {/*<Swiper*/}
-          {/*    modules={[Autoplay]}*/}
-          {/*    spaceBetween={10}*/}
-          {/*    slidesPerView="auto"*/}
-          {/*    centeredSlides={false}*/}
-          {/*    loop={true}*/}
-          {/*    autoplay={{ delay: 2500, disableOnInteraction: false }}*/}
-          {/*    className={styles.swiperContainer}*/}
-          {/*>*/}
-          {/*  {products.map((product) => (*/}
-          {/*      <SwiperSlide key={product.id} className={styles.slide}>*/}
-          {/*        <Link to={`/item/${product.id}`} className={styles.productLink}>*/}
-          {/*          <GameCard*/}
-          {/*              imageSrc={product.media?.[0]?.Uri || "img/default.png"}*/}
-          {/*              name={product.name}*/}
-          {/*              oldPrice={product.base_price ? `${product.base_price} ₽` : ""}*/}
-          {/*              newPrice={product.discounted_price ? `${product.discounted_price} ₽` : "Бесплатно"}*/}
-          {/*          />*/}
-          {/*        </Link>*/}
-          {/*      </SwiperSlide>*/}
-          {/*  ))}*/}
-          {/*</Swiper>*/}
+
           {products.length > 0 ? (
-              <Slider products={products} />
+              <Slider products={products} isLightTheme={true} />
           ) : (
-              <p>Loading products...</p>
+              <p>Загружаем товары...</p>
           )}
         </div>
       </section>

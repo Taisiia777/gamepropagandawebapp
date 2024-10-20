@@ -19,13 +19,12 @@ interface Product {
 }
 const HalloweenSale: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const products = useAppSelector((state) => state.products.items);
   const products = useAppSelector((state) => state.products.items) as unknown as Product[];
-
-  const productStatus = useAppSelector((state) => state.products.status);
+  const productStatus = useAppSelector((state) => state.products.status.fetchProducts);
+  // const productStatus = useAppSelector((state) => state.products.status);
 
   useEffect(() => {
-    if (productStatus === "idle") {
+    if (productStatus === 'idle') {
       dispatch(fetchProducts());
     }
   }, [productStatus, dispatch]);
@@ -42,32 +41,11 @@ const HalloweenSale: React.FC = () => {
             <h2 className={styles.title}>Хеллоуин</h2>
           </header>
           {products.length > 0 ? (
-              <Slider products={products} />
+              <Slider products={products} isLightTheme={true} />
           ) : (
-              <p>Loading products...</p>
+              <p>Загружаем товары...</p>
           )}
-          {/*<Swiper*/}
-          {/*    modules={[Autoplay]}*/}
-          {/*    spaceBetween={10}*/}
-          {/*    slidesPerView={'auto'}*/}
-          {/*    centeredSlides={false}*/}
-          {/*    loop={true}*/}
-          {/*    autoplay={{ delay: 2500, disableOnInteraction: false }}*/}
-          {/*    className={styles.swiperContainer}*/}
-          {/*>*/}
-          {/*  {products.map((product) => (*/}
-          {/*      <SwiperSlide key={product.id} className={styles.slide}>*/}
-          {/*        <Link to={`/item/${product.id}`} className={styles.productLink}>*/}
-          {/*          <ProductCard*/}
-          {/*              imageSrc={product.media?.[0]?.Uri || 'img/default.png'}*/}
-          {/*              name={product.name}*/}
-          {/*              oldPrice={product.base_price ? `${product.base_price} ₽` : ""}*/}
-          {/*              newPrice={product.discounted_price ? `${product.discounted_price} ₽` : "Бесплатно"}*/}
-          {/*          />*/}
-          {/*        </Link>*/}
-          {/*      </SwiperSlide>*/}
-          {/*  ))}*/}
-          {/*</Swiper>*/}
+
 
         </div>
       </section>

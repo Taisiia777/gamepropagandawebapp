@@ -25,6 +25,7 @@
 }
 
 .title {
+  margin-top: 0;
   color: #e7e7e7;
   letter-spacing: -0.28px;
   z-index: 10;

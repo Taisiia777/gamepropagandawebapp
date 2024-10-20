@@ -1,16 +1,10 @@
-
 import React, { useEffect } from "react";
-// import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
-// import { Autoplay } from "swiper/modules";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchProducts } from "../../utils/productsSlice";
-// import ProductCard from "./ProductCard";
+import { fetchProductsByCategory } from "../../utils/productsSlice";
 import styles from "./NewReleases.module.css";
 import Slider from "../Slider/Slider.tsx";
-// import { Link } from "react-router-dom";
-// import Slider from "../Slider/Slider.tsx";
 interface Product {
   id: string;
   media: Array<{ Uri: string }>;
@@ -19,16 +13,17 @@ interface Product {
   discounted_price: string | null;
 }
 const NewReleases: React.FC = () => {
+
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items) as unknown as Product[];
-  const productStatus = useAppSelector((state) => state.products.status);
+  const products = useAppSelector((state) => state.products.newReleases) as unknown as Product[];
+  const productStatus = useAppSelector((state) => state.products.status.fetchProductsByCategory);
 
   useEffect(() => {
     if (productStatus === "idle") {
-      dispatch(fetchProducts());
+      dispatch(fetchProductsByCategory({ category: "New", page: 1 }));
+
     }
   }, [productStatus, dispatch]);
-
   return (
       <section className={styles.container}>
         <div className={styles.saleCard}>
@@ -40,33 +35,11 @@ const NewReleases: React.FC = () => {
             />
             <h2 className={styles.title}>Новинки</h2>
           </header>
-          {products.length > 0 ? (
-              <Slider products={products} />
+          {products && products.length > 0 ? (
+              <Slider products={products} isLightTheme={true} />
           ) : (
-              <p>Loading products...</p>
+              <p>Загружаем товары...</p>
           )}
-          {/*<Swiper*/}
-          {/*    modules={[Autoplay]}*/}
-          {/*    spaceBetween={20}*/}
-          {/*    slidesPerView="auto"*/}
-          {/*    centeredSlides={false}*/}
-          {/*    loop={true}*/}
-          {/*    autoplay={{ delay: 2500, disableOnInteraction: false }}*/}
-          {/*    className={styles.swiperContainer}*/}
-          {/*>*/}
-          {/*  {products.map((product) => (*/}
-          {/*      <SwiperSlide key={product.id} className={styles.slide}>*/}
-          {/*        <Link to={`/item/${product.id}`} className={styles.productLink}>*/}
-          {/*          <ProductCard*/}
-          {/*              imageSrc={product.media?.[0]?.Uri || "img/default.png"}*/}
-          {/*              name={product.name}*/}
-          {/*              oldPrice={product.base_price ? `${product.base_price} ₽` : ""}*/}
-          {/*              newPrice={product.discounted_price ? `${product.discounted_price} ₽` : "Бесплатно"}*/}
-          {/*          />*/}
-          {/*        </Link>*/}
-          {/*      </SwiperSlide>*/}
-          {/*  ))}*/}
-          {/*</Swiper>*/}
         </div>
       </section>
   );

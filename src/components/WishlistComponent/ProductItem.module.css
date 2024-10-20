@@ -1,7 +1,7 @@
 
 .productItem {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: start;
     border-radius: 12px;
     margin-bottom: 20px;
@@ -11,27 +11,26 @@
 }
 
 .productImage {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 6px;
     margin-bottom: 15px;
+    object-fit: cover; /* Обрезает изображение по размеру контейнера, сохраняя пропорции */
+    object-position: center; /* Центрирует изображение внутри контейнера */
 }
 
-.productTitle {
-    font-family: 'Onest', sans-serif; /* Убедитесь, что шрифт подключен */
-    font-weight: 600; /* SemiBold */
-    font-size: 16px;
-    color: #ffffff;
-    text-align: center;
-    margin: 10px 0;
-}
+
 
 .productDate, .productPrice {
     font-size: 14px;
     color: #bbbbbb;
-    margin: 5px 0;
+    margin: 0;
 }
-
+.productDescr{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
 .addToCartButton {
     margin-top: 12px;
     background-color: #C5FF00; /* Цвет фона, соответствующий коду из Figma */
@@ -41,7 +40,7 @@
     border: none;
     border-radius: 50px; /* Закругленные углы */
     cursor: pointer;
-    width: 312px; /* Ширина кнопки */
+    width: 254px; /* Ширина кнопки */
     height: 50px; /* Высота кнопки */
     display: flex;
     align-items: center;
@@ -56,28 +55,64 @@
 }
 
 .deleteIcon {
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: -10px;
+    top: 140px;
     cursor: pointer;
 }
 .productTitle {
     font-family: 'Onest', sans-serif; /* Убедитесь, что шрифт подключен */
-    font-weight: 400; /* Regular */
-    font-size: 16px;
-    line-height: 26px; /* Высота строки */
+    font-weight: 500; /* SemiBold */
+    font-size: 14px;
+    line-height: 20px; /* Высота строки */
     color: #E7E7E7; /* Цвет текста */
     text-align: left;
-    margin: 5px 0;
+    margin: 0;
 }
 
 .productDate, .productPrice {
     font-family: 'Onest', sans-serif; /* Убедитесь, что шрифт подключен */
-    font-weight: 400; /* Regular */
+    font-weight: 500; /* Regular */
     font-size: 16px;
-    line-height: 26px; /* Высота строки */
+    line-height: 22px; /* Высота строки */
     color: #E7E7E7; /* Цвет текста */
     margin: 5px 0;
+    text-align: start;
+}
+.discountText {
+    color: #4A9D42; /* Зеленый цвет для текста скидки */
+    font-weight: 400;
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: start;
+}
+.oldPrice{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+.oldPriceText{
+
+    color: #7A7A7A;
+}
+.newPriceText{
+    display: flex;
+    margin-left: 10px;
+    color: #fff;
+}
+.divider {
+    height: 1px;
+    background-color: #333333;
+    width: 100%;
+    margin: 20px 0;
+}
+.cartItemRemoving {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.removing {
+    transform: translateX(-100%); /* Уезжает влево */
+    opacity: 0; /* Исчезает */
 }

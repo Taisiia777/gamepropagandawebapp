@@ -53,7 +53,7 @@
 }
 
 .divider {
-  margin: 15px 0;
+  margin: 24px 0;
   width: 320px;
   max-width: 100%;
   height: 1px;
@@ -111,7 +111,10 @@
   border: 0;
 }
 .description{
-
+  display: flex;
+flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px;
 }
 
 .description__text {
@@ -124,7 +127,13 @@
   color: #fff; /* Цвет текста белый */
   opacity: 0.5; /* Прозрачность 50% */
 }
-
+.expandDescriptionButton{
+  background: none;
+  font-weight: 400;
+  font-size: 14px;
+  color: #C5FF00;
+  padding: 0;
+}
 .bestSellers {
   max-width: none !important;
 }
@@ -153,6 +162,7 @@
 }
 
 .title {
+  margin-left: 20px;
   color: #e7e7e7;
   letter-spacing: -0.28px;
   z-index: 10;

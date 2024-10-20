@@ -77,7 +77,7 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
                 <p className={styles.emptyCartMessage}>Ваша корзина пуста.</p>
             )}
             <div className={styles.divider} />
-            <h2 className={styles.recommendationsTitle}>Эксклюзивно для тебя</h2>
+            <h2 className={styles.recommendationsTitle}>Лидеры продаж</h2>
             <Swiper
                 modules={[Autoplay]}
                 spaceBetween={30}

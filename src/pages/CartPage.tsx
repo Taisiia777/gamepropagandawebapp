@@ -7,10 +7,18 @@ import OrderSummary from "../components/OrderSummary/OrderSummary";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks.ts";
 import { fetchProducts } from "../utils/productsSlice.ts";
 
+interface Product {
+  id: string;
+  media: string | Array<{ Uri: string }>;
+  name: string;
+  base_price: string | null;
+  discounted_price: string | null;
+}
+
 function CartPage() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items);
-  const productStatus = useAppSelector((state) => state.products.status);
+  const products = useAppSelector((state) => state.products.items) as unknown as Product[];
+  const productStatus = useAppSelector((state) => state.products.status.fetchProducts);
 
   useEffect(() => {
     if (productStatus === 'idle') {
@@ -26,11 +34,30 @@ function CartPage() {
     imageUrl: string;
   }>>([]);
 
-  // Преобразуем `products` в нужный формат
+  // Функция для извлечения ссылки на изображение
+  const extractImageUrl = (media: string | Array<{ Uri: string }>): string => {
+    try {
+      // Если media - это строка, попробуем её распарсить
+      if (typeof media === 'string') {
+        const parsedMedia = JSON.parse(media);
+        const imageMedia = parsedMedia.find((item: { type: string }) => item.type === 'IMAGE');
+        if (imageMedia && imageMedia.url) {
+          return imageMedia.url;
+        }
+      } else if (Array.isArray(media)) {
+        return `https:${media[0]?.Uri}`; // Если это массив, берем первый Uri и добавляем https
+      }
+    } catch (error) {
+      console.error('Ошибка при парсинге media:', error);
+    }
+    return 'img/default.png'; // Если нет картинки, возвращаем изображение по умолчанию
+  };
+
+  // Преобразуем `products` в нужный формат для рекомендаций
   const recommendations = products.map((product: any) => ({
     id: product.id,
-    price: product.discounted_price || product.base_price, // Выберите подходящее свойство для цены
-    imageSrc: product.media?.[0]?.Uri || 'img/default.png', // Подставьте изображение или значение по умолчанию
+    price: product.discounted_price || product.base_price, // Выбираем цену или значение по умолчанию
+    imageSrc: extractImageUrl(product.media), // Преобразуем media в ссылку на изображение
     name: product.name,
   }));
 
@@ -45,7 +72,6 @@ function CartPage() {
       return sum + (isNaN(price) ? 0 : price);
     }, 0);
   };
-
 
   const totalAmount = calculateTotal();
   const currency = "₽";

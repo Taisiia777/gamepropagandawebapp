@@ -3,16 +3,21 @@
 
 
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ProductCard.module.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks.ts";
 import { fetchProducts } from "../../utils/productsSlice.ts";
 import 'swiper/css';
 import 'swiper/css/autoplay';
-import ProductCard from '../BestSellers/ProductCard.tsx';
-
+import PricingContainer from "../PricingContainer/PricingContainer.tsx";
+import Slider from "../Slider/Slider.tsx";
+interface Product {
+    id: string;
+    media: Array<{ Uri: string }>;
+    name: string;
+    base_price: string | null;
+    discounted_price: string | null;
+}
 interface ProductDetail {
   label: string;
   value: string;
@@ -38,8 +43,9 @@ const ProductElenent: React.FC<ProductElenentProps> = ({  id,
                                                          description,
                                                        }) => {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items);
-  const productStatus = useAppSelector((state) => state.products.status);
+    const products = useAppSelector((state) => state.products.items) as unknown as Product[];
+  const productStatus = useAppSelector((state) => state.products.status.fetchProducts);
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   useEffect(() => {
     if (productStatus === 'idle') {
@@ -85,69 +91,60 @@ const ProductElenent: React.FC<ProductElenentProps> = ({  id,
       }
 
   };
-
+    // Функция для обработки клика по кнопке раскрытия описания
+    const toggleDescription = () => {
+        setIsDescriptionExpanded(!isDescriptionExpanded);
+    };
   return (
       <article className={styles.card}>
-        <div className="productImageContainer">
-          <img src={imageUrl} alt={title} className={styles.productImageMain} />
-        </div>
+          <div className="productImageContainer">
+              <img src={imageUrl} alt={title} className={styles.productImageMain}/>
+          </div>
 
-        <div className={styles.cardContent}>
-          <h2 className={styles.productTitle}>{title}</h2>
-          {price !== "" ? (
-              <p className={styles.productPrice}>
-                {price}
+          <div className={styles.cardContent}>
+              <h2 className={styles.productTitle}>{title}</h2>
+              {price !== "" ? (
+                  <p className={styles.productPrice}>
+                      {price}
+                  </p>
+              ) : (
+                  <p className={styles.productPrice}>Бесплатно</p>
+              )}
+              <PricingContainer/>
+              <hr className={styles.divider}/>
+              <div className={styles.productDetails}>
+                  {details.map((detail, index) => (
+                      <React.Fragment key={index}>
+                          <span className={styles.productDetails__title}>{detail.label}: </span>
+                          <span className={styles.productDetails__value}>{detail.value}</span>
+                          <br/>
+                      </React.Fragment>
+                  ))}
+              </div>
+              <button className={styles.addToCartButton} onClick={addToCart}>
+                  Добавить в корзину
+              </button>
+          </div>
+
+
+          <div className={styles.description}>
+              <p className={styles.description__text}>
+                  {isDescriptionExpanded ? description : `${description.substring(0, 150)}...`}
               </p>
-          ) : (
-              <p className={styles.productPrice}>Бесплатно</p>
-          )}
-          <hr className={styles.divider} />
-          <div className={styles.productDetails}>
-            {details.map((detail, index) => (
-                <React.Fragment key={index}>
-                  <span className={styles.productDetails__title}>{detail.label}: </span>
-                  <span className={styles.productDetails__value}>{detail.value}</span>
-                  <br />
-                </React.Fragment>
-            ))}
+              <button className={styles.expandDescriptionButton} onClick={toggleDescription}>
+                  {isDescriptionExpanded ? "Скрыть описание" : "Раскрыть описание"}
+              </button>
           </div>
-          <button className={styles.addToCartButton} onClick={addToCart}>
-            Добавить в корзину
-          </button>
-        </div>
-
-        <div className={styles.description}>
-          <p className={styles.description__text}>
-            {description}
-          </p>
-        </div>
-
-        <div className={styles.bestSellers}>
-          <div className={styles.container}>
-            <h2 className={styles.title}>Похожие игры</h2>
-            <Swiper
-                modules={[Autoplay]}
-                spaceBetween={0}
-                slidesPerView={'auto'}
-                centeredSlides={false}
-                loop={true}
-                autoplay={{ delay: 2500, disableOnInteraction: false }}
-                className={styles.swiperContainer}
-            >
-              {products.map((product) => (
-                  <SwiperSlide key={product.id} className={styles.slide}>
-                    <ProductCard
-                        id={product.id}
-                        imageSrc={product.media[0]?.Uri || 'img/default.png'}
-                        name={product.name}
-                        oldPrice={product.base_price}
-                        newPrice={product.discounted_price}
-                    />
-                  </SwiperSlide>
-              ))}
-            </Swiper>
+          <div className={styles.bestSellers}>
+              <div className={styles.container}>
+                  <h2 className={styles.title}>Лидеры продаж</h2>
+                  {products.length > 0 ? (
+                      <Slider products={products} isLightTheme={false} />
+                  ) : (
+                      <p>Загружаем товары...</p>
+                  )}
+              </div>
           </div>
-        </div>
       </article>
   );
 };

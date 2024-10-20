@@ -1,5 +1,4 @@
 .wishlist {
-    background-color: #232323;
     color: #ffffff;
     padding: 20px;
     max-width: 400px;
@@ -63,6 +62,7 @@
 .productCount {
     font-size: 16px;
     margin: 10px 0;
+    margin-bottom: 20px;
     color: #bbbbbb;
     text-align: start;
 
@@ -94,12 +94,7 @@
     width: 100%;
 }
 
-.divider {
-    height: 1px;
-    background-color: #333333;
-    width: 100%;
-    margin: 20px 0;
-}
+
 
 .copyButton {
     background-color: #2B2B2B;
@@ -117,4 +112,12 @@
 
 .copyButton:hover {
     background-color: #c5e000;
+}
+.cartItemRemoving {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.removing {
+    transform: translateX(-100%); /* Уезжает влево */
+    opacity: 0; /* Исчезает */
 }
