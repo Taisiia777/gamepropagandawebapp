@@ -11,7 +11,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
-  height: 100vh;
+  height: 110vh;
 
 }
 @media (prefers-color-scheme: light) {

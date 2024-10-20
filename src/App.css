@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 0;
   text-align: center;
-  height: 100vh;
+  height: 110vh;
 }
 @media (prefers-color-scheme: light) {
   :root {
