@@ -12,6 +12,7 @@
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   height: 110vh;
+  padding-bottom: 50px;
 
 }
 @media (prefers-color-scheme: light) {
