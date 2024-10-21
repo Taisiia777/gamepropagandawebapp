@@ -18,4 +18,6 @@ export interface Product {
     genres: string[];
     platforms: string[];
     media: Media[];
+    spoken_languages: string[];   // Разговорные языки
+    screen_languages: string[];   // Языки интерфейса (субтитры)
 }

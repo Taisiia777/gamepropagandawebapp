@@ -9,5 +9,19 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      (function(d, w, c) {
+        w.ChatSupportId = 'your-support-id'; // Здесь будет ваш уникальный идентификатор чата
+        var s = d.createElement('script');
+        s.async = true;
+        s.src = 'https://helpdeskeddy.com/widget.js'; // URL скрипта виджета
+        var x = d.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+        w[c] = w[c] || function() {
+          (w[c].q = w[c].q || []).push(arguments);
+        };
+      })(document, window, 'ChatSupport');
+    </script>
+
   </body>
 </html>

@@ -5,7 +5,7 @@ function CatalogPage() {
   // Example data for cartItems and recommendations
   
   return (
-    <div>
+    <div style={{height: "100vh"}}>
       <MainComponent />
       <GameCatalog/>
       <GameCardList/>

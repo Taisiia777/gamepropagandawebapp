@@ -84,23 +84,12 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Product } from "../types/Product";
 
-// Fetch products by category
-// export const fetchProductsByCategory = createAsyncThunk(
-//     "products/fetchProductsByCategory",
-//     async (category: string) => {
-//         const response = await axios.get<Product[]>(`https://03f4-95-161-221-131.ngrok-free.app/products/category/${category}`, {
-//             headers: {
-//                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
-//             }
-//         });
-//         return response.data;
-//     }
-// );
+
 
 export const fetchProductsByCategory = createAsyncThunk(
     "products/fetchProductsByCategory",
     async ({ category, page = 1 }: { category: string; page?: number }) => {
-        const response = await axios.get<Product[]>(`https://03f4-95-161-221-131.ngrok-free.app/products/category/${category}`, {
+        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/category/${category}`, {
             params: { page }, // Если page не передан, будет использоваться значение по умолчанию
             headers: {
                 'ngrok-skip-browser-warning': '1'
@@ -113,7 +102,7 @@ export const fetchProductsByCategory = createAsyncThunk(
 
 // Fetch paginated products
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async (page?: number) => {
-    const response = await axios.get<Product[]>(`https://03f4-95-161-221-131.ngrok-free.app/products`, {
+    const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products`, {
         params: { page },
         headers: {
             'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
@@ -126,7 +115,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async (p
 export const searchProductsByName = createAsyncThunk(
     "products/searchProductsByName",
     async (name: string) => {
-        const response = await axios.get<Product[]>(`https://03f4-95-161-221-131.ngrok-free.app/products/`, {
+        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/`, {
             params: { name },
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
@@ -140,7 +129,7 @@ export const searchProductsByName = createAsyncThunk(
 export const fetchTopRatedProducts = createAsyncThunk(
     "products/fetchTopRatedProducts",
     async () => {
-        const response = await axios.get<Product[]>(`https://03f4-95-161-221-131.ngrok-free.app/products/top-rated`, {
+        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/top-rated`, {
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
             }
@@ -153,7 +142,7 @@ export const fetchTopRatedProducts = createAsyncThunk(
 export const fetchProductsInPriceRange = createAsyncThunk(
     "products/fetchProductsInPriceRange",
     async () => {
-        const response = await axios.get<Product[]>(`https://03f4-95-161-221-131.ngrok-free.app/products/price-range/1-500`, {
+        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/price-range/1-500`, {
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
             }
@@ -201,7 +190,37 @@ const initialState: ProductsState = {
 const productsSlice = createSlice({
     name: "products",
     initialState,
-    reducers: {},
+    reducers: {
+        filterByPlatform: (state, action: PayloadAction<string>) => {
+            if (action.payload === 'Все') {
+                state.filteredItems = state.items; // Если выбрана платформа "Все", возвращаем все продукты
+            } else {
+                state.filteredItems = state.items.filter(product => product.platforms.includes(action.payload));
+            }
+        },
+        filterByLanguage: (state, action: PayloadAction<string>) => {
+            if (action.payload === 'Все') {
+                state.filteredItems = state.items; // Если выбран язык "Все", возвращаем все продукты
+            } else {
+                // Можно фильтровать либо по `spoken_languages`, либо по `screen_languages`, в зависимости от нужного
+                state.filteredItems = state.items.filter(product =>
+                    product.screen_languages.includes(action.payload) ||
+                    product.spoken_languages.includes(action.payload)
+                );
+            }
+        },
+        filterByPriceRange: (state, action: PayloadAction<{ minPrice: number; maxPrice: number }>) => {
+            const { minPrice, maxPrice } = action.payload;
+            state.filteredItems = state.items.filter(product => {
+                const price = product.discounted_price ? Number(product.discounted_price) : Number(product.base_price);
+                return price >= minPrice && price <= maxPrice;
+            });
+        },
+        resetFilters: (state) => {
+            state.filteredItems = state.items; // Сбрасываем все фильтры
+        }
+    },
+
     extraReducers: (builder) => {
         builder
             .addCase(fetchProducts.pending, (state) => {
@@ -285,4 +304,15 @@ const productsSlice = createSlice({
     },
 });
 
+
+
+// Экспортируем действия для фильтров
+export const {
+    filterByPlatform,
+    filterByLanguage,
+    filterByPriceRange,
+    resetFilters
+} = productsSlice.actions;
+
+// Экспортируем сам редьюсер по умолчанию
 export default productsSlice.reducer;
