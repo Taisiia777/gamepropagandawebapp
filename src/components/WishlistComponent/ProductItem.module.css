@@ -4,7 +4,7 @@
     flex-direction: row;
     align-items: start;
     border-radius: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     position: relative;
     max-width: 300px; /* Ширина карточки */
     margin-top: 30px;
@@ -32,7 +32,7 @@
     margin-left: 20px;
 }
 .addToCartButton {
-    margin-top: 12px;
+    margin-top: 0;
     background-color: #C5FF00; /* Цвет фона, соответствующий коду из Figma */
     color: #000000; /* Черный цвет текста */
     font-size: 14px;
@@ -59,7 +59,7 @@
     height: 50px;
     position: absolute;
     right: -10px;
-    top: 140px;
+    top: 120px;
     cursor: pointer;
 }
 .productTitle {
