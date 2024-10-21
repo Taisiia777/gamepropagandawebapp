@@ -109,7 +109,7 @@ const SubscriptionComponent: React.FC = () => {
   const eaPlaySubscriptions = [
     {
       imageSrc:
-          "https://cdn.builder.io/api/v1/image/assets/TEMP/cd626a0263aa593737ef1cec4ef5985f75e444bba7cef906593f95c7b3f6ee49?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
+          "img/ea1.svg",
       name: "EA Play Basic",
       price: selectedPeriod === "1 месяц" ? "590 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(1500) :
@@ -117,7 +117,7 @@ const SubscriptionComponent: React.FC = () => {
     },
     {
       imageSrc:
-          "https://cdn.builder.io/api/v1/image/assets/TEMP/cd626a0263aa593737ef1cec4ef5985f75e444bba7cef906593f95c7b3f6ee49?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
+          "img/ea12.svg",
       name: "EA Play Pro",
       price: selectedPeriod === "1 месяц" ? "990 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(2500) :

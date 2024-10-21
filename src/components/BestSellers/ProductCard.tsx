@@ -77,9 +77,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice,
                             <>
                                 {shouldShowSale && oldPrice && (
                                     <span
-                                        className={`${styles.oldPrice} ${isLightTheme ? styles.lightTextOld : ""}`}>{oldPrice} Р</span>
+                                        className={`${styles.oldPrice} ${isLightTheme ? styles.lightTextOld : ""}`}>{oldPrice} ₽</span>
                                 )}
-                                <span className={`${styles.newPrice} ${isLightTheme ? styles.lightText : ""}`}>{newPrice} Р</span>
+                                <span className={`${styles.newPrice} ${isLightTheme ? styles.lightText : ""}`}>{newPrice} ₽</span>
                             </>
                         )}
                     </div>
