@@ -77,14 +77,14 @@ const SubscriptionComponent: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<"1 месяц" | "3 месяца" | "12 месяцев">("1 месяц");
 
   // Генерация случайных цен
-  const getRandomPrice = (base: number) => `${base + Math.floor(Math.random() * 500)} ₽`;
+  const getRandomPrice = (base: number) => `${base + Math.floor(Math.random() * 500)} Р`;
 
   const psPlusSubscriptions = [
     {
       imageSrc:
           "https://cdn.builder.io/api/v1/image/assets/TEMP/0a2372f876f17e80a5c391fcaf9b7b560c0b9fa85891a77a73562ef4ad4f32d0?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
       name: "PS Plus Essential",
-      price: selectedPeriod === "1 месяц" ? "590 ₽" :
+      price: selectedPeriod === "1 месяц" ? "590 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(1500) :
               getRandomPrice(4000),
     },
@@ -92,7 +92,7 @@ const SubscriptionComponent: React.FC = () => {
       imageSrc:
           "https://cdn.builder.io/api/v1/image/assets/TEMP/30b28e31709e43ac2ec45f01bec4a9b51423c96614b2e2c267968bb756d88efd?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
       name: "PS Plus Extra",
-      price: selectedPeriod === "1 месяц" ? "990 ₽" :
+      price: selectedPeriod === "1 месяц" ? "990 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(2500) :
               getRandomPrice(5000),
     },
@@ -100,7 +100,7 @@ const SubscriptionComponent: React.FC = () => {
       imageSrc:
           "https://cdn.builder.io/api/v1/image/assets/TEMP/cd626a0263aa593737ef1cec4ef5985f75e444bba7cef906593f95c7b3f6ee49?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
       name: "PS Plus Premium",
-      price: selectedPeriod === "1 месяц" ? "1190 ₽" :
+      price: selectedPeriod === "1 месяц" ? "1190 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(3000) :
               getRandomPrice(7000),
     },
@@ -111,7 +111,7 @@ const SubscriptionComponent: React.FC = () => {
       imageSrc:
           "https://cdn.builder.io/api/v1/image/assets/TEMP/cd626a0263aa593737ef1cec4ef5985f75e444bba7cef906593f95c7b3f6ee49?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
       name: "EA Play Basic",
-      price: selectedPeriod === "1 месяц" ? "590 ₽" :
+      price: selectedPeriod === "1 месяц" ? "590 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(1500) :
               getRandomPrice(3000),
     },
@@ -119,7 +119,7 @@ const SubscriptionComponent: React.FC = () => {
       imageSrc:
           "https://cdn.builder.io/api/v1/image/assets/TEMP/cd626a0263aa593737ef1cec4ef5985f75e444bba7cef906593f95c7b3f6ee49?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
       name: "EA Play Pro",
-      price: selectedPeriod === "1 месяц" ? "990 ₽" :
+      price: selectedPeriod === "1 месяц" ? "990 Р" :
           selectedPeriod === "3 месяца" ? getRandomPrice(2500) :
               getRandomPrice(6000),
     },
