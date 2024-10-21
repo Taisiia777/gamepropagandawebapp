@@ -104,7 +104,7 @@ function ItemPage() {
                         imageUrl: extractImageUrl(data.media), // Обрабатываем media для получения ссылки на изображение
                         title: data.name || "Товар",
                         price: data.discounted_price || data.base_price || "Бесплатно", // Если цены нет, показываем "Бесплатно"
-                        currency: "₽",
+                        currency: "Р",
                         details: [
                             { label: "Платформа", value: data.platforms?.join(", ") || "Не указано" },
                             { label: "Жанр", value: data.genres?.join(", ") || "Не указано" },

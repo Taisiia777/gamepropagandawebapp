@@ -51,7 +51,7 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
     const calculateTotal = () => {
         return newCartItems.reduce((total, item) => {
             // Преобразуем цену в строку и удаляем "₽", если она есть, затем пытаемся привести к числу
-            const itemPrice = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("₽", "").trim());
+            const itemPrice = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("Р", "").trim());
             return total + (isNaN(itemPrice) ? 0 : itemPrice);
         }, 0);
     };

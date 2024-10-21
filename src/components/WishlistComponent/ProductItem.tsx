@@ -15,7 +15,7 @@ interface ProductItemProps {
 
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ imageSrc, name, date, newPrice, id,  currency = "₽", onRemove, oldPrice }) => {
+const ProductItem: React.FC<ProductItemProps> = ({ imageSrc, name, date, newPrice, id,  currency = "Р", onRemove, oldPrice }) => {
 
     const [isRemoving, setIsRemoving] = useState(false); // Для анимации удаления
 

@@ -29,8 +29,8 @@ const GameSales: React.FC = () => {
   }, [productStatus, dispatch]);
 
   return (
-      <section className={styles.container}>
-        <div className={styles.saleCard}>
+      <section className={styles.container} >
+        <div className={styles.saleCard} >
           <header className={styles.titleWrapper}>
             <h2 className={styles.title}>До 500 рублей</h2>
           </header>

@@ -68,13 +68,13 @@ function CartPage() {
 
   const calculateTotal = () => {
     return cartItems.reduce((sum, item) => {
-      const price = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("₽", "").trim());
+      const price = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("Р", "").trim());
       return sum + (isNaN(price) ? 0 : price);
     }, 0);
   };
 
   const totalAmount = calculateTotal();
-  const currency = "₽";
+  const currency = "Р";
 
   return (
       <div>
