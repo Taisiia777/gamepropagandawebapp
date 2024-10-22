@@ -84,8 +84,8 @@ const SubscriptionComponent: React.FC = () => {
       imageSrc:
           "https://cdn.builder.io/api/v1/image/assets/TEMP/0a2372f876f17e80a5c391fcaf9b7b560c0b9fa85891a77a73562ef4ad4f32d0?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c",
       name: "PS Plus Essential",
-      price: selectedPeriod === "1 месяц" ? "590 Р" :
-          selectedPeriod === "3 месяца" ? getRandomPrice(1500) :
+      price: selectedPeriod === "1 месяц" ? "1490 Р" :
+          selectedPeriod === "3 месяца" ? "3590 Р" :
               getRandomPrice(4000),
     },
     {

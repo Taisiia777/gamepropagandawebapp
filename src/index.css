@@ -14,7 +14,19 @@
   height: 100%;
 
 }
-
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: #121212;
+    color: #fff;
+  }
+  body{
+    background-color: #121212;
+    color: #fff;
+  }
+  a{
+    color: #fff;
+  }
+}
 
 a {
   font-weight: 500;
