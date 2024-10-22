@@ -27,33 +27,33 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                     aria-label="Введите пароль"
                 />
 
-                <div className={styles.checkboxContainer}>
-                    <input
-                        type="checkbox"
-                        id="sameEmail"
-                        className={styles.checkbox}
-                    />
-                    <label htmlFor="sameEmail" className={styles.checkboxLabel}>
-                        E-mail для чека такой же, как логин
-                    </label>
-                </div>
+                {/*<div className={styles.checkboxContainer}>*/}
+                {/*    <input*/}
+                {/*        type="checkbox"*/}
+                {/*        id="sameEmail"*/}
+                {/*        className={styles.checkbox}*/}
+                {/*    />*/}
+                {/*    <label htmlFor="sameEmail" className={styles.checkboxLabel}>*/}
+                {/*        E-mail для чека такой же, как логин*/}
+                {/*    </label>*/}
+                {/*</div>*/}
 
-                <label htmlFor="receiptEmail" className={styles['visually-hidden']}>E-mail для чека</label>
-                <input
-                    type="email"
-                    id="receiptEmail"
-                    className={styles.input}
-                    placeholder="Введите e-mail для чека"
-                    aria-label="Введите e-mail для чека"
-                />
+                {/*<label htmlFor="receiptEmail" className={styles['visually-hidden']}>E-mail для чека</label>*/}
+                {/*<input*/}
+                {/*    type="email"*/}
+                {/*    id="receiptEmail"*/}
+                {/*    className={styles.input}*/}
+                {/*    placeholder="Введите e-mail для чека"*/}
+                {/*    aria-label="Введите e-mail для чека"*/}
+                {/*/>*/}
 
-                <p className={styles.verificationMessage} style={{ color: "rgba(231,231,231,0.3)" }}>
-                    Подтверди свою электронную почту. Не получил письмо?{" "}
-                    <span style={{ color: "rgba(231,231,231,1)" }}>Отправить снова</span>
-                </p>
+                {/*<p className={styles.verificationMessage} style={{ color: "rgba(231,231,231,0.3)" }}>*/}
+                {/*    Подтверди свою электронную почту. Не получил письмо?{" "}*/}
+                {/*    <span style={{ color: "rgba(231,231,231,1)" }}>Отправить снова</span>*/}
+                {/*</p>*/}
             </form>
 
-            <hr className={styles.divider} />
+            {/*<hr className={styles.divider} />*/}
             <Link to="/codes">
                 <div className={styles.backupCodesContainer}>
                     <img
