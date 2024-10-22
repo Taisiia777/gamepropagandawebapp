@@ -95,7 +95,7 @@ const AppContent: React.FC = () => {
     };
 
     return (
-        <AnimatePresence exitBeforeEnter> {/* Оборачиваем в AnimatePresence */}
+        <AnimatePresence mode="wait"> {/* Заменили exitBeforeEnter на mode="wait" */}
             <motion.div
                 key={location.pathname}  // Для уникальности анимации при каждом переходе
                 initial="initial"
