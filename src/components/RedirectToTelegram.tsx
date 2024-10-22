@@ -7,7 +7,7 @@ const RedirectToTelegram: React.FC = () => {
         };
 
         const redirectToTelegram = () => {
-            const telegramUrl = 'https://t.me/YourBot';
+            const telegramUrl = 'https://t.me/gamepropagandawebapptestbot';
             window.location.href = telegramUrl;
         };
 

@@ -7,9 +7,11 @@ import CatalogPage from './pages/CatalogPage';
 import WishList from './pages/WishList';
 import AccountPage from './pages/AccountPage';
 import ReserveCodesPage from './pages/ReserveCodesPage';
+import useScrollToTop from './hooks/useScrollToTop'; // Импортируем хук
 
 const AppContent: React.FC = () => {
     const navigate = useNavigate();
+    useScrollToTop();
 
     useEffect(() => {
         if (window.Telegram?.WebApp) {

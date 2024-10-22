@@ -98,8 +98,8 @@ import { filterByPlatform, filterByLanguage, filterByPriceRange, resetFilters } 
 
 const FilterComponent: React.FC = () => {
     const dispatch = useDispatch();
-    const [minPrice, setMinPrice] = useState(30);
-    const [maxPrice, setMaxPrice] = useState(70);
+    const [minPrice, setMinPrice] = useState(1);
+    const [maxPrice, setMaxPrice] = useState(15000);
     const [selectedPlatform, setSelectedPlatform] = useState("Все");
     const [selectedLanguage, setSelectedLanguage] = useState("Все");
     const [isFilterVisible, setIsFilterVisible] = useState(true); // Управление видимостью фильтров
@@ -124,8 +124,8 @@ const FilterComponent: React.FC = () => {
     const handleResetFilters = () => {
         setSelectedPlatform("Все");
         setSelectedLanguage("Все");
-        setMinPrice(30);
-        setMaxPrice(70);
+        setMinPrice(1);
+        setMaxPrice(15000);
         dispatch(resetFilters()); // Сброс всех фильтров
     };
 
