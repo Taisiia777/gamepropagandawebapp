@@ -88,11 +88,12 @@ const AppContent: React.FC = () => {
 
     // Анимации появления/исчезновения
     const pageTransition = {
-        initial: { opacity: 0, x: -100 }, // Начальная позиция
-        animate: { opacity: 1, x: 0 },    // Появление
-        exit: { opacity: 0, x: 100 },     // Исчезновение
-        transition: { duration: 0.5 },    // Длительность анимации
+        initial: { opacity: 0, x: -10 }, // Меньшее смещение по оси X
+        animate: { opacity: 1, x: 0 },   // Плавное появление
+        exit: { opacity: 0, x: 10 },     // Меньшее смещение при исчезновении
+        transition: { duration: 0.3, ease: 'easeInOut' }, // Более длительная анимация с плавным входом и выходом
     };
+
 
     return (
         <AnimatePresence mode="wait"> {/* Заменили exitBeforeEnter на mode="wait" */}
