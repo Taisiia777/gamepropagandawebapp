@@ -89,7 +89,7 @@ import { Product } from "../types/Product";
 export const fetchProductsByCategory = createAsyncThunk(
     "products/fetchProductsByCategory",
     async ({ category, page = 1 }: { category: string; page?: number }) => {
-        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/category/${category}`, {
+        const response = await axios.get<Product[]>(`https://455b-95-161-221-131.ngrok-free.app/products/category/${category}`, {
             params: { page }, // Если page не передан, будет использоваться значение по умолчанию
             headers: {
                 'ngrok-skip-browser-warning': '1'
@@ -102,7 +102,7 @@ export const fetchProductsByCategory = createAsyncThunk(
 
 // Fetch paginated products
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async (page?: number) => {
-    const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products`, {
+    const response = await axios.get<Product[]>(`https://455b-95-161-221-131.ngrok-free.app/products`, {
         params: { page },
         headers: {
             'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
@@ -115,7 +115,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async (p
 export const searchProductsByName = createAsyncThunk(
     "products/searchProductsByName",
     async (name: string) => {
-        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/`, {
+        const response = await axios.get<Product[]>(`https://455b-95-161-221-131.ngrok-free.app/products/`, {
             params: { name },
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
@@ -129,7 +129,7 @@ export const searchProductsByName = createAsyncThunk(
 export const fetchTopRatedProducts = createAsyncThunk(
     "products/fetchTopRatedProducts",
     async () => {
-        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/top-rated`, {
+        const response = await axios.get<Product[]>(`https://455b-95-161-221-131.ngrok-free.app/products/top-rated`, {
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
             }
@@ -142,7 +142,7 @@ export const fetchTopRatedProducts = createAsyncThunk(
 export const fetchProductsInPriceRange = createAsyncThunk(
     "products/fetchProductsInPriceRange",
     async () => {
-        const response = await axios.get<Product[]>(`https://d171-95-161-221-131.ngrok-free.app/products/price-range/1-500`, {
+        const response = await axios.get<Product[]>(`https://455b-95-161-221-131.ngrok-free.app/products/price-range/1-500`, {
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
             }
