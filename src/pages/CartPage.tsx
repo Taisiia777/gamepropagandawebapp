@@ -5,7 +5,7 @@ import Cart from "../components/CartComponents/Cart";
 import OrderForm from "../components/OrderForm/OrderForm";
 import OrderSummary from "../components/OrderSummary/OrderSummary";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks.ts";
-import { fetchProducts } from "../utils/productsSlice.ts";
+import { fetchTopRatedProducts} from "../utils/productsSlice.ts";
 
 interface Product {
   id: string;
@@ -17,12 +17,13 @@ interface Product {
 
 function CartPage() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items) as unknown as Product[];
-  const productStatus = useAppSelector((state) => state.products.status.fetchProducts);
+  const products = useAppSelector((state) => state.products.topRated) as unknown as Product[];
+  const productStatus = useAppSelector((state) => state.products.status.fetchTopRatedProducts);
+  // const productStatus = useAppSelector((state) => state.products.status);
 
   useEffect(() => {
     if (productStatus === 'idle') {
-      dispatch(fetchProducts());
+      dispatch(fetchTopRatedProducts());
     }
   }, [productStatus, dispatch]);
 

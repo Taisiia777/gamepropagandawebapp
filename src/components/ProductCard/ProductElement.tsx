@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ProductCard.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks.ts";
-import { fetchProducts } from "../../utils/productsSlice.ts";
+import { fetchTopRatedProducts } from "../../utils/productsSlice.ts";
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import PricingContainer from "../PricingContainer/PricingContainer.tsx";
@@ -42,16 +42,17 @@ const ProductElenent: React.FC<ProductElenentProps> = ({  id,
                                                          details,
                                                          description,
                                                        }) => {
-  const dispatch = useAppDispatch();
-    const products = useAppSelector((state) => state.products.items) as unknown as Product[];
-  const productStatus = useAppSelector((state) => state.products.status.fetchProducts);
-    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+    const dispatch = useAppDispatch();
+    const products = useAppSelector((state) => state.products.topRated) as unknown as Product[];
+    const productStatus = useAppSelector((state) => state.products.status.fetchTopRatedProducts);
+    // const productStatus = useAppSelector((state) => state.products.status);
 
-  useEffect(() => {
-    if (productStatus === 'idle') {
-      dispatch(fetchProducts());
-    }
-  }, [productStatus, dispatch]);
+    useEffect(() => {
+        if (productStatus === 'idle') {
+            dispatch(fetchTopRatedProducts());
+        }
+    }, [productStatus, dispatch]);
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   // Функция для добавления товара в корзину и сохранения в localStorage
   const addToCart = () => {
