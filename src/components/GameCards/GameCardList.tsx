@@ -60,12 +60,14 @@ const GameCardList: React.FC = () => {
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Прокручиваем страницу наверх с плавной анимацией
         if (selectedCategory) {
             dispatch(fetchProductsByCategory({ category: selectedCategory, page: newPage })); // Передаем категорию и страницу
         } else {
             dispatch(fetchProducts(newPage));
         }
     };
+
     const totalPages = Math.ceil(240 / 24); // Assume 240 products as an example
     const paginationRange = () => {
         const range = [];

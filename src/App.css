@@ -7,19 +7,7 @@
   background-color: #121212;
 
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    background-color: #121212;
-    color: #fff;
-  }
-  body{
-    background-color: #121212;
-    color: #fff;
-  }
-  a{
-    color: #fff;
-  }
-}
+
 
 .logo {
   height: 6em;
@@ -97,4 +85,28 @@
   animation: bounce 1.5s ease-out !important;
 }
 
+button, input {
+  border: none; /* Убираем обводки */
+  outline: none; /* Убираем стандартную подсветку */
+  background-color: transparent; /* Если нужно, убираем фон */
+  -webkit-tap-highlight-color: transparent; /* Убираем голубое выделение на мобильных устройствах */
+}
+
+button:focus, input:focus {
+  outline: none; /* Убираем фокус-подсветку */
+  box-shadow: none; /* Убираем любые тени, возникающие при фокусе */
+}
+
+button {
+  cursor: pointer; /* Указатель при наведении на кнопку */
+}
+
+button:hover {
+  text-decoration: none; /* Убираем любые декорации при наведении */
+}
+
+button:active, input:active {
+  outline: none; /* Убираем активное выделение */
+  -webkit-tap-highlight-color: transparent; /* Убираем голубое выделение при активном клике */
+}
 

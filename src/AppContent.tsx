@@ -49,16 +49,10 @@ const AppContent: React.FC = () => {
             if (location.pathname === '/') {
                 // Показываем кнопку "Закрыть" на главной странице
                 webApp.BackButton.hide(); // Скрываем кнопку "Назад"
-                webApp.MainButton.show(); // Показываем кнопку "Закрыть"
-                webApp.MainButton.setText("Закрыть");
 
-                // Закрываем WebApp при нажатии на кнопку "Закрыть"
-                webApp.MainButton.onClick(() => {
-                    webApp.close();
-                });
+
             } else {
-                // Показываем кнопку "Назад" на всех остальных страницах
-                webApp.MainButton.hide(); // Скрываем кнопку "Закрыть"
+
                 webApp.BackButton.show(); // Показываем кнопку "Назад"
                 webApp.BackButton.onClick(() => {
                     navigate(-1); // Переход назад при нажатии на кнопку "Назад"
@@ -67,7 +61,6 @@ const AppContent: React.FC = () => {
 
             return () => {
                 webApp.BackButton.offClick(); // Очищаем обработчик при размонтировании компонента
-                webApp.MainButton.offClick(); // Очищаем обработчик для кнопки "Закрыть"
             };
         }
     }, [location.pathname, navigate]); // До

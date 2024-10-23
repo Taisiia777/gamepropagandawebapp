@@ -74,15 +74,28 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+
+button, input {
+  border: none; /* Убираем обводки */
+  outline: none; /* Убираем стандартную подсветку */
+  background-color: transparent; /* Если нужно, убираем фон */
+  -webkit-tap-highlight-color: transparent; /* Убираем голубое выделение на мобильных устройствах */
+}
+
+button:focus, input:focus {
+  outline: none; /* Убираем фокус-подсветку */
+  box-shadow: none; /* Убираем любые тени, возникающие при фокусе */
+}
+
+button {
+  cursor: pointer; /* Указатель при наведении на кнопку */
+}
+
+button:hover {
+  text-decoration: none; /* Убираем любые декорации при наведении */
+}
+
+button:active, input:active {
+  outline: none; /* Убираем активное выделение */
+  -webkit-tap-highlight-color: transparent; /* Убираем голубое выделение при активном клике */
 }

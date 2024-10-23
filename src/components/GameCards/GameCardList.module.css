@@ -35,3 +35,16 @@
   width: 100%;
   justify-content: center;
 }
+.pagination {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.pagination button {
+  background-color: transparent; /* Убираем фон */
+  border: none; /* Убираем обводку */
+  color: white; /* Устанавливаем белый цвет текста */
+  cursor: pointer; /* Добавляем указатель при наведении */
+}

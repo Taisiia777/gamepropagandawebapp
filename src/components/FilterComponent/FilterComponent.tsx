@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./FilterComponent.module.css";
 import FilterSelect from "./FilterSelect";
@@ -16,6 +16,18 @@ const FilterComponent: React.FC = () => {
     const [isFilterVisible, setIsFilterVisible] = useState(true); // Управление видимостью фильтров
     console.log(selectedLanguage)
     console.log(selectedPlatform)
+    useEffect(() => {
+        if (isFilterVisible) {
+            document.body.style.overflow = 'hidden'; // Отключаем скроллинг
+        } else {
+            document.body.style.overflow = ''; // Восстанавливаем скроллинг
+        }
+
+        return () => {
+            document.body.style.overflow = ''; // Обязательно восстанавливаем скроллинг при размонтировании компонента
+        };
+    }, [isFilterVisible]);
+
     const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const platform = e.target.value;
         setSelectedPlatform(platform);
@@ -38,6 +50,8 @@ const FilterComponent: React.FC = () => {
         setMinPrice(1);
         setMaxPrice(15000);
         dispatch(resetFilters()); // Сброс всех фильтров
+        setIsFilterVisible(false); // Закрываем фильтр после применения
+
     };
 
     // Обработчик для закрытия фильтра при клике на оверлей
