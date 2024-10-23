@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice,
         <article className={`${styles.productCard} ${isLightTheme ? styles.lightTheme : ""}`}>
             <div onClick={handleLikeClick} style={{ cursor: "pointer" }}>
                 <img
-                    src={isLiked ? "img/unlike.svg" : "img/like.svg"}
+                    src={isLiked ? "/img/unlike.svg" : "/img/like.svg"}
                     alt={isLiked ? "Unlike" : "Like"}
                     className={styles.productLike}
                 />
@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, imageSrc, name, oldPrice,
             <Link to={`/item/${id}`} className={styles.productLink}>
 
                 {shouldShowSale && (
-                    <img src="img/sale.svg" alt="sale" className={styles.productSale}/>
+                    <img src="/img/sale.svg" alt="sale" className={styles.productSale}/>
 
                 )}
                 {shouldShowSale && (

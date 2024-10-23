@@ -11,13 +11,13 @@ interface MenuItemData {
 }
 
 const menuItems: MenuItemData[] = [
-    { icon: "img/home", text: "Главная", link: "/" },
-    { icon: "img/catalog", text: "Каталог", link: "/catalog" },
-    { icon: "img/account", text: "Аккаунт", link: "/account" },
-    { icon: "img/subscriptions", text: "Мои подписки", link: "/subscriptions" },
-    { icon: "img/orders", text: "Мои заказы", link: "/orders" },
-    { icon: "img/chat", text: "Поддержка 24/7", link: "/chat" },
-    { icon: "img/wishlist", text: "Мои вишлисты", link: "/wishlist" },
+    { icon: "/img/home", text: "Главная", link: "/" },
+    { icon: "/img/catalog", text: "Каталог", link: "/catalog" },
+    { icon: "/img/account", text: "Аккаунт", link: "/account" },
+    { icon: "/img/subscriptions", text: "Мои подписки", link: "/subscriptions" },
+    { icon: "/img/orders", text: "Мои заказы", link: "/orders" },
+    { icon: "/img/chat", text: "Поддержка 24/7", link: "/chat" },
+    { icon: "/img/wishlist", text: "Мои вишлисты", link: "/wishlist" },
 ];
 
 interface MenuComponentProps {
@@ -43,7 +43,7 @@ const MenuComponent: React.FC<MenuComponentProps> = ({ onClose }) => {
             <nav className={`${styles.menu} ${isClosing ? styles.closing : styles.opening}`}>
                 <div className={styles.menuBackground}>
                     <img
-                        src={location.pathname === "/" ? "img/close_black.svg" : "img/close_white.svg"}
+                        src={location.pathname === "/" ? "/img/close_black.svg" : "/img/close_white.svg"}
                         alt="Close menu"
                         className={styles.closeIcon}
                         onClick={handleClose}

@@ -34,6 +34,23 @@ interface CartItemType {
 
 const Cart: React.FC<CartProps> = ({ recommendations }) => {
     const [newCartItems, setNewCartItems] = useState<CartItemType[]>([]);
+    useEffect(() => {
+        const handleCartUpdate = () => {
+            const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+            setNewCartItems(savedCart);
+        };
+
+        // Подписываемся на событие обновления корзины
+        window.addEventListener("cartUpdated", handleCartUpdate);
+
+        // Загрузка корзины при первой отрисовке
+        handleCartUpdate();
+
+        // Очищаем подписку при размонтировании компонента
+        return () => {
+            window.removeEventListener("cartUpdated", handleCartUpdate);
+        };
+    }, []);
 
     // Загрузка данных из localStorage при первой отрисовке
     useEffect(() => {

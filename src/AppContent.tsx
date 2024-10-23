@@ -1,53 +1,4 @@
-// import React, { useEffect } from 'react';
-// import { Routes, Route, useNavigate } from 'react-router-dom';
-// import HomePage from './pages/HomePage';
-// import CartPage from './pages/CartPage';
-// import ItemPage from './pages/ItemPage';
-// import CatalogPage from './pages/CatalogPage';
-// import WishList from './pages/WishList';
-// import AccountPage from './pages/AccountPage';
-// import ReserveCodesPage from './pages/ReserveCodesPage';
-// import useScrollToTop from './hooks/useScrollToTop'; // Импортируем хук
-//
-// const AppContent: React.FC = () => {
-//     const navigate = useNavigate();
-//     useScrollToTop();
-//
-//     useEffect(() => {
-//         if (window.Telegram?.WebApp) {
-//             const webApp = window.Telegram.WebApp;
-//
-//             webApp.expand();
-//             webApp.ready();
-//             webApp.enableClosingConfirmation();
-//
-//             webApp.BackButton.show();
-//             webApp.BackButton.onClick(() => {
-//                 navigate(-1); // Переход назад при нажатии на кнопку
-//             });
-//
-//             return () => {
-//                 webApp.BackButton.offClick();
-//             };
-//         }
-//     }, [navigate]);
-//
-//     return (
-//         <div>
-//             <Routes>
-//                 <Route path="/" element={<HomePage />} />
-//                 <Route path="/cart" element={<CartPage />} />
-//                 <Route path="/item/:id" element={<ItemPage />} /> {/* Поддержка параметра id */}
-//                 <Route path="/catalog" element={<CatalogPage />} />
-//                 <Route path="/wishlist" element={<WishList />} />
-//                 <Route path="/account" element={<AccountPage />} />
-//                 <Route path="/codes" element={<ReserveCodesPage />} />
-//             </Routes>
-//         </div>
-//     );
-// };
-//
-// export default AppContent;
+
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -58,6 +9,7 @@ import CatalogPage from './pages/CatalogPage';
 import WishList from './pages/WishList';
 import AccountPage from './pages/AccountPage';
 import ReserveCodesPage from './pages/ReserveCodesPage';
+import SubscriptionPage from './pages/SubscriptionPage'; // Импортируем страницу подписок
 import useScrollToTop from './hooks/useScrollToTop'; // Хук для скролла на 0
 
 const AppContent: React.FC = () => {
@@ -67,6 +19,24 @@ const AppContent: React.FC = () => {
     // Вызов хука для скролла на 0
     useScrollToTop();
 
+    // useEffect(() => {
+    //     if (window.Telegram?.WebApp) {
+    //         const webApp = window.Telegram.WebApp;
+    //
+    //         webApp.expand();
+    //         webApp.ready();
+    //         webApp.enableClosingConfirmation();
+    //
+    //         webApp.BackButton.show();
+    //         webApp.BackButton.onClick(() => {
+    //             navigate(-1); // Переход назад при нажатии на кнопку
+    //         });
+    //
+    //         return () => {
+    //             webApp.BackButton.offClick();
+    //         };
+    //     }
+    // }, [navigate]);
     useEffect(() => {
         if (window.Telegram?.WebApp) {
             const webApp = window.Telegram.WebApp;
@@ -75,17 +45,32 @@ const AppContent: React.FC = () => {
             webApp.ready();
             webApp.enableClosingConfirmation();
 
-            webApp.BackButton.show();
-            webApp.BackButton.onClick(() => {
-                navigate(-1); // Переход назад при нажатии на кнопку
-            });
+            // Проверяем текущий маршрут
+            if (location.pathname === '/') {
+                // Показываем кнопку "Закрыть" на главной странице
+                webApp.BackButton.hide(); // Скрываем кнопку "Назад"
+                webApp.MainButton.show(); // Показываем кнопку "Закрыть"
+                webApp.MainButton.setText("Закрыть");
+
+                // Закрываем WebApp при нажатии на кнопку "Закрыть"
+                webApp.MainButton.onClick(() => {
+                    webApp.close();
+                });
+            } else {
+                // Показываем кнопку "Назад" на всех остальных страницах
+                webApp.MainButton.hide(); // Скрываем кнопку "Закрыть"
+                webApp.BackButton.show(); // Показываем кнопку "Назад"
+                webApp.BackButton.onClick(() => {
+                    navigate(-1); // Переход назад при нажатии на кнопку "Назад"
+                });
+            }
 
             return () => {
-                webApp.BackButton.offClick();
+                webApp.BackButton.offClick(); // Очищаем обработчик при размонтировании компонента
+                webApp.MainButton.offClick(); // Очищаем обработчик для кнопки "Закрыть"
             };
         }
-    }, [navigate]);
-
+    }, [location.pathname, navigate]); // До
     // Анимации появления/исчезновения
     const pageTransition = {
         initial: { opacity: 0, x: -10 }, // Меньшее смещение по оси X
@@ -112,6 +97,8 @@ const AppContent: React.FC = () => {
                     <Route path="/wishlist" element={<WishList />} />
                     <Route path="/account" element={<AccountPage />} />
                     <Route path="/codes" element={<ReserveCodesPage />} />
+                    <Route path="/subscriptions/:id" element={<SubscriptionPage />} />
+
                 </Routes>
             </motion.div>
         </AnimatePresence>

@@ -40,11 +40,12 @@ const HeaderComponent: React.FC = () => {
     return (
         <>
             <header className={`${styles.header} ${isSearchBarVisible ? styles.fixedHeader : ""}`}>
-                <div className={styles.logoContainer} onClick={toggleMenu}>
+                <div className={styles.logoContainer} >
                     <ImageComponent
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/6a87b4a0643c77122840625ae1ab5878767d34045d3b3595ebb1aa6f1bfe1e39?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c"
                         alt="Logo icon"
                         size="small"
+                        onClick={toggleMenu}
                     />
                     <Link to="/">
                         <ImageComponent

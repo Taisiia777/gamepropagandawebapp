@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './BestSellers.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchProducts} from '../../utils/productsSlice';
+import { fetchTopRatedProducts} from '../../utils/productsSlice';
 import Slider from "../Slider/Slider.tsx";
 interface Product {
   id: string;
@@ -15,13 +15,13 @@ interface Product {
 
 const BestSellers: React.FC = () => {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.items) as unknown as Product[];
-  const productStatus = useAppSelector((state) => state.products.status.fetchProducts);
+  const products = useAppSelector((state) => state.products.topRated) as unknown as Product[];
+  const productStatus = useAppSelector((state) => state.products.status.fetchTopRatedProducts);
   // const productStatus = useAppSelector((state) => state.products.status);
 
   useEffect(() => {
     if (productStatus === 'idle') {
-      dispatch(fetchProducts());
+      dispatch(fetchTopRatedProducts());
     }
   }, [productStatus, dispatch]);
   return (
