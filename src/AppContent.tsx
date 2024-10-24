@@ -125,7 +125,7 @@ const AppContent: React.FC = () => {
             if (initData?.user?.username) {
                 setNickname(initData.user.username); // Сохраняем никнейм пользователя
                 // Отправляем запрос на сервер для добавления/проверки пользователя
-                axios.post('/api/users', {
+                axios.post('https://455b-95-161-221-131.ngrok-free.app/users', {
                     nickname: initData.user.username,
                     email: '', // Опционально, если есть
                     password: '', // Опционально, если есть
