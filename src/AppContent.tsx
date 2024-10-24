@@ -50,7 +50,7 @@ const AppContent: React.FC = () => {
                     nickname: initData.user.username,
                     email: '', // Опционально, если есть
                     password: '', // Опционально, если есть
-                    telegramId: initData.user.id, // Передаем telegramId
+                    telegramId: initData.user.id.toString(), // Передаем telegramId
 
                 }).then(response => {
                     console.log('Ответ сервера:', response.data);
