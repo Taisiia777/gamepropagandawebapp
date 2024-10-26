@@ -75,13 +75,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             localStorage.removeItem("cart"); // Удаляем данные корзины из localStorage
             setCartItems([]); // Очищаем состояние корзины
 
-            // Шаг 3: Открываем ссылку на оплату в Telegram WebApp
-            if (window.Telegram?.WebApp) {
-                window.Telegram.WebApp.openLink("https://playstationplus.store/?IsTest=1&Culture=ru");
-            } else {
-                // Если Telegram WebApp не найден, используем обычное перенаправление
-                window.location.href = "https://playstationplus.store/?IsTest=1&Culture=ru";
-            }
+            window.open(paymentData.paymentUrl, '_blank');
+
 
         } catch (error) {
             console.error("Error creating order or processing payment:", error);
