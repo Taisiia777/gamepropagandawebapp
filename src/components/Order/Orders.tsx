@@ -88,7 +88,7 @@ export const Orders: React.FC = () => {
         const fetchUserId = async () => {
             try {
                 if (telegramId) {
-                    const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/by-telegram/${telegramId}`, {
+                    const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/telegram/${telegramId}`, {
                         headers: {
                             'ngrok-skip-browser-warning': '1',
                         },
