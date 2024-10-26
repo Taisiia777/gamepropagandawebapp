@@ -1,38 +1,46 @@
-// import React from 'react';
+//
+// import React, { useEffect, useState } from 'react';
 // import styles from './Orders.module.css';
 // import { OrderCard } from './OrderCard';
-// import { OrderItem } from '../../types/Product.ts';
-//
-// const orders: OrderItem[] = [
-//     {
-//         type: 'DLC',
-//         title: 'Metro 2033 История Сэма',
-//         expiryDate: 'Дата окончания: 07.06.2024',
-//         price: '1 390 руб.',
-//         canClaim: true
-//     },
-//     {
-//         type: 'Комплект',
-//         title: 'Комплект «Grand Theft Auto V: Premium Edition и платежная карта «Мегалодон»',
-//         expiryDate: 'Дата окончания: 07.06.2024',
-//         price: '8 290 руб.',
-//         canClaim: true
-//     },
-//     {
-//         type: 'Игра',
-//         title: 'Atelier Sophie 2: The Alchemist of the Mysterious Dream Digital Deluxe Edition',
-//         expiryDate: 'Дата окончания: 07.06.2024',
-//         price: '6 990 руб.'
-//     },
-//     {
-//         type: 'Пополнение',
-//         title: 'GTA Online: Megalodon Shark Cash Card (PS4™)',
-//         expiryDate: 'Дата окончания: 07.06.2024',
-//         price: '6 390 руб.'
-//     }
-// ];
-//
+// import { useAppSelector } from '../../hooks/hooks.ts'; // Хук для извлечения userId из Redux
+// import { OrderItem } from '../../types/Product'; // Тип для заказа
+// import {RootState} from "../../store.ts";
 // export const Orders: React.FC = () => {
+//     const userId = useAppSelector((state: RootState) => state.user.telegramId); // Получаем userId из userSlice
+//     const [orders, setOrders] = useState<OrderItem[]>([]); // Состояние для заказов
+//     const [loading, setLoading] = useState<boolean>(true); // Состояние загрузки
+//
+//     useEffect(() => {
+//         const fetchOrders = async () => {
+//             try {
+//                 if (userId) {
+//                     const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}/orders`, {
+//                         headers: {
+//                             'ngrok-skip-browser-warning': '1',
+//                         },
+//                     });
+//
+//                     if (response.ok) {
+//                         const data = await response.json();
+//                         setOrders(data); // Обновляем заказы в состоянии
+//                     } else {
+//                         console.error('Ошибка при получении заказов');
+//                     }
+//                 }
+//             } catch (error) {
+//                 console.error('Ошибка при запросе заказов:', error);
+//             } finally {
+//                 setLoading(false); // Завершаем загрузку
+//             }
+//         };
+//
+//         fetchOrders();
+//     }, [userId]);
+//
+//     if (loading) {
+//         return <p>Загрузка заказов...</p>;
+//     }
+//
 //     return (
 //         <main className={styles.container}>
 //             <h1 className={styles.title}>Мои заказы</h1>
@@ -48,12 +56,16 @@
 //             </div>
 //
 //             <section className={styles.ordersList}>
-//                 {orders.map((order, index) => (
-//                     <React.Fragment key={index}>
-//                         <OrderCard order={order} />
-//                         {index < orders.length - 1 && <hr className={styles.divider} />}
-//                     </React.Fragment>
-//                 ))}
+//                 {orders.length > 0 ? (
+//                     orders.map((order, index) => (
+//                         <React.Fragment key={index}>
+//                             <OrderCard order={order} />
+//                             {index < orders.length - 1 && <hr className={styles.divider} />}
+//                         </React.Fragment>
+//                     ))
+//                 ) : (
+//                     <p>У вас пока нет заказов.</p>
+//                 )}
 //             </section>
 //         </main>
 //     );
@@ -63,12 +75,41 @@ import styles from './Orders.module.css';
 import { OrderCard } from './OrderCard';
 import { useAppSelector } from '../../hooks/hooks.ts'; // Хук для извлечения userId из Redux
 import { OrderItem } from '../../types/Product'; // Тип для заказа
-import {RootState} from "../../store.ts";
+import { RootState } from "../../store.ts";
+
 export const Orders: React.FC = () => {
-    const userId = useAppSelector((state: RootState) => state.user.telegramId); // Получаем userId из userSlice
+    const telegramId = useAppSelector((state: RootState) => state.user.telegramId); // Получаем telegramId из userSlice
     const [orders, setOrders] = useState<OrderItem[]>([]); // Состояние для заказов
     const [loading, setLoading] = useState<boolean>(true); // Состояние загрузки
+    const [userId, setUserId] = useState<string | null>(null); // Состояние для хранения userId из базы данных
 
+    // Функция для получения userId из базы данных по telegramId
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                if (telegramId) {
+                    const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/by-telegram/${telegramId}`, {
+                        headers: {
+                            'ngrok-skip-browser-warning': '1',
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUserId(data.id); // Сохраняем userId из ответа
+                    } else {
+                        console.error('Ошибка при получении userId');
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка при запросе userId:', error);
+            }
+        };
+
+        fetchUserId();
+    }, [telegramId]);
+
+    // Функция для получения заказов по userId
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -93,7 +134,9 @@ export const Orders: React.FC = () => {
             }
         };
 
-        fetchOrders();
+        if (userId) {
+            fetchOrders();
+        }
     }, [userId]);
 
     if (loading) {

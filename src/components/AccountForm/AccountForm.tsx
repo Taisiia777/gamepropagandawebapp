@@ -22,7 +22,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
             if (!telegramId) return; // Если telegramId нет, не делаем запрос
 
             try {
-                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${telegramId}`, {
+                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/telegram/${telegramId}`, {
                     headers: {
                         'ngrok-skip-browser-warning': '1',
                     },
