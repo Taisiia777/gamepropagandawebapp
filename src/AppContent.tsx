@@ -159,6 +159,7 @@ const AppContent: React.FC = () => {
                         if (userData) {
                             // Пользователь существует, заполняем все данные в userSlice
                             dispatch(setUser({
+                                userId: userData.id,
                                 telegramId: userData.telegramId,
                                 nickname: userData.nickname,
                                 email: userData.email,
@@ -180,6 +181,7 @@ const AppContent: React.FC = () => {
                                 console.log('Новый пользователь создан:', response.data);
                                 // Обновляем userSlice с никнеймом и telegramId
                                 dispatch(setUser({
+                                    userId: '',
                                     telegramId: response.data.telegramId,
                                     nickname: response.data.nickname,
                                     email: '',
