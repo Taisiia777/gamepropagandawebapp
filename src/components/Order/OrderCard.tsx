@@ -36,11 +36,11 @@ interface Item {
 interface OrderCardProps {
     orderId: number;
     totalAmount: number;
-    items: Item[];
+    items?: Item[]; // Обозначаем items как необязательный параметр
     createdAt: string;
 }
 
-export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, items, createdAt }) => {
+export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, items = [], createdAt }) => {
     return (
         <article className={styles.orderCard}>
             <h3 className={styles.orderTitle}>Заказ №{orderId}</h3>
@@ -49,18 +49,22 @@ export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, item
 
             <div className={styles.orderItems}>
                 <h4>Товары в заказе:</h4>
-                <ul>
-                    {items.map((item) => (
-                        <li key={item.id} className={styles.orderItem}>
-                            <img src={item.imageSrc} alt={item.name} className={styles.itemImage} />
-                            <div>
-                                <p className={styles.itemName}>{item.name}</p>
-                                <p className={styles.itemQuantity}>Количество: {item.quantity}</p>
-                                <p className={styles.itemPrice}>Цена: {item.newPrice} руб.</p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {items.length > 0 ? (
+                    <ul>
+                        {items.map((item) => (
+                            <li key={item.id} className={styles.orderItem}>
+                                <img src={item.imageSrc} alt={item.name} className={styles.itemImage} />
+                                <div>
+                                    <p className={styles.itemName}>{item.name}</p>
+                                    <p className={styles.itemQuantity}>Количество: {item.quantity}</p>
+                                    <p className={styles.itemPrice}>Цена: {item.newPrice} руб.</p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Нет товаров в заказе</p>
+                )}
             </div>
         </article>
     );
