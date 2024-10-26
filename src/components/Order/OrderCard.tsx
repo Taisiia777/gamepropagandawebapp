@@ -50,18 +50,17 @@ export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, item
             <div className={styles.orderItems}>
                 <h4>Товары в заказе:</h4>
                 {items.length > 0 ? (
-                    <ul>
+                    <div>
                         {items.map((item) => (
-                            <li key={item.id} className={styles.orderItem}>
-                                <img src={item.imageSrc} alt={item.name} className={styles.itemImage} />
+                            <div key={item.id} className={styles.orderItem}>
                                 <div>
                                     <p className={styles.itemName}>{item.name}</p>
                                     <p className={styles.itemQuantity}>Количество: {item.quantity}</p>
                                     <p className={styles.itemPrice}>Цена: {item.newPrice} руб.</p>
                                 </div>
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 ) : (
                     <p>Нет товаров в заказе</p>
                 )}

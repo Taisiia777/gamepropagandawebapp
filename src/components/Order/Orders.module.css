@@ -105,3 +105,6 @@
     margin: 18px 0 20px;
     width: 100%;
 }
+.orderDate, .orderTotal, .orderItems h4, .itemName, .itemQuantity, .itemPrice {
+    text-align: left; /* Выровнять текст */
+}
