@@ -75,7 +75,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             localStorage.removeItem("cart"); // Удаляем данные корзины из localStorage
             setCartItems([]); // Очищаем состояние корзины
 
-            window.open(paymentData.paymentUrl, '_blank');
+            window.location.href = paymentData.paymentUrl;
 
 
         } catch (error) {
