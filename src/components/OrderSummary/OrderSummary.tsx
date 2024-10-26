@@ -75,8 +75,13 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             localStorage.removeItem("cart"); // Удаляем данные корзины из localStorage
             setCartItems([]); // Очищаем состояние корзины
 
-            // Шаг 3: Перенаправляем пользователя на страницу оплаты
-            window.location.href = paymentData.paymentUrl;
+            // Шаг 3: Открываем ссылку на оплату в Telegram WebApp
+            if (window.Telegram?.WebApp) {
+                window.Telegram.WebApp.openLink(paymentData.paymentUrl);
+            } else {
+                // Если Telegram WebApp не найден, используем обычное перенаправление
+                window.location.href = paymentData.paymentUrl;
+            }
 
         } catch (error) {
             console.error("Error creating order or processing payment:", error);

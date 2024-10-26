@@ -18,6 +18,8 @@ interface TelegramWebApp {
         offClick(callback?: () => void): void;
     };
     enableClosingConfirmation(): void;
+    openLink(url: string): void; // Добавляем метод openLink
+
 }
 
 interface Window {
