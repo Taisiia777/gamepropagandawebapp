@@ -36,11 +36,11 @@ interface Item {
 interface OrderCardProps {
     orderId: number;
     totalAmount: number;
-    items?: Item[]; // Обозначаем items как необязательный параметр
+    items: Item[]; // Обязательно передаем массив товаров
     createdAt: string;
 }
 
-export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, items = [], createdAt }) => {
+export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, items, createdAt }) => {
     return (
         <article className={styles.orderCard}>
             <h3 className={styles.orderTitle}>Заказ №{orderId}</h3>
