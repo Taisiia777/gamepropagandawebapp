@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './WishlistComponent.module.css';
 import ProductItem from './ProductItem';
 import MainComponent from "../MainComponent/MainComponent.tsx";
+import { useAppSelector } from '../../hooks/hooks.ts'; // Импортируем хук
+import { RootState } from '../../store.ts'; // Импортируем тип состояния
 interface WishlistComponentProps {
     searchIconSrc: string;
     sortIconSrc: string;
@@ -23,6 +25,7 @@ const WishlistComponent: React.FC<WishlistComponentProps> = ({
                                                                  sortIconSrc,
                                                              }) => {
     const [products, setProducts] = useState<Product[]>([]);
+    const userId = useAppSelector((state: RootState) => state.user.telegramId);
 
 
     useEffect(() => {
@@ -60,7 +63,7 @@ const WishlistComponent: React.FC<WishlistComponentProps> = ({
                 <ul className={styles.productList}>
                     {products.map((product) => (
                         <li style={{maxWidth: "312px"}} key={product.id}>
-                            <ProductItem {...product} onRemove={handleRemove}/>
+                            <ProductItem {...product} onRemove={handleRemove} userId={userId ? userId.toString() : "0" }/>
                         </li>
                     ))}
                 </ul>

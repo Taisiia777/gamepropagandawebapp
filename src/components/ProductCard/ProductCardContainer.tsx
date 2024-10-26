@@ -1,7 +1,8 @@
 
 import React from "react";
 import ProductElement from "./ProductElement";
-
+import { useAppSelector } from "../../hooks/hooks.ts"; // Импортируем хук для работы с Redux
+import {RootState} from "../../store.ts";
 interface ProductDetails {
   label: string;
   value: string;
@@ -22,6 +23,8 @@ interface ProductCardContainerProps {
 }
 
 const ProductCardContainer: React.FC<ProductCardContainerProps> = ({ product }) => {
+  const userId = useAppSelector((state: RootState) => state.user.telegramId);
+
   const displayPrice = product.price !== null ? `${product.price} ${product.currency}` : "Бесплатно";
 
   return (
@@ -33,6 +36,7 @@ const ProductCardContainer: React.FC<ProductCardContainerProps> = ({ product }) 
           description={product.description}
           currency={product.currency}
           id={product.id}
+          userId={userId ? userId.toString() : '0'}  // Если userId null, передаем '0' как дефолтное значение
       />
   );
 };

@@ -1,9 +1,9 @@
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Добавляем useNavigate для перехода
 import styles from './BestSellers.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchTopRatedProducts} from '../../utils/productsSlice';
+import { fetchTopRatedProducts, resetFilters } from '../../utils/productsSlice'; // Импортируем resetFilters
 import Slider from "../Slider/Slider.tsx";
 interface Product {
   id: string;
@@ -15,7 +15,9 @@ interface Product {
 
 const BestSellers: React.FC = () => {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.topRated) as unknown as Product[];
+    const navigate = useNavigate(); // Для перехода на страницу каталога
+
+    const products = useAppSelector((state) => state.products.topRated) as unknown as Product[];
   const productStatus = useAppSelector((state) => state.products.status.fetchTopRatedProducts);
   // const productStatus = useAppSelector((state) => state.products.status);
 
@@ -24,19 +26,27 @@ const BestSellers: React.FC = () => {
       dispatch(fetchTopRatedProducts());
     }
   }, [productStatus, dispatch]);
+    // Обработчик клика на кнопку "Смотреть весь каталог"
+    const handleViewCatalogClick = () => {
+        dispatch(resetFilters()); // Сбрасываем фильтры
+        navigate('/catalog'); // Перенаправляем на страницу каталога
+    };
   return (
       <section className={styles.bestSellers}>
-        <div className={styles.container}>
-          <h2 className={styles.title}>Лидеры продаж</h2>
-          {products.length > 0 ? (
-              <Slider products={products} />
-          ) : (
-              <p>Загружаем товары...</p>
-          )}
-            <Link to="/catalog">
-                       <button className={styles.catalogButton}>Смотреть весь каталог</button>
-                    </Link>
-        </div>
+          <div className={styles.container}>
+              <h2 className={styles.title}>Лидеры продаж</h2>
+              {products.length > 0 ? (
+                  <Slider products={products}/>
+              ) : (
+                  <p>Загружаем товары...</p>
+              )}
+              {/*<Link to="/catalog">*/}
+              {/*           <button className={styles.catalogButton}>Смотреть весь каталог</button>*/}
+              {/*        </Link>*/}
+              <button className={styles.catalogButton} onClick={handleViewCatalogClick}>
+                  Смотреть весь каталог
+              </button>
+          </div>
       </section>
   );
 };

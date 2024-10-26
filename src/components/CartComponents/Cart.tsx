@@ -7,7 +7,8 @@ import "swiper/css/autoplay";
 import styles from "./Cart.module.css";
 import CartItem from "./CartItem";
 import RecommendationItem from "./RecommendationItem";
-
+import { useAppSelector } from '../../hooks/hooks.ts'; // Импортируем хук
+import { RootState } from '../../store.ts'; // Импортируем тип состояния
 interface CartProps {
     cartItems?: Array<{
         id: string;
@@ -34,6 +35,8 @@ interface CartItemType {
 
 const Cart: React.FC<CartProps> = ({ recommendations }) => {
     const [newCartItems, setNewCartItems] = useState<CartItemType[]>([]);
+    const userId = useAppSelector((state: RootState) => state.user.telegramId);
+
     useEffect(() => {
         const handleCartUpdate = () => {
             const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -67,15 +70,14 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
 
     const calculateTotal = () => {
         return newCartItems.reduce((total, item) => {
-            // Преобразуем цену в строку и удаляем "₽", если она есть, затем пытаемся привести к числу
             const itemPrice = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("Р", "").trim());
             return total + (isNaN(itemPrice) ? 0 : itemPrice);
         }, 0);
     };
 
-
     const totalAmount = calculateTotal();
-    console.log(JSON.stringify(recommendations));
+    const minimumOrderAmount = 400; // Минимальная сумма заказа
+
     return (
         <main className={styles.cartContainer}>
             <header className={styles.cartHeader}>
@@ -94,22 +96,29 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
                 <p className={styles.emptyCartMessage}>Ваша корзина пуста.</p>
             )}
             <div className={styles.divider} />
-            <h2 className={styles.recommendationsTitle}>Лидеры продаж</h2>
-            <Swiper
-                modules={[Autoplay]}
-                spaceBetween={30}
-                slidesPerView={'auto'}
-                centeredSlides={false}
-                loop={true}
-                autoplay={{ delay: 2500, disableOnInteraction: false }}
-                className={styles.swiperContainer}
-            >
-                {recommendations.map((item) => (
-                    <SwiperSlide key={item.id} className={styles.slide}>
-                        <RecommendationItem {...item} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+
+            {totalAmount >= minimumOrderAmount && (
+                <>
+                    <h2 className={styles.recommendationsTitle}>Лидеры продаж</h2>
+                    <Swiper
+                        modules={[Autoplay]}
+                        spaceBetween={30}
+                        slidesPerView={'auto'}
+                        centeredSlides={false}
+                        loop={true}
+                        autoplay={{ delay: 2500, disableOnInteraction: false }}
+                        className={styles.swiperContainer}
+                    >
+                        {recommendations.map((item) => (
+                            <SwiperSlide key={item.id} className={styles.slide}>
+                                <RecommendationItem {...item} userId={userId ? userId.toString() : "0"} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </>
+            )}
+
+
         </main>
     );
 };

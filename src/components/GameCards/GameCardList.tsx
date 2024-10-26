@@ -1,23 +1,38 @@
 import React, { useEffect, useState} from "react";
 import CategoryList from "../CatalogComponents/CategoryList.tsx";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchProducts, searchProductsByName, fetchProductsByCategory } from "../../utils/productsSlice.ts";
+import { fetchProducts, searchProductsByName, fetchProductsByCategory, resetFilters  } from "../../utils/productsSlice.ts";
 import ProductCard from "../BestSellers/ProductCard";
 import SearchBar from "../CatalogComponents/SearchBar.tsx";
 import styles from "./GameCardList.module.css";
+import { useLocation } from 'react-router-dom';
 
 const GameCardList: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>(""); // Новое состояние для выбранной категории
+    // const [selectedCategory, setSelectedCategory] = useState<string>(""); // Новое состояние для выбранной категории
+    const location = useLocation();
+    const initialCategory = location.state?.activeCategory || ""; // Получаем активную категорию из состояния или пустую строку по умолчанию
+    const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory); // Устанавливаем начальную категорию
 
-
+    // const handleCategoryClick = (category: string) => {
+    //     setCurrentPage(1);
+    //     setVisibleProducts(24);
+    //     setHasMore(true);
+    //     setSelectedCategory(category); // Устанавливаем выбранную категорию
+    //     dispatch(fetchProductsByCategory({ category })); // Передаем только категорию, без страницы (будет использована страница по умолчанию)
+    // };
     const handleCategoryClick = (category: string) => {
         setCurrentPage(1);
         setVisibleProducts(24);
         setHasMore(true);
-        setSelectedCategory(category); // Устанавливаем выбранную категорию
-        dispatch(fetchProductsByCategory({ category })); // Передаем только категорию, без страницы (будет использована страница по умолчанию)
-    };
 
+        if (category === "") {
+            // Если категория пустая, сбрасываем все фильтры
+            dispatch(resetFilters());
+        } else {
+            setSelectedCategory(category);
+            dispatch(fetchProductsByCategory({ category }));
+        }
+    };
 
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => {
@@ -32,7 +47,13 @@ const GameCardList: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [hasMore, setHasMore] = useState<boolean>(true);
     console.log(hasMore)
-
+    useEffect(() => {
+        if (initialCategory) {
+            dispatch(fetchProductsByCategory({ category: initialCategory }));
+        } else {
+            dispatch(fetchProducts(currentPage));
+        }
+    }, [initialCategory, dispatch]);
     useEffect(() => {
         if (productStatus === "idle") {
             if (selectedCategory) {

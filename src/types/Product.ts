@@ -21,3 +21,10 @@ export interface Product {
     spoken_languages: string[];   // Разговорные языки
     screen_languages: string[];   // Языки интерфейса (субтитры)
 }
+export interface OrderItem {
+    type: 'DLC' | 'Комплект' | 'Игра' | 'Пополнение';
+    title: string;
+    expiryDate: string;
+    price: string;
+    canClaim?: boolean;
+}

@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import MainComponent from "../components/MainComponent/MainComponent";
 import Cart from "../components/CartComponents/Cart";
 import OrderForm from "../components/OrderForm/OrderForm";
-import OrderSummary from "../components/OrderSummary/OrderSummary";
+import OrderSummary from "../components/OrderSummary/OrderSummary"; // Добавляем сюда OrderSummary
 import { useAppDispatch, useAppSelector } from "../hooks/hooks.ts";
-import { fetchTopRatedProducts} from "../utils/productsSlice.ts";
+import { fetchTopRatedProducts } from "../utils/productsSlice.ts";
+import {MinimumOrder} from "../components/MinimumOrder/MinimumOrder.tsx";
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -16,10 +18,17 @@ interface Product {
 }
 
 function CartPage() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.topRated) as unknown as Product[];
   const productStatus = useAppSelector((state) => state.products.status.fetchTopRatedProducts);
-  // const productStatus = useAppSelector((state) => state.products.status);
+  const minimumOrderAmount = 400; // Минимальная сумма заказа
+  const privacyPolicyUrl = "/privacy-policy"; // URL политики конфиденциальности
+  const userId = useAppSelector((state) => state.user.telegramId); // Извлекаем идентификатор пользователя из userSlice
+
+  const handleCatalogClick = () => {
+    navigate("/catalog");
+  };
 
   useEffect(() => {
     if (productStatus === 'idle') {
@@ -35,10 +44,8 @@ function CartPage() {
     imageUrl: string;
   }>>([]);
 
-  // Функция для извлечения ссылки на изображение
   const extractImageUrl = (media: string | Array<{ Uri: string }>): string => {
     try {
-      // Если media - это строка, попробуем её распарсить
       if (typeof media === 'string') {
         const parsedMedia = JSON.parse(media);
         const imageMedia = parsedMedia.find((item: { type: string }) => item.type === 'IMAGE');
@@ -46,19 +53,18 @@ function CartPage() {
           return imageMedia.url;
         }
       } else if (Array.isArray(media)) {
-        return `https:${media[0]?.Uri}`; // Если это массив, берем первый Uri и добавляем https
+        return `https:${media[0]?.Uri}`;
       }
     } catch (error) {
       console.error('Ошибка при парсинге media:', error);
     }
-    return 'img/default.png'; // Если нет картинки, возвращаем изображение по умолчанию
+    return 'img/default.png';
   };
 
-  // Преобразуем `products` в нужный формат для рекомендаций
   const recommendations = products.map((product: any) => ({
     id: product.id,
-    price: product.discounted_price || product.base_price, // Выбираем цену или значение по умолчанию
-    imageSrc: extractImageUrl(product.media), // Преобразуем media в ссылку на изображение
+    price: product.discounted_price || product.base_price,
+    imageSrc: extractImageUrl(product.media),
     name: product.name,
   }));
 
@@ -78,11 +84,26 @@ function CartPage() {
   const currency = "Р";
 
   return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <MainComponent />
         <Cart cartItems={cartItems} recommendations={recommendations} />
-        <OrderForm />
-        <OrderSummary totalAmount={totalAmount} currency={currency} />
+        {totalAmount < minimumOrderAmount ? (
+            <MinimumOrder
+                minimumAmount={minimumOrderAmount}
+                onCatalogClick={handleCatalogClick}
+                privacyPolicyUrl={privacyPolicyUrl}
+            />
+        ) : (
+            <>
+              <OrderForm />
+              <OrderSummary
+                  totalAmount={totalAmount}
+                  currency={currency}
+                  cartItems={cartItems} // Передаем товары в OrderSummary
+                  userId={userId ? userId : "0"} // Если userId null, передаем '0' как дефолтное значение
+              />
+            </>
+        )}
       </div>
   );
 }

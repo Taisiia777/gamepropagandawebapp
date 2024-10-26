@@ -93,3 +93,22 @@
     white-space: nowrap;
     border: 0;
 }
+.submitButton {
+    margin-top: 20px;
+    background-color: #d1ff00; /* Яркий желто-зеленый цвет */
+    color: #000; /* Черный текст */
+    padding: 10px 20px; /* Пространство внутри кнопки */
+    font-size: 16px; /* Размер текста */
+    border: none; /* Убираем границы */
+    border-radius: 30px; /* Закругляем края */
+    cursor: pointer; /* Указываем, что это кнопка */
+    display: inline-block;
+    width: 100%; /* Кнопка занимает всю ширину */
+    max-width: 320px;
+    text-align: center; /* Центрируем текст */
+    transition: background-color 0.3s ease; /* Добавляем анимацию изменения цвета */
+}
+
+.submitButton:hover {
+    background-color: #b2e600; /* Немного темнее при наведении */
+}

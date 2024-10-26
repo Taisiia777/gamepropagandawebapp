@@ -1,21 +1,101 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styles from './AccountForm.module.css';
-import {Link} from "react-router-dom";
+import { RootState } from '../../store'; // Импорт типа RootState для работы с Redux
 
-interface AccountFormProps {}
-
+interface AccountFormProps {
+    email?: string;
+    password?: string;
+}
 const AccountForm: React.FC<AccountFormProps> = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isFormDisabled, setIsFormDisabled] = useState(false); // Для блокировки формы
+
+    // Получаем telegramId из глобального состояния (userSlice)
+    const telegramId = useSelector((state: RootState) => state.user.telegramId);
+
+    // Функция для получения данных пользователя
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!telegramId) return; // Если telegramId нет, не делаем запрос
+
+            try {
+                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${telegramId}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': '1',
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.email || data.password) {
+                        setEmail(data.email || ''); // Если почта есть, заполняем инпут
+                        setPassword(data.password || ''); // Если пароль есть, заполняем инпут
+                        setIsFormDisabled(true); // Делаем инпуты и кнопку неактивными
+                    }
+                } else {
+                    console.error('Failed to fetch user data');
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
+    }, [telegramId]);
+
+    // Функция для отправки данных на сервер
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault(); // Останавливаем стандартное поведение формы
+
+        if (isFormDisabled) return; // Если форма заблокирована, отменяем отправку
+
+        try {
+            // Отправляем email и пароль на бэкенд
+            const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${telegramId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': '1',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit account details');
+            }
+
+            const data = await response.json();
+            console.log('Account details submitted successfully:', data);
+
+            // Очистка формы после успешной отправки
+            setEmail('');
+            setPassword('');
+        } catch (error) {
+            console.error('Error submitting account details:', error);
+        }
+    };
+
     return (
         <section className={styles.container}>
             <h1 className={styles.title}>Аккаунт</h1>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <label htmlFor="email" className={styles['visually-hidden']}>E-mail</label>
                 <input
                     type="email"
                     id="email"
                     className={styles.input}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} // Обновляем состояние при изменении поля
                     placeholder="Введите e-mail"
                     aria-label="Введите e-mail"
+                    required
+                    disabled={isFormDisabled} // Отключаем инпут, если форма заблокирована
                 />
 
                 <label htmlFor="password" className={styles['visually-hidden']}>Пароль</label>
@@ -23,37 +103,19 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                     type="password"
                     id="password"
                     className={styles.input}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} // Обновляем состояние при изменении поля
                     placeholder="Введите пароль"
                     aria-label="Введите пароль"
+                    required
+                    disabled={isFormDisabled} // Отключаем инпут, если форма заблокирована
                 />
 
-                {/*<div className={styles.checkboxContainer}>*/}
-                {/*    <input*/}
-                {/*        type="checkbox"*/}
-                {/*        id="sameEmail"*/}
-                {/*        className={styles.checkbox}*/}
-                {/*    />*/}
-                {/*    <label htmlFor="sameEmail" className={styles.checkboxLabel}>*/}
-                {/*        E-mail для чека такой же, как логин*/}
-                {/*    </label>*/}
-                {/*</div>*/}
-
-                {/*<label htmlFor="receiptEmail" className={styles['visually-hidden']}>E-mail для чека</label>*/}
-                {/*<input*/}
-                {/*    type="email"*/}
-                {/*    id="receiptEmail"*/}
-                {/*    className={styles.input}*/}
-                {/*    placeholder="Введите e-mail для чека"*/}
-                {/*    aria-label="Введите e-mail для чека"*/}
-                {/*/>*/}
-
-                {/*<p className={styles.verificationMessage} style={{ color: "rgba(231,231,231,0.3)" }}>*/}
-                {/*    Подтверди свою электронную почту. Не получил письмо?{" "}*/}
-                {/*    <span style={{ color: "rgba(231,231,231,1)" }}>Отправить снова</span>*/}
-                {/*</p>*/}
+                <button type="submit" className={styles.submitButton} disabled={isFormDisabled}>
+                    Сохранить
+                </button>
             </form>
 
-            {/*<hr className={styles.divider} />*/}
             <Link to="/codes">
                 <div className={styles.backupCodesContainer}>
                     <img
@@ -61,10 +123,9 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                         alt="Backup codes icon"
                         className={styles.backupCodesIcon}
                     />
-                    <span style={{color: "#fff"}}>Резервные коды</span>
+                    <span style={{ color: "#fff" }}>Резервные коды</span>
                 </div>
             </Link>
-
         </section>
     );
 };

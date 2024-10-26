@@ -8,7 +8,7 @@
     flex-direction: column;
     color: #e7e7e7;
     font: 400 16px/2 Onest, sans-serif;
-    z-index: 100;
+    z-index: 103;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
@@ -122,16 +122,13 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
-    z-index: 1000; /* Перекрывает всё */
+    z-index: 102; /* Перекрывает всё */
     display: flex;
     justify-content: start;
     align-items: center;
 }
 
-.menu {
-    position: relative;
-    z-index: 1001; /* Поверх оверлея */
-}
+
 
 .closing {
     transform: translateX(-100%);
