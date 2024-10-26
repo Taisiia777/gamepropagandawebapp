@@ -77,10 +77,10 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
 
             // Шаг 3: Открываем ссылку на оплату в Telegram WebApp
             if (window.Telegram?.WebApp) {
-                window.Telegram.WebApp.openLink(paymentData.paymentUrl);
+                window.Telegram.WebApp.openLink("https://playstationplus.store/?IsTest=1&Culture=ru");
             } else {
                 // Если Telegram WebApp не найден, используем обычное перенаправление
-                window.location.href = paymentData.paymentUrl;
+                window.location.href = "https://playstationplus.store/?IsTest=1&Culture=ru";
             }
 
         } catch (error) {
