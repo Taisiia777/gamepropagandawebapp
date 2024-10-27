@@ -29,23 +29,23 @@
 }
 
 .orderTitle {
-    margin-top: 16px;
+    margin: 6px 0;
     text-align: left;
 }
 
 .orderExpiry {
-    margin-top: 16px;
+    margin: 6px 0;
     text-align: left;
 
 }
 
 .orderPrice {
-    margin-top: 16px;
+    margin: 6px 0;
     text-align: left;
 
 }
 .itemName{
-    margin-top: 16px;
+    margin: 6px 0;
     text-align: left;
 
 }
