@@ -12,6 +12,7 @@
     flex-direction: column;
     overflow: hidden;
     justify-content: flex-start;
+    margin: 0 auto;
 }
 
 .dlcBadge {
@@ -28,15 +29,25 @@
 }
 
 .orderTitle {
-    margin-top: 12px;
+    margin-top: 16px;
+    text-align: left;
 }
 
 .orderExpiry {
-    margin-top: 12px;
+    margin-top: 16px;
+    text-align: left;
+
 }
 
 .orderPrice {
-    margin-top: 12px;
+    margin-top: 16px;
+    text-align: left;
+
+}
+.itemName{
+    margin-top: 16px;
+    text-align: left;
+
 }
 
 .orderButton {

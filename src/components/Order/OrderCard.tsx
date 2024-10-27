@@ -19,7 +19,7 @@ interface OrderCardProps {
 }
 
 export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, items, createdAt }) => {
-    console.log(items)
+    console.log(orderId)
     return (
         // <article className={styles.container}>
         //     <h3 className={styles.orderTitle}>Заказ №{orderId}</h3>
@@ -47,9 +47,24 @@ export const OrderCard: React.FC<OrderCardProps> = ({ orderId, totalAmount, item
         // </article>
         <section className={styles.container}>
             <div className={styles.orderList}>
-                <span className={styles.dlcBadge}>DLC</span>
-                <h2 className={styles.orderTitle}>Заказ №{orderId}</h2>
-                <p className={styles.orderExpiry}>Дата окончания: {new Date(createdAt).toLocaleDateString()}</p>
+                <span className={styles.dlcBadge}>Игра</span>
+                     <div className={styles.orderItems}>
+                         {items.length > 0 ? (
+                                <div>
+                                    {items.map((item) => (
+                                        <div key={item.id} className={styles.orderItem}>
+                                            <div>
+                                                <p className={styles.itemName}>{item.name}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p>Нет товаров в заказе</p>
+                            )}
+                        </div>
+                {/*<h2 className={styles.orderTitle}>Заказ №{orderId}</h2>*/}
+                <p className={styles.orderExpiry}>Дата: {new Date(createdAt).toLocaleDateString()}</p>
                 <p className={styles.orderPrice}>{totalAmount} руб</p>
                 <button
                     className={styles.orderButton}
