@@ -1,0 +1,71 @@
+.container {
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    color: #e7e7e7;
+    font: 400 16px/2 Onest, sans-serif;
+}
+
+.orderList {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: flex-start;
+}
+
+.dlcBadge {
+    align-self: stretch;
+    border-radius: 4px;
+    background: rgba(136, 136, 136, 0.6);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    width: 100px;
+    max-width: 100%;
+    padding: 2px 8px;
+    font: 500 14px/2 Onest, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.orderTitle {
+    margin-top: 12px;
+}
+
+.orderExpiry {
+    margin-top: 12px;
+}
+
+.orderPrice {
+    margin-top: 12px;
+}
+
+.orderButton {
+    align-self: stretch;
+    border-radius: 100px;
+    background: #c5ff00;
+    margin-top: 12px;
+    min-height: 50px;
+    width: 100%;
+    padding: 14px 20px;
+    font: 500 14px/2 Onest, sans-serif;
+    color: #000;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.orderButton:hover {
+    opacity: 0.9;
+}
+
+.orderButton:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.divider {
+    background-color: rgba(255, 255, 255, 0.08);
+    height: 1px;
+    margin-top: 18px;
+    width: 100%;
+}
