@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom'; // Импортируем Link
 const SubscriptionComponent: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<"1 месяц" | "3 месяца" | "12 месяцев">("1 месяц");
 
-  // Генерация случайных цен
-  // const getRandomPrice = (base: number) => `${base + Math.floor(Math.random() * 500)} Р`;
+
 
   const psPlusSubscriptions = [
     {
@@ -75,14 +74,7 @@ const SubscriptionComponent: React.FC = () => {
               />
           ))}
         </div>
-        {/*{psPlusSubscriptions.map((sub, index) => (*/}
-        {/*    <SubscriptionItem key={index} {...sub} />*/}
-        {/*))}*/}
 
-        {/*<h2 className={styles.sectionTitle}>Подписки EA Play</h2>*/}
-        {/*{eaPlaySubscriptions.map((sub, index) => (*/}
-        {/*    <SubscriptionItem key={index} {...sub} />*/}
-        {/*))}*/}
 
         {psPlusSubscriptions.map((sub) => (
             <Link to={`/subscriptions/${sub.id}`} key={sub.id} className={styles.subscriptionLink}>
@@ -98,7 +90,6 @@ const SubscriptionComponent: React.FC = () => {
         ))}
 
 
-        {/*<button className={styles.viewAllButton}>Смотреть все подписки</button>*/}
       </section>
   );
 };
