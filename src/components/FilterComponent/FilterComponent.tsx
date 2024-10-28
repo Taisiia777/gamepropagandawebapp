@@ -42,6 +42,8 @@ const FilterComponent: React.FC = () => {
 
     const handlePriceRangeChange = () => {
         dispatch(filterByPriceRange({ minPrice, maxPrice })); // Отправляем ценовой диапазон в Redux
+        setIsFilterVisible(false); // Закрываем фильтр после применения
+
     };
 
     const handleResetFilters = () => {
@@ -74,8 +76,8 @@ const FilterComponent: React.FC = () => {
                     onChange={handlePlatformChange}
                 />
                 <FilterSelect
-                    label="Язык"
-                    options={["Все", "ru", "en", "ja"]}
+                    label="Локализация"
+                    options={["все", "русский текст", "русская озвучка"]}
                     onChange={handleLanguageChange}
                 />
                 <label htmlFor="priceRange" className={styles.filterLabel}>

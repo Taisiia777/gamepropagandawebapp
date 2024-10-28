@@ -1,18 +1,32 @@
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SortButton.module.css";
 
 const SortButton: React.FC = () => {
-  return (
-    <button className={styles.sortButton}>
-      <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/4f98e7829e5353ac01aa55864541978bfeb8409618543d42a6b39f7635160364?placeholderIfAbsent=true&apiKey=f19410a7ed964887a882a08cb3ad097c"
-        alt=""
-        className={styles.sortIcon}
-      />
-      <span>по популярности</span>
-    </button>
-  );
+    const [selectedOption, setSelectedOption] = useState("по дате: Сначала новые");
+
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedOption(e.target.value);
+        // Здесь можно добавить логику для изменения сортировки в зависимости от выбранного варианта
+    };
+
+    return (
+        <div className={styles.sortContainer}>
+            <select
+                value={selectedOption}
+                onChange={handleSortChange}
+                className={styles.sortSelect}
+            >
+                <option value="по дате: Сначала новые">По дате: Сначала новые</option>
+                <option value="по дате: Сначала старые">По дате: Сначала старые</option>
+                <option value="по возрастанию цены">По возрастанию цены</option>
+                <option value="по убыванию цены">По убыванию цены</option>
+                <option value="по популярности">По популярности</option>
+                <option value="по алфавиту: A-Z">По Алфавиту: A-Z</option>
+                <option value="по алфавиту: Z-A">По Алфавиту: Z-A</option>
+            </select>
+        </div>
+    );
 };
 
 export default SortButton;

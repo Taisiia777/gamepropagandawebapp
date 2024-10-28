@@ -1,19 +1,4 @@
-//
-// import React from "react";
-// import FilterButton from "./FilterButton";
-// import SortButton from "./SortButton";
-// import styles from "./CatalogControls.module.css";
-// import FilterComponent from "../FilterComponent/FilterComponent.tsx";
-// const CatalogControls: React.FC = () => {
-//   return (
-//     <div className={styles.controlsContainer}>
-//       <FilterButton />
-//       <SortButton />
-//     </div>
-//   );
-// };
-//
-// export default CatalogControls;
+
 import React, { useState } from "react";
 import FilterButton from "./FilterButton";
 import SortButton from "./SortButton";
