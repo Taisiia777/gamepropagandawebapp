@@ -250,7 +250,7 @@ const OrderFormSwitcher: React.FC = () => {
 
         if (isEmailValid && userId) {
             try {
-                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}/email`, {
+                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -281,7 +281,7 @@ const OrderFormSwitcher: React.FC = () => {
 
         if (isPasswordValid && userId) {
             try {
-                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}/password`, {
+                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
