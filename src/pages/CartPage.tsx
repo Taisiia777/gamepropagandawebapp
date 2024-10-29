@@ -101,6 +101,8 @@ function CartPage() {
                   currency={currency}
                   cartItems={cartItems} // Передаем товары в OrderSummary
                   userId={userId ? userId : "0"} // Если userId null, передаем '0' как дефолтное значение
+                  setCartItems={setCartItems}  // Передаем функцию setCartItems
+
               />
             </>
         )}

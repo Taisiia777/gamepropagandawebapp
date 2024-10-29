@@ -86,10 +86,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         <div>{suggestion.name}</div>
     );
 
-    // Исправляем функцию onChange
-    const handleChange = (_event: React.FormEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
-        setSearchTerm(newValue);
+    // // Исправляем функцию onChange
+    // const handleChange = (_event: React.FormEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
+    //     setSearchTerm(newValue);
+    // };
+    // Исправляем тип события на HTMLElement и приводим к HTMLInputElement внутри
+    const handleChange = (
+        _event: React.FormEvent<HTMLElement>, // Используем _event, чтобы явно указать, что событие не используется
+        { newValue }: { newValue: string }   // Получаем newValue
+    ) => {
+        setSearchTerm(newValue); // Обновляем состояние с новым значением
     };
+
+
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
