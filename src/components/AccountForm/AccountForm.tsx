@@ -199,6 +199,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
             setIsFormDisabled(false);
             setButtonText('Сохранить');
         } else {
+            alert("1")
             // Если форма разблокирована, отправляем данные на сервер
             await handleSubmit();  // Добавляем await для ожидания завершения handleSubmit
         }
@@ -208,6 +209,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
     // Функция для отправки данных на сервер
     const handleSubmit = async () => {
         if (!userId) return; // Если нет userId, отменяем отправку
+        alert("2")
 
         try {
             const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
