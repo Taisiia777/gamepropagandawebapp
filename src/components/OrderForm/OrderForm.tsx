@@ -468,7 +468,6 @@
 //
 //
 
-
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store.ts";
@@ -497,7 +496,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                                                          setCartItems,
                                                      }) => {
     // Состояние для управления отображаемой формой
-    const [isAccountForm, setIsAccountForm] = useState(false);
+    const [isAccountForm, setIsAccountForm] = useState(false); // Переключение между шаблонами
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [promoCode, setPromoCode] = useState(""); // Поле для промокода
@@ -572,10 +571,10 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
 
             // Шаг 2: Создание заказа после успешного обновления данных
             const cleanedCartItems = cartItems.map(item => ({
-                id: item.id,
+                productId: parseInt(item.id, 10), // Преобразуем id продукта в Int
                 name: item.title,
-                imageSrc: item.imageUrl,
-                newPrice: item.price,
+                imageUrl: item.imageUrl,
+                price: item.price,
                 quantity: 1
             }));
 
@@ -585,7 +584,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                     'ngrok-skip-browser-warning': '1',
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ cartItems: cleanedCartItems }),
+                body: JSON.stringify({ cartItems: cleanedCartItems, totalAmount }),
             });
 
             if (!orderResponse.ok) throw new Error("Ошибка при создании заказа");
@@ -679,7 +678,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                     />
 
                     <button type="submit" id="submitOrder" className={styles.submitButton}>
-                        Оформить заказ
+                        Оформить заказ на {totalAmount} {currency}
                     </button>
                     <p className={styles.privacyPolicy}>
                         Ваши личные данные будут использоваться для обработки ваших заказов,
@@ -772,7 +771,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                     />
 
                     <button type="submit" id="submitOrder" className={styles.submitButton}>
-                        Оформить заказ
+                        Оформить заказ на {totalAmount} {currency}
                     </button>
                     <p className={styles.privacyPolicy}>
                         Ваши личные данные будут использоваться для обработки ваших заказов,
