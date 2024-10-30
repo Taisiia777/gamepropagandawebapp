@@ -13,6 +13,8 @@
   width: 100%;
   max-width: 300px;
   z-index: 100;
+  height: 42px;
+  box-sizing: border-box;
 }
 
 .searchInput {
@@ -21,7 +23,10 @@
   border: none;
   color: inherit;
   font: inherit;
+  margin-top: 7px;
+  margin-left: 40px;
 }
+
 
 .searchButton {
   background: transparent;
@@ -35,6 +40,10 @@
   object-fit: contain;
   object-position: center;
   width: 34px;
+  position: absolute;
+  top: 6px;
+  left: 0;
+
 }
 
 .visuallyHidden {
@@ -48,16 +57,19 @@
   white-space: nowrap;
   border: 0;
 }
+
+
+
 .suggestionsContainerOpen {
+  margin-top: 10px;
   display: block;
   position: absolute;
-  background-color: #121212; /* Устанавливаем фон на #121212 */
-  max-height: 200px;
-  height: 200px;
+  background-color: #2B2B2B; /* Dark background */
+  max-height: 300px;
   overflow-y: auto;
-  border: 1px solid #ccc;
   z-index: 110;
-  color: #fff; /* Текст белого цвета для контраста */
+  border-radius: 10px;
+  color: #fff; /* White text for better contrast */
 }
 
 .suggestionsList {
@@ -68,7 +80,10 @@
 
 .suggestion {
   padding: 10px;
-  border-bottom: 1px solid #333; /* Темнее, чтобы соответствовать фону */
+  border-bottom: 1px solid #333; /* Darker border */
+  font-size: 18px;
+  font-weight: 500;
+  text-align: left;
   cursor: pointer;
 }
 
@@ -77,5 +92,16 @@
 }
 
 .suggestion--highlighted {
-  background-color: #333; /* Цвет подсветки чуть светлее фона */
+  background-color: #333; /* Slightly lighter background for hover */
+  color: #fff; /* Keep text white */
+}
+
+/* Optional scrollbar styling */
+.suggestionsContainerOpen::-webkit-scrollbar {
+  width: 6px;
+}
+
+.suggestionsContainerOpen::-webkit-scrollbar-thumb {
+  background-color: #444; /* Darker scrollbar thumb */
+  border-radius: 10px;
 }
