@@ -1,3 +1,4 @@
+//
 // import React, { useState, useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 // import { Link } from 'react-router-dom';
@@ -8,20 +9,23 @@
 //     email?: string;
 //     password?: string;
 // }
+//
 // const AccountForm: React.FC<AccountFormProps> = () => {
 //     const [email, setEmail] = useState('');
 //     const [password, setPassword] = useState('');
 //     const [isFormDisabled, setIsFormDisabled] = useState(false); // Для блокировки формы
+//     const [userId, setUserId] = useState<string | null>(null); // Для хранения userId
 //
 //     // Получаем telegramId из глобального состояния (userSlice)
 //     const telegramId = useSelector((state: RootState) => state.user.telegramId);
 //
-//     // Функция для получения данных пользователя
+//     // Функция для получения userId по telegramId
 //     useEffect(() => {
-//         const fetchUserData = async () => {
-//             if (!telegramId) return; // Если telegramId нет, не делаем запрос
+//         const fetchUserId = async () => {
+//             if (!telegramId) return;
 //
 //             try {
+//                 // Запрашиваем userId по telegramId
 //                 const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/telegram/${telegramId}`, {
 //                     headers: {
 //                         'ngrok-skip-browser-warning': '1',
@@ -30,31 +34,32 @@
 //
 //                 if (response.ok) {
 //                     const data = await response.json();
+//                     setUserId(data.userId); // Сохраняем userId из ответа
 //                     if (data.email || data.password) {
 //                         setEmail(data.email || ''); // Если почта есть, заполняем инпут
 //                         setPassword(data.password || ''); // Если пароль есть, заполняем инпут
 //                         setIsFormDisabled(true); // Делаем инпуты и кнопку неактивными
 //                     }
 //                 } else {
-//                     console.error('Failed to fetch user data');
+//                     console.error('Failed to fetch user ID');
 //                 }
 //             } catch (error) {
-//                 console.error('Error fetching user data:', error);
+//                 console.error('Error fetching user ID:', error);
 //             }
 //         };
 //
-//         fetchUserData();
+//         fetchUserId();
 //     }, [telegramId]);
 //
 //     // Функция для отправки данных на сервер
 //     const handleSubmit = async (e: React.FormEvent) => {
 //         e.preventDefault(); // Останавливаем стандартное поведение формы
 //
-//         if (isFormDisabled) return; // Если форма заблокирована, отменяем отправку
+//         if (isFormDisabled || !userId) return; // Если форма заблокирована или нет userId, отменяем отправку
 //
 //         try {
 //             // Отправляем email и пароль на бэкенд
-//             const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${telegramId}`, {
+//             const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
 //                 method: 'PUT',
 //                 headers: {
 //                     'Content-Type': 'application/json',
@@ -146,6 +151,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isFormDisabled, setIsFormDisabled] = useState(false); // Для блокировки формы
+    const [isEditing, setIsEditing] = useState(false); // Для переключения между "Редактировать" и "Сохранить"
     const [userId, setUserId] = useState<string | null>(null); // Для хранения userId
 
     // Получаем telegramId из глобального состояния (userSlice)
@@ -167,10 +173,13 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setUserId(data.userId); // Сохраняем userId из ответа
-                    if (data.email || data.password) {
+
+                    // Блокируем форму только если оба поля заполнены
+                    if (data.email && data.password) {
                         setEmail(data.email || ''); // Если почта есть, заполняем инпут
                         setPassword(data.password || ''); // Если пароль есть, заполняем инпут
                         setIsFormDisabled(true); // Делаем инпуты и кнопку неактивными
+                        setIsEditing(false); // Устанавливаем режим "Редактировать"
                     }
                 } else {
                     console.error('Failed to fetch user ID');
@@ -187,34 +196,40 @@ const AccountForm: React.FC<AccountFormProps> = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Останавливаем стандартное поведение формы
 
-        if (isFormDisabled || !userId) return; // Если форма заблокирована или нет userId, отменяем отправку
+        if (!userId) return; // Если нет userId, отменяем отправку
 
-        try {
-            // Отправляем email и пароль на бэкенд
-            const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'ngrok-skip-browser-warning': '1',
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            });
+        if (isEditing) {
+            // Сохраняем новые данные
+            try {
+                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': '1',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                    }),
+                });
 
-            if (!response.ok) {
-                throw new Error('Failed to submit account details');
+                if (!response.ok) {
+                    throw new Error('Failed to submit account details');
+                }
+
+                const data = await response.json();
+                console.log('Account details submitted successfully:', data);
+
+                // После успешной отправки блокируем форму
+                setIsFormDisabled(true);
+                setIsEditing(false); // Переключаем кнопку обратно на "Редактировать"
+            } catch (error) {
+                console.error('Error submitting account details:', error);
             }
-
-            const data = await response.json();
-            console.log('Account details submitted successfully:', data);
-
-            // Очистка формы после успешной отправки
-            setEmail('');
-            setPassword('');
-        } catch (error) {
-            console.error('Error submitting account details:', error);
+        } else {
+            // Разблокируем форму для редактирования
+            setIsFormDisabled(false);
+            setIsEditing(true); // Меняем текст кнопки на "Сохранить"
         }
     };
 
@@ -248,8 +263,8 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                     disabled={isFormDisabled} // Отключаем инпут, если форма заблокирована
                 />
 
-                <button type="submit" className={styles.submitButton} disabled={isFormDisabled}>
-                    Сохранить
+                <button type="submit" className={styles.submitButton}>
+                    {isEditing ? 'Сохранить' : 'Редактировать'} {/* Динамически меняем текст кнопки */}
                 </button>
             </form>
 

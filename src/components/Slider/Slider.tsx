@@ -1,53 +1,4 @@
-//
-// import React from 'react';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/css';
-// import 'swiper/css/autoplay';
-// import { Autoplay } from 'swiper/modules';
-// import styles from './Slider.module.css';
-// import ProductCard from "../BestSellers/ProductCard.tsx";
-// interface SliderProps {
-//     products: Array<{
-//         id: string;
-//         media: Array<{ Uri: string }>;
-//         name: string;
-//         base_price: string | null;
-//         discounted_price: string | null;
-//     }>;
-//     isLightTheme?: boolean; // Новый пропс для темы
-//
-// }
-//
-// const Slider: React.FC<SliderProps> = ({ products, isLightTheme }) => {
-//     console.log(JSON.stringify(products))
-//
-//     return (
-//         <Swiper
-//             modules={[Autoplay]}
-//             spaceBetween={0}
-//             slidesPerView={'auto'}
-//             centeredSlides={false}
-//             loop={true}
-//             autoplay={{ delay: 2500, disableOnInteraction: false }}
-//             className={styles.swiperContainer}
-//         >
-//             {products.map((product) => (
-//                 <SwiperSlide key={product.id} className={styles.slide}>
-//                     <ProductCard
-//                         id={product.id}
-//                         imageSrc={product.media[0]?.Uri || 'img/default.png'}
-//                         name={product.name}
-//                         oldPrice={product.base_price}
-//                         newPrice={product.discounted_price}
-//                         isLightTheme={isLightTheme} // Включаем светлую тему
-//
-//                     />
-//                 </SwiperSlide>
-//             ))}
-//         </Swiper>
-//     );
-// };
-// export default Slider;
+
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -103,7 +54,9 @@ const Slider: React.FC<SliderProps> = ({ products, isLightTheme }) => {
             slidesPerView={'auto'}
             centeredSlides={false}
             loop={true}
-            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            // autoplay={{ delay: 2500, disableOnInteraction: false }}
+            autoplay={false} // Отключает автоматическое перелистывание
+
             className={styles.swiperContainer}
         >
             {products.map((product) => (
