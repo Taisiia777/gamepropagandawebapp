@@ -148,16 +148,16 @@ interface AccountFormProps {
 }
 
 const AccountForm: React.FC<AccountFormProps> = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isFormDisabled, setIsFormDisabled] = useState(false); // Для блокировки формы
-    const [isEditing, setIsEditing] = useState(false); // Для переключения между "Редактировать" и "Сохранить"
+    const [email, setEmail] = useState(''); // Поле для email
+    const [password, setPassword] = useState(''); // Поле для пароля
+    const [isFormDisabled, setIsFormDisabled] = useState(true); // Для блокировки формы по умолчанию
     const [userId, setUserId] = useState<string | null>(null); // Для хранения userId
+    const [buttonText, setButtonText] = useState('Редактировать'); // Для изменения текста кнопки
 
     // Получаем telegramId из глобального состояния (userSlice)
     const telegramId = useSelector((state: RootState) => state.user.telegramId);
 
-    // Функция для получения userId по telegramId
+    // Функция для получения userId по telegramId и блокировки формы
     useEffect(() => {
         const fetchUserId = async () => {
             if (!telegramId) return;
@@ -174,12 +174,12 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                     const data = await response.json();
                     setUserId(data.userId); // Сохраняем userId из ответа
 
-                    // Блокируем форму только если оба поля заполнены
+                    // Если поля email и password заполнены, блокируем форму
                     if (data.email && data.password) {
-                        setEmail(data.email || ''); // Если почта есть, заполняем инпут
-                        setPassword(data.password || ''); // Если пароль есть, заполняем инпут
-                        setIsFormDisabled(true); // Делаем инпуты и кнопку неактивными
-                        setIsEditing(false); // Устанавливаем режим "Редактировать"
+                        setEmail(data.email || ''); // Заполняем email
+                        setPassword(data.password || ''); // Заполняем password
+                        setIsFormDisabled(true); // Блокируем поля
+                        setButtonText('Редактировать'); // Кнопка для редактирования
                     }
                 } else {
                     console.error('Failed to fetch user ID');
@@ -192,51 +192,54 @@ const AccountForm: React.FC<AccountFormProps> = () => {
         fetchUserId();
     }, [telegramId]);
 
-    // Функция для отправки данных на сервер
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault(); // Останавливаем стандартное поведение формы
+    // Функция для обработки кликов на кнопку
+    const handleButtonClick = () => {
+        if (isFormDisabled) {
+            // Если форма заблокирована, разблокируем для редактирования
+            setIsFormDisabled(false);
+            setButtonText('Сохранить');
+        } else {
+            // Если форма разблокирована, отправляем данные на сервер
+            handleSubmit();
+        }
+    };
 
+    // Функция для отправки данных на сервер
+    const handleSubmit = async () => {
         if (!userId) return; // Если нет userId, отменяем отправку
 
-        if (isEditing) {
-            // Сохраняем новые данные
-            try {
-                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': '1',
-                    },
-                    body: JSON.stringify({
-                        email,
-                        password,
-                    }),
-                });
+        try {
+            const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': '1',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
 
-                if (!response.ok) {
-                    throw new Error('Failed to submit account details');
-                }
-
-                const data = await response.json();
-                console.log('Account details submitted successfully:', data);
-
-                // После успешной отправки блокируем форму
-                setIsFormDisabled(true);
-                setIsEditing(false); // Переключаем кнопку обратно на "Редактировать"
-            } catch (error) {
-                console.error('Error submitting account details:', error);
+            if (!response.ok) {
+                throw new Error('Failed to submit account details');
             }
-        } else {
-            // Разблокируем форму для редактирования
-            setIsFormDisabled(false);
-            setIsEditing(true); // Меняем текст кнопки на "Сохранить"
+
+            const data = await response.json();
+            console.log('Account details submitted successfully:', data);
+
+            // После успешной отправки блокируем форму и меняем текст кнопки на "Редактировать"
+            setIsFormDisabled(true);
+            setButtonText('Редактировать');
+        } catch (error) {
+            console.error('Error submitting account details:', error);
         }
     };
 
     return (
         <section className={styles.container}>
             <h1 className={styles.title}>Аккаунт</h1>
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
                 <label htmlFor="email" className={styles['visually-hidden']}>E-mail</label>
                 <input
                     type="email"
@@ -263,8 +266,8 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                     disabled={isFormDisabled} // Отключаем инпут, если форма заблокирована
                 />
 
-                <button type="submit" className={styles.submitButton}>
-                    {isEditing ? 'Сохранить' : 'Редактировать'} {/* Динамически меняем текст кнопки */}
+                <button type="button" className={styles.submitButton} onClick={handleButtonClick}>
+                    {buttonText} {/* Меняем текст кнопки */}
                 </button>
             </form>
 
