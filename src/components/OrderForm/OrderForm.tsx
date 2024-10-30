@@ -475,7 +475,27 @@ import { RootState } from "../../store.ts";
 import styles from "./OrderForm.module.css";
 import CheckboxGroup from "./CheckboxGroup.tsx";
 
-const OrderFormSwitcher: React.FC = () => {
+interface CartItem {
+    id: string;
+    title: string;
+    subtitle: string;
+    price: number;
+    imageUrl: string;
+}
+
+interface OrderFormProps {
+    totalAmount: number;
+    currency: string;
+    cartItems: CartItem[];
+    setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+}
+
+const OrderFormSwitcher: React.FC<OrderFormProps> = ({
+                                                         totalAmount,
+                                                         currency,
+                                                         cartItems,
+                                                         setCartItems,
+                                                     }) => {
     // Состояние для управления отображаемой формой
     const [isAccountForm, setIsAccountForm] = useState(false);
     const [email, setEmail] = useState("");
@@ -503,16 +523,16 @@ const OrderFormSwitcher: React.FC = () => {
         return password.length >= 6;
     };
 
-    // Отправка данных пользователя
+    // Отправка данных пользователя (email или пароль в зависимости от формы)
     const handleSubmitOrder = async (e: React.FormEvent) => {
         e.preventDefault(); // Отменяем стандартное поведение формы
 
-        const isEmailValid = validateEmail(email);
-        const isPasswordValid = validatePassword(password);
+        // Валидация полей в зависимости от выбранной формы
+        const isEmailValid = isAccountForm ? validateEmail(email) : true;
+        const isPasswordValid = !isAccountForm ? validatePassword(password) : true;
 
-        // Проверяем email и пароль
-        setEmailError(!isEmailValid);
-        setPasswordError(!isPasswordValid);
+        setEmailError(!isEmailValid && isAccountForm);
+        setPasswordError(!isPasswordValid && !isAccountForm);
 
         if (!isEmailValid || !isPasswordValid) {
             // Если данные некорректны, отменяем отправку
@@ -520,26 +540,80 @@ const OrderFormSwitcher: React.FC = () => {
         }
 
         try {
-            // Шаг 1: Отправляем данные пользователя (email и пароль)
-            const userResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    'ngrok-skip-browser-warning': '1',
-                },
-                body: JSON.stringify({ email, password }), // Отправляем вместе email и пароль
-            });
+            // Шаг 1: Отправляем данные пользователя (email или пароль)
+            let userResponse;
+            if (isAccountForm && userId) {
+                // Отправляем email, если это форма для аккаунта
+                userResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        'ngrok-skip-browser-warning': '1',
+                    },
+                    body: JSON.stringify({ email }), // Отправляем только email
+                });
+            } else if (!isAccountForm && userId) {
+                // Отправляем пароль, если это форма для входа
+                userResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        'ngrok-skip-browser-warning': '1',
+                    },
+                    body: JSON.stringify({ password }), // Отправляем только пароль
+                });
+            }
 
-            if (!userResponse.ok) {
+            if (userResponse && !userResponse.ok) {
                 throw new Error("Ошибка при обновлении данных пользователя");
             }
 
             console.log("Данные пользователя успешно обновлены.");
 
-            // Здесь можно добавить логику для создания заказа или другие действия после успешного обновления данных пользователя
+            // Шаг 2: Создание заказа после успешного обновления данных
+            const cleanedCartItems = cartItems.map(item => ({
+                id: item.id,
+                name: item.title,
+                imageSrc: item.imageUrl,
+                newPrice: item.price,
+                quantity: 1
+            }));
+
+            const orderResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}/order`, {
+                method: "POST",
+                headers: {
+                    'ngrok-skip-browser-warning': '1',
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ cartItems: cleanedCartItems }),
+            });
+
+            if (!orderResponse.ok) throw new Error("Ошибка при создании заказа");
+
+            const orderData = await orderResponse.json();
+            console.log("Заказ успешно создан:", orderData);
+
+            // Шаг 3: Получение ссылки для оплаты и редирект на страницу оплаты
+            const paymentResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/payment/pay/${orderData.orderId}/${totalAmount}`, {
+                method: "GET",
+                headers: {
+                    'ngrok-skip-browser-warning': '1',
+                },
+            });
+
+            if (!paymentResponse.ok) throw new Error("Ошибка при создании ссылки для оплаты");
+
+            const paymentData = await paymentResponse.json();
+            console.log("Ссылка для оплаты:", paymentData);
+
+            // Очистка корзины
+            setCartItems([]);
+
+            // Переход на страницу оплаты
+            window.location.href = paymentData.paymentUrl;
 
         } catch (error) {
-            console.error("Ошибка при обновлении данных пользователя:", error);
+            console.error("Ошибка при создании заказа или обработке платежа:", error);
         }
     };
 
@@ -713,11 +787,9 @@ const OrderFormSwitcher: React.FC = () => {
                         .
                     </p>
                 </form>
-
             )}
         </div>
     );
 };
 
 export default OrderFormSwitcher;
-
