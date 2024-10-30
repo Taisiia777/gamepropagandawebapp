@@ -541,7 +541,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
         try {
             // Шаг 1: Отправляем данные пользователя (email или пароль)
             let userResponse;
-            if (isAccountForm && userId) {
+            if (!isAccountForm && userId) {
                 // Отправляем email, если это форма для аккаунта
                 userResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
                     method: "PUT",
@@ -551,7 +551,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                     },
                     body: JSON.stringify({ email }), // Отправляем только email
                 });
-            } else if (!isAccountForm && userId) {
+            } else if (isAccountForm && userId) {
                 // Отправляем пароль, если это форма для входа
                 userResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
                     method: "PUT",
@@ -559,7 +559,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                         "Content-Type": "application/json",
                         'ngrok-skip-browser-warning': '1',
                     },
-                    body: JSON.stringify({ password }), // Отправляем только пароль
+                    body: JSON.stringify({ email, password }), // Отправляем только пароль
                 });
             }
 
