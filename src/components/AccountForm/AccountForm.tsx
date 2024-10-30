@@ -192,17 +192,18 @@ const AccountForm: React.FC<AccountFormProps> = () => {
         fetchUserId();
     }, [telegramId]);
 
-    // Функция для обработки кликов на кнопку
-    const handleButtonClick = () => {
+// Функция для обработки кликов на кнопку
+    const handleButtonClick = async () => {
         if (isFormDisabled) {
             // Если форма заблокирована, разблокируем для редактирования
             setIsFormDisabled(false);
             setButtonText('Сохранить');
         } else {
             // Если форма разблокирована, отправляем данные на сервер
-            handleSubmit();
+            await handleSubmit();  // Добавляем await для ожидания завершения handleSubmit
         }
     };
+
 
     // Функция для отправки данных на сервер
     const handleSubmit = async () => {
