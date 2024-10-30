@@ -163,7 +163,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
             if (!telegramId) return;
 
             try {
-                // Запрашиваем userId по telegramId
+                console.log("Fetching userId by telegramId...");
                 const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/telegram/${telegramId}`, {
                     headers: {
                         'ngrok-skip-browser-warning': '1',
@@ -172,6 +172,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Fetched user data:", data);
                     setUserId(data.userId); // Сохраняем userId из ответа
 
                     // Если поля email и password заполнены, блокируем форму
@@ -192,24 +193,27 @@ const AccountForm: React.FC<AccountFormProps> = () => {
         fetchUserId();
     }, [telegramId]);
 
-// Функция для обработки кликов на кнопку
+    // Функция для обработки кликов на кнопку
     const handleButtonClick = async () => {
         if (isFormDisabled) {
+            console.log("Switching to editing mode...");
             // Если форма заблокирована, разблокируем для редактирования
             setIsFormDisabled(false);
             setButtonText('Сохранить');
         } else {
-            alert("1")
-            // Если форма разблокирована, отправляем данные на сервер
-            await handleSubmit();  // Добавляем await для ожидания завершения handleSubmit
+            console.log("Submitting form...");
+            handleSubmit(); // Убираем await для проверки выполнения без блокировок
         }
     };
 
-
     // Функция для отправки данных на сервер
     const handleSubmit = async () => {
-        if (!userId) return; // Если нет userId, отменяем отправку
-        alert("2")
+        if (!userId) {
+            console.error("No userId found, aborting submission.");
+            return; // Если нет userId, отменяем отправку
+        }
+
+        console.log("Sending data to server:", { email, password });
 
         try {
             const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
@@ -224,6 +228,8 @@ const AccountForm: React.FC<AccountFormProps> = () => {
                 }),
             });
 
+            console.log("Server response status:", response.status);
+
             if (!response.ok) {
                 throw new Error('Failed to submit account details');
             }
@@ -234,6 +240,19 @@ const AccountForm: React.FC<AccountFormProps> = () => {
             // После успешной отправки блокируем форму и меняем текст кнопки на "Редактировать"
             setIsFormDisabled(true);
             setButtonText('Редактировать');
+
+            // Повторно загружаем данные пользователя после успешной отправки
+            const updatedResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
+                headers: {
+                    'ngrok-skip-browser-warning': '1',
+                },
+            });
+            if (updatedResponse.ok) {
+                const updatedData = await updatedResponse.json();
+                console.log("Updated user data after submission:", updatedData);
+                setEmail(updatedData.email || '');
+                setPassword(updatedData.password || '');
+            }
         } catch (error) {
             console.error('Error submitting account details:', error);
         }
@@ -289,3 +308,4 @@ const AccountForm: React.FC<AccountFormProps> = () => {
 };
 
 export default AccountForm;
+
