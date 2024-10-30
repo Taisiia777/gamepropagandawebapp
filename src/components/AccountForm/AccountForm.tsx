@@ -142,12 +142,7 @@ import { Link } from 'react-router-dom';
 import styles from './AccountForm.module.css';
 import { RootState } from '../../store'; // Импорт типа RootState для работы с Redux
 
-interface AccountFormProps {
-    email?: string;
-    password?: string;
-}
-
-const AccountForm: React.FC<AccountFormProps> = () => {
+const AccountForm: React.FC = () => {
     const [email, setEmail] = useState(''); // Поле для email
     const [password, setPassword] = useState(''); // Поле для пароля
     const [isFormDisabled, setIsFormDisabled] = useState(true); // Для блокировки формы по умолчанию
@@ -160,7 +155,10 @@ const AccountForm: React.FC<AccountFormProps> = () => {
     // Функция для получения userId по telegramId и блокировки формы
     useEffect(() => {
         const fetchUserId = async () => {
-            if (!telegramId) return;
+            if (!telegramId) {
+                console.error("No telegramId found");
+                return;
+            }
 
             try {
                 console.log("Fetching userId by telegramId...");
@@ -202,7 +200,11 @@ const AccountForm: React.FC<AccountFormProps> = () => {
             setButtonText('Сохранить');
         } else {
             console.log("Submitting form...");
-            handleSubmit(); // Убираем await для проверки выполнения без блокировок
+            if (!userId) {
+                alert("UserId не найден, невозможно сохранить данные.");
+                return;
+            }
+            await handleSubmit();
         }
     };
 
@@ -240,19 +242,6 @@ const AccountForm: React.FC<AccountFormProps> = () => {
             // После успешной отправки блокируем форму и меняем текст кнопки на "Редактировать"
             setIsFormDisabled(true);
             setButtonText('Редактировать');
-
-            // Повторно загружаем данные пользователя после успешной отправки
-            const updatedResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
-                headers: {
-                    'ngrok-skip-browser-warning': '1',
-                },
-            });
-            if (updatedResponse.ok) {
-                const updatedData = await updatedResponse.json();
-                console.log("Updated user data after submission:", updatedData);
-                setEmail(updatedData.email || '');
-                setPassword(updatedData.password || '');
-            }
         } catch (error) {
             console.error('Error submitting account details:', error);
         }
