@@ -171,7 +171,7 @@ const AccountForm: React.FC = () => {
                 if (response.ok) {
                     const data = await response.json();
                     console.log("Fetched user data:", data);
-                    setUserId(data.userId); // Сохраняем userId из ответа
+                    setUserId(data.id); // Сохраняем userId из ответа
 
                     // Если поля email и password заполнены, блокируем форму
                     if (data.email && data.password) {
