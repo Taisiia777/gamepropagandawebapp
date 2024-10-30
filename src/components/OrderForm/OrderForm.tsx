@@ -571,12 +571,14 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
 
             // Шаг 2: Создание заказа после успешного обновления данных
             const cleanedCartItems = cartItems.map(item => ({
-                productId: parseInt(item.id, 10), // Преобразуем id продукта в Int
+                id: parseInt(item.id, 10), // Преобразуем id продукта в Int
                 name: item.title,
-                imageUrl: item.imageUrl,
-                price: item.price,
-                quantity: 1
+                imageSrc: item.imageUrl,
+                newPrice: item.price, // Преобразуем очищенную цену в строку
+                oldPrice: null, // Если нет старой цены, отправляем null
+                quantity: 1 // Задаем количество
             }));
+
 
             const orderResponse = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}/order`, {
                 method: "POST",
