@@ -25,7 +25,7 @@ const AccountForm: React.FC = () => {
 
             try {
                 console.log("Fetching userId by telegramId...");
-                const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/telegram/${telegramId}`, {
+                const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/telegram/${telegramId}`, {
                     headers: {
                         'ngrok-skip-browser-warning': '1',
                     },
@@ -81,7 +81,7 @@ const AccountForm: React.FC = () => {
         console.log("Sending data to server:", { email, password });
 
         try {
-            const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

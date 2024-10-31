@@ -149,7 +149,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
         // Запрос на добавление товара в корзину на бэкенд
         try {
-            const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/users/${userId}/cart`, {
+            const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}/cart`, {
                 method: "POST",
                 headers: {
                     'ngrok-skip-browser-warning': '1',

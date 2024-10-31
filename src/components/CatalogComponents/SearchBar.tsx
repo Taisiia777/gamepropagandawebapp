@@ -19,8 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     // Функция для получения предложений на основе введенного текста
     const fetchSuggestions = async (value: string) => {
         if (value.length > 2) {
-            // const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/products?name=${value}`);
-            const response = await fetch(`https://455b-95-161-221-131.ngrok-free.app/products?name=${value}`, {
+            const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/products?name=${value}`, {
                 headers: {
                     'ngrok-skip-browser-warning': '1', // Добавляем заголовок для игнорирования предупреждений ngrok
                 },

@@ -73,7 +73,7 @@ function ItemPage() {
         if (id) {
             setLoading(true);
 
-            fetch(`https://455b-95-161-221-131.ngrok-free.app/products/${id}`, {
+            fetch(`${process.env.REACT_APP_NGROK_URL}/products/${id}`, {
                 headers: {
                     'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
                 }
