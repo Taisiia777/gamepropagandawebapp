@@ -37,7 +37,7 @@ const RecommendationItem: React.FC<RecommendationItemProps> = ({
 
         // Запрос на добавление товара в корзину на бэкенд
         try {
-            const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}/cart`, {
+            const response = await fetch(`${import.meta.env.VITE_NGROK_URL}/users/${userId}/cart`, {
                 method: "POST",
                 headers: {
                     'ngrok-skip-browser-warning': '1',

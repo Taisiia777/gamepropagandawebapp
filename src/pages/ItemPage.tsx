@@ -73,7 +73,7 @@ function ItemPage() {
         if (id) {
             setLoading(true);
 
-            fetch(`${process.env.REACT_APP_NGROK_URL}/products/${id}`, {
+            fetch(`${import.meta.env.VITE_NGROK_URL}/products/${id}`, {
                 headers: {
                     'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
                 }

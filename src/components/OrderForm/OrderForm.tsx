@@ -75,7 +75,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
             let userResponse;
             if (!isAccountForm && userId) {
                 // Отправляем email, если это форма для аккаунта
-                userResponse = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}`, {
+                userResponse = await fetch(`${import.meta.env.VITE_NGROK_URL}/users/${userId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
                 });
             } else if (isAccountForm && userId) {
                 // Отправляем пароль, если это форма для входа
-                userResponse = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}`, {
+                userResponse = await fetch(`${import.meta.env.VITE_NGROK_URL}/users/${userId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
             }));
 
 
-            const orderResponse = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}/order`, {
+            const orderResponse = await fetch(`${import.meta.env.VITE_NGROK_URL}/users/${userId}/order`, {
                 method: "POST",
                 headers: {
                     'ngrok-skip-browser-warning': '1',
@@ -127,7 +127,7 @@ const OrderFormSwitcher: React.FC<OrderFormProps> = ({
             console.log("Заказ успешно создан:", orderData);
 
             // Шаг 3: Получение ссылки для оплаты и редирект на страницу оплаты
-            const paymentResponse = await fetch(`${process.env.REACT_APP_NGROK_URL}/payment/pay/${orderData.orderId}/${totalAmount}`, {
+            const paymentResponse = await fetch(`${import.meta.env.VITE_NGROK_URL}/payment/pay/${orderData.orderId}/${totalAmount}`, {
                 method: "GET",
                 headers: {
                     'ngrok-skip-browser-warning': '1',

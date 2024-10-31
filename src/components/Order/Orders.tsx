@@ -32,7 +32,7 @@ export const Orders: React.FC = () => {
         const fetchUserId = async () => {
             try {
                 if (telegramId) {
-                    const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/telegram/${telegramId}`, {
+                    const response = await fetch(`${import.meta.env.VITE_NGROK_URL}/users/telegram/${telegramId}`, {
                         headers: {
                             'ngrok-skip-browser-warning': '1',
                         },
@@ -58,7 +58,7 @@ export const Orders: React.FC = () => {
         const fetchOrders = async () => {
             try {
                 if (userId) {
-                    const response = await fetch(`${process.env.REACT_APP_NGROK_URL}/users/${userId}/orders`, {
+                    const response = await fetch(`${import.meta.env.VITE_NGROK_URL}/users/${userId}/orders`, {
                         headers: {
                             'ngrok-skip-browser-warning': '1',
                         },

@@ -47,7 +47,7 @@ const AppContent: React.FC = () => {
                 setTelegramId(initData.user.id);
 
                 // Проверяем наличие пользователя в базе данных
-                axios.get(`${process.env.REACT_APP_NGROK_URL}/users/telegram/${initData.user.id}`, {
+                axios.get(`${import.meta.env.VITE_NGROK_URL}/users/telegram/${initData.user.id}`, {
                     headers: {
                         'ngrok-skip-browser-warning': '1', // Заголовок для игнорирования предупреждений ngrok
                     },
@@ -66,7 +66,7 @@ const AppContent: React.FC = () => {
                             }));
                         } else {
                             // Пользователь не найден, создаем нового
-                            axios.post(`${process.env.REACT_APP_NGROK_URL}/users`, {
+                            axios.post(`${import.meta.env.VITE_NGROK_URL}/users`, {
                                 nickname: initData.user.username,
                                 email: '',
                                 password: '',

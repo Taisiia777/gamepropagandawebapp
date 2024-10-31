@@ -10,7 +10,7 @@ import { Product } from "../types/Product";
 export const fetchProductsByCategory = createAsyncThunk(
     "products/fetchProductsByCategory",
     async ({ category, page = 1 }: { category: string; page?: number }) => {
-        const response = await axios.get<Product[]>(`${process.env.REACT_APP_NGROK_URL}/products/category/${category}`, {
+        const response = await axios.get<Product[]>(`${import.meta.env.VITE_NGROK_URL}/products/category/${category}`, {
             params: { page }, // Если page не передан, будет использоваться значение по умолчанию
             headers: {
                 'ngrok-skip-browser-warning': '1'
@@ -23,7 +23,7 @@ export const fetchProductsByCategory = createAsyncThunk(
 
 // Fetch paginated products
 export const fetchProducts = createAsyncThunk("products/fetchProducts", async (page?: number) => {
-    const response = await axios.get<Product[]>(`${process.env.REACT_APP_NGROK_URL}/products`, {
+    const response = await axios.get<Product[]>(`${import.meta.env.VITE_NGROK_URL}/products`, {
         params: { page },
         headers: {
             'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
@@ -36,7 +36,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async (p
 export const searchProductsByName = createAsyncThunk(
     "products/searchProductsByName",
     async (name: string) => {
-        const response = await axios.get<Product[]>(`${process.env.REACT_APP_NGROK_URL}/products/`, {
+        const response = await axios.get<Product[]>(`${import.meta.env.VITE_NGROK_URL}/products/`, {
             params: { name },
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
@@ -50,7 +50,7 @@ export const searchProductsByName = createAsyncThunk(
 export const fetchTopRatedProducts = createAsyncThunk(
     "products/fetchTopRatedProducts",
     async () => {
-        const response = await axios.get<Product[]>(`${process.env.REACT_APP_NGROK_URL}/products/top-rated`, {
+        const response = await axios.get<Product[]>(`${import.meta.env.VITE_NGROK_URL}/products/top-rated`, {
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
             }
@@ -63,7 +63,7 @@ export const fetchTopRatedProducts = createAsyncThunk(
 export const fetchProductsInPriceRange = createAsyncThunk(
     "products/fetchProductsInPriceRange",
     async () => {
-        const response = await axios.get<Product[]>(`${process.env.REACT_APP_NGROK_URL}/products/price-range/1-500`, {
+        const response = await axios.get<Product[]>(`${import.meta.env.VITE_NGROK_URL}/products/price-range/1-500`, {
             headers: {
                 'ngrok-skip-browser-warning': '1' // Добавляем заголовок для игнорирования предупреждения
             }
