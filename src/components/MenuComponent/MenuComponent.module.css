@@ -1,7 +1,7 @@
 .menu {
     display: flex;
     position: fixed !important;
-    left: 0;
+    left: -10px;
     top: 0;
     height: 100vh;
     max-width: 256px;

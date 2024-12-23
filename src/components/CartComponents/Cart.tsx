@@ -7,16 +7,11 @@ import "swiper/css/autoplay";
 import styles from "./Cart.module.css";
 import CartItem from "./CartItem";
 import RecommendationItem from "./RecommendationItem";
-import { useAppSelector } from '../../hooks/hooks.ts'; // Импортируем хук
-import { RootState } from '../../store.ts'; // Импортируем тип состояния
+import { useAppSelector } from '../../hooks/hooks.ts';
+import { RootState } from '../../store.ts';
+import axios from "axios"; // Подключение axios для выполнения запросов
+
 interface CartProps {
-    cartItems?: Array<{
-        id: string;
-        title: string;
-        subtitle: string;
-        price: number;
-        imageUrl: string;
-    }>;
     recommendations: Array<{
         id: string;
         price: number;
@@ -35,39 +30,95 @@ interface CartItemType {
 
 const Cart: React.FC<CartProps> = ({ recommendations }) => {
     const [newCartItems, setNewCartItems] = useState<CartItemType[]>([]);
-    const userId = useAppSelector((state: RootState) => state.user.telegramId);
+    const telegramId = useAppSelector((state: RootState) => state.user.telegramId);
+    const [userId, setUserId] = useState<string | null>(null);
 
-    useEffect(() => {
-        const handleCartUpdate = () => {
-            const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-            setNewCartItems(savedCart);
-        };
-
-        // Подписываемся на событие обновления корзины
-        window.addEventListener("cartUpdated", handleCartUpdate);
-
-        // Загрузка корзины при первой отрисовке
-        handleCartUpdate();
-
-        // Очищаем подписку при размонтировании компонента
-        return () => {
-            window.removeEventListener("cartUpdated", handleCartUpdate);
-        };
-    }, []);
-
-    // Загрузка данных из localStorage при первой отрисовке
-    useEffect(() => {
+    // Функция обновления корзины из localStorage
+    const loadCartItems = () => {
         const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
         setNewCartItems(savedCart);
+    };
+
+    useEffect(() => {
+        // Загрузка корзины при первой отрисовке
+        loadCartItems();
+
+        // Подписываемся на событие обновления корзины
+        const handleCartUpdate = () => loadCartItems();
+        window.addEventListener("cartUpdated", handleCartUpdate);
+
+        // Очищаем подписку при размонтировании компонента
+        return () => window.removeEventListener("cartUpdated", handleCartUpdate);
     }, []);
 
     // Функция для удаления элемента по id
-    const handleRemove = (id: string) => {
-        const updatedCart = newCartItems.filter((item) => item.id !== id);
-        setNewCartItems(updatedCart);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+    // const handleRemove = (id: string) => {
+    //     const updatedCart = newCartItems.filter((item) => item.id !== id);
+    //     setNewCartItems(updatedCart);
+    //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    //     // Отправка события обновления корзины
+    //     if (updatedCart.length === 0) {
+    //         // Если корзина пуста, отправляем событие для очистки интерфейса
+    //         window.dispatchEvent(new Event("cartUpdated"));
+    //     }
+    // };
+ // Функция для удаления элемента по id
+ useEffect(() => {
+    // Получение userId из базы данных по telegramId
+    const fetchUserId = async () => {
+        if (!telegramId) return;
+
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_NGROK_URL}/users/telegram/${telegramId}`, {
+                headers: {
+                    'ngrok-skip-browser-warning': '1',
+                },
+            });
+            setUserId(response.data.id); // Сохраняем userId из базы данных
+        } catch (error) {
+            console.error("Ошибка при получении userId:", error);
+        }
     };
 
+    fetchUserId();
+
+    // Загрузка корзины при первой отрисовке
+    loadCartItems();
+
+    // Подписываемся на событие обновления корзины
+    const handleCartUpdate = () => loadCartItems();
+    window.addEventListener("cartUpdated", handleCartUpdate);
+
+    // Очищаем подписку при размонтировании компонента
+    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
+}, [telegramId]);
+
+// Функция для удаления элемента по id
+const handleRemove = async (id: string) => {
+    // Удаление из UI
+    const updatedCart = newCartItems.filter((item) => item.id !== id);
+    setNewCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    try {
+        if (userId) {
+            // Отправляем запрос на сервер для удаления элемента из БД
+            await axios.delete(`${import.meta.env.VITE_NGROK_URL}/users/${userId}/cart/${id}`);
+            console.log(`Товар с ID ${id} успешно удалён с сервера`);
+        } else {
+            console.warn("userId отсутствует, невозможно удалить товар с сервера");
+        }
+    } catch (error) {
+        console.error("Ошибка при удалении товара с сервера:", error);
+    }
+
+    // Отправка события обновления корзины
+    if (updatedCart.length === 0) {
+        // Если корзина пуста, отправляем событие для очистки интерфейса
+        window.dispatchEvent(new Event("cartUpdated"));
+    }
+};
     const calculateTotal = () => {
         return newCartItems.reduce((total, item) => {
             const itemPrice = String(item.price).trim() === "Бесплатно" ? 0 : parseFloat(String(item.price).replace("Р", "").trim());
@@ -95,7 +146,6 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
             ) : (
                 <p className={styles.emptyCartMessage}>Ваша корзина пуста.</p>
             )}
-            <div className={styles.divider} />
 
             {totalAmount >= minimumOrderAmount && (
                 <>
@@ -117,8 +167,6 @@ const Cart: React.FC<CartProps> = ({ recommendations }) => {
                     </Swiper>
                 </>
             )}
-
-
         </main>
     );
 };

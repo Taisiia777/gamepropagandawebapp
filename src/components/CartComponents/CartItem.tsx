@@ -51,6 +51,8 @@ const CartItem: React.FC<CartItemProps> = ({
         </header>
         <h2 className={styles.cartItemTitle}>{title}</h2>
         <p className={styles.cartItemSubtitle}>{subtitle}</p>
+        <div className={styles.divider} />
+
       </div>
   );
 };

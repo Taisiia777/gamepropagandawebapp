@@ -5,7 +5,7 @@ interface MenuItemProps {
     icon: string;
     text: string;
     isActive: boolean;
-    onClick: () => void;
+    onClick?: () => void; // Сделали onClick необязательным
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ icon, text, isActive, onClick }) => {

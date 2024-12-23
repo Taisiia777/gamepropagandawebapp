@@ -1,0 +1,32 @@
+/* AccordionItem.module.css */
+.accordionItem {
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+}
+
+.content {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.iconOpen {
+    transform: rotate(180deg);
+}
+
+.iconClosed {
+    transform: rotate(0deg);
+}

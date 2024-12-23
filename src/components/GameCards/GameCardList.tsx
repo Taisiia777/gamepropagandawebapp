@@ -8,18 +8,11 @@ import styles from "./GameCardList.module.css";
 import { useLocation } from 'react-router-dom';
 
 const GameCardList: React.FC = () => {
-    // const [selectedCategory, setSelectedCategory] = useState<string>(""); // Новое состояние для выбранной категории
     const location = useLocation();
     const initialCategory = location.state?.activeCategory || ""; // Получаем активную категорию из состояния или пустую строку по умолчанию
     const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory); // Устанавливаем начальную категорию
 
-    // const handleCategoryClick = (category: string) => {
-    //     setCurrentPage(1);
-    //     setVisibleProducts(24);
-    //     setHasMore(true);
-    //     setSelectedCategory(category); // Устанавливаем выбранную категорию
-    //     dispatch(fetchProductsByCategory({ category })); // Передаем только категорию, без страницы (будет использована страница по умолчанию)
-    // };
+
     const handleCategoryClick = (category: string) => {
         setCurrentPage(1);
         setVisibleProducts(24);
@@ -72,45 +65,64 @@ const GameCardList: React.FC = () => {
         dispatch(searchProductsByName(searchTerm));
     };
 
+    // useEffect(() => {
+    //     if (products.length < visibleProducts) {
+    //         setHasMore(false);
+    //     }
+    // }, [products, visibleProducts]);
     useEffect(() => {
-        if (products.length < visibleProducts) {
+        // Определяем, осталось ли ещё загружать товары
+        if (products.length >= visibleProducts) {
+            setHasMore(true);
+        } else {
             setHasMore(false);
         }
     }, [products, visibleProducts]);
+    
 
-
-    const handlePageChange = (newPage: number) => {
-        setCurrentPage(newPage);
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Прокручиваем страницу наверх с плавной анимацией
+    // const handlePageChange = (newPage: number) => {
+    //     setCurrentPage(newPage);
+    //     window.scrollTo({ top: 0, behavior: 'smooth' }); // Прокручиваем страницу наверх с плавной анимацией
+    //     if (selectedCategory) {
+    //         dispatch(fetchProductsByCategory({ category: selectedCategory, page: newPage })); // Передаем категорию и страницу
+    //     } else {
+    //         dispatch(fetchProducts(newPage));
+    //     }
+    // };
+    const handleLoadMore = () => {
+        const nextPage = currentPage + 1;
+        setCurrentPage(nextPage);
+        setVisibleProducts(prev => prev + 24); // Увеличиваем видимые товары
+    
         if (selectedCategory) {
-            dispatch(fetchProductsByCategory({ category: selectedCategory, page: newPage })); // Передаем категорию и страницу
+            dispatch(fetchProductsByCategory({ category: selectedCategory, page: nextPage }));
         } else {
-            dispatch(fetchProducts(newPage));
+            dispatch(fetchProducts(nextPage));
         }
     };
-
-    const totalPages = Math.ceil(240 / 24); // Assume 240 products as an example
-    const paginationRange = () => {
-        const range = [];
-        if (totalPages <= 5) {
-            for (let i = 1; i <= totalPages; i++) {
-                range.push(i);
-            }
-        } else {
-            if (currentPage === 1) {
-                range.push(1, 2, "...", totalPages);
-            } else if (currentPage === 2) {
-                range.push(1, 2, 3, "...", totalPages);
-            } else if (currentPage === totalPages - 1) {
-                range.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
-            } else if (currentPage === totalPages) {
-                range.push(1, "...", totalPages - 1, totalPages);
-            } else {
-                range.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
-            }
-        }
-        return range;
-    };
+    
+    // const totalPages = Math.ceil(240 / 24); // Assume 240 products as an example
+    // const paginationRange = () => {
+    //     const range = [];
+    //     if (totalPages <= 5) {
+    //         for (let i = 1; i <= totalPages; i++) {
+    //             range.push(i);
+    //         }
+    //     } else {
+    //         if (currentPage === 1) {
+    //             range.push(1, 2, "...", totalPages);
+    //         } else if (currentPage === 2) {
+    //             range.push(1, 2, 3, "...", totalPages);
+    //         } else if (currentPage === totalPages - 1) {
+    //             range.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+    //         } else if (currentPage === totalPages) {
+    //             range.push(1, "...", totalPages - 1, totalPages);
+    //         } else {
+    //             range.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+    //         }
+    //     }
+    //     return range;
+    // };
     const parseMedia = (media: string | Array<{ Uri: string }>) => {
         try {
             // Если media - это строка, попробуем её распарсить
@@ -135,34 +147,31 @@ const GameCardList: React.FC = () => {
         <section className={styles.container}>
             <SearchBar onSearch={handleSearch} />
             <div className={styles.grid}>
-                {products.slice((currentPage - 1) * visibleProducts, currentPage * visibleProducts).map((product) => (
-                    <div key={product.id}>
-                        <ProductCard
-                            id={product.id}
-                            // imageSrc={product.media?.[0]?.Uri || "img/default.png"}
-                            imageSrc={parseMedia(product.media)} // Используем функцию для парсинга media
-                            name={product.name}
-                            oldPrice={product.base_price ? `${product.base_price} ` : ""}
-                            newPrice={product.discounted_price ? `${product.discounted_price} ` : "Бесплатно"}
-                        />
-                    </div>
-                ))}
+             
+    {products.map((product, index) => (
+        <div key={product.id}>
+            <ProductCard
+            id={localStorage.getItem("isSubscriptionCategory") === "true" ? (Math.floor(index / 3) + 1).toString() : product.id} // Преобразуем ID в строку для подписок
+            imageSrc={parseMedia(product.media)}
+                name={product.name}
+                oldPrice={product.base_price ? `${product.base_price} ` : ""}
+                newPrice={product.discounted_price ? `${product.discounted_price} ` : "Бесплатно"}
+            />
+        </div>
+    ))}
+
             </div>
             <CategoryList onCategoryClick={handleCategoryClick} />
             <div className={styles.pagination}>
-                {paginationRange().map((page, index) => (
-                    typeof page === "number" ? (
-                        <button
-                            key={index}
-                            className={page === currentPage ? styles.activePage : ""}
-                            onClick={() => handlePageChange(page)}
-                        >
-                            {page}
-                        </button>
-                    ) : (
-                        <span key={index} className={styles.ellipsis}>...</span>
-                    )
-                ))}
+               
+                {hasMore && (
+    <div className={styles.pagination}>
+        <button onClick={handleLoadMore} className={styles.loadMoreButton}>
+            Показать еще
+        </button>
+    </div>
+)}
+
             </div>
 
         </section>

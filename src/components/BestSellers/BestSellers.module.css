@@ -100,7 +100,7 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 0 16px 0 8px;
+  padding: 0 0px 0 8px;
   box-sizing: border-box;
   overflow: hidden;
   margin: 0;
@@ -124,10 +124,10 @@
 .priceContainer {
   align-self: flex-start;
   display: flex;
-  margin-top: 26px;
+  margin-top: 18px;
   align-items: center;
   gap: 8px 4px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 22px;
   justify-content: flex-start;
@@ -177,7 +177,7 @@
 
 .lightText {
   color: #000000 !important; /* Черный цвет текста */
-  font-weight: 600;
+  font-weight: 400;
 }
 .lightTextOld {
   color: #BDBDBD !important; /* Черный цвет текста */

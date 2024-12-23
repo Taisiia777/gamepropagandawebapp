@@ -56,7 +56,9 @@ const ProductElement: React.FC<ProductElementProps> = ({
     }, [productStatus, dispatch]);
 
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-
+    const createMarkup = (text: string) => {
+        return { __html: text };
+    };
     // Функция для добавления товара в корзину и сохранения в localStorage и отправки на бэкенд
     const addToCart = async () => {
         // Создаём объект товара для добавления
@@ -151,9 +153,15 @@ const ProductElement: React.FC<ProductElementProps> = ({
             </div>
 
             <div className={styles.description}>
-                <p className={styles.description__text}>
+                {/* <p className={styles.description__text}>
                     {isDescriptionExpanded ? description : `${description.substring(0, 150)}...`}
-                </p>
+                </p> */}
+                <p
+    className={styles.description__text}
+    dangerouslySetInnerHTML={createMarkup(
+        isDescriptionExpanded ? description : `${description.substring(0, 150)}...`
+    )}
+/>
                 <button className={styles.expandDescriptionButton} onClick={toggleDescription}>
                     {isDescriptionExpanded ? "Скрыть описание" : "Раскрыть описание"}
                 </button>

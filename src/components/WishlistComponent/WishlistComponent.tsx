@@ -22,7 +22,7 @@ interface Product {
 
 
 const WishlistComponent: React.FC<WishlistComponentProps> = ({
-                                                                 sortIconSrc,
+                                                                //  sortIconSrc,
                                                              }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const userId = useAppSelector((state: RootState) => state.user.telegramId);
@@ -56,10 +56,7 @@ const WishlistComponent: React.FC<WishlistComponentProps> = ({
             <div className={styles.content}>
 
                 <p className={styles.productCount}>Добавленные продукты: {products.length}</p>
-                <div className={styles.sortContainer}>
-                    <img src={sortIconSrc} alt="Sort" className={styles.sortIcon}/>
-                    <span className={styles.sortText}>по дате: Сначала новые</span>
-                </div>
+
                 <ul className={styles.productList}>
                     {products.map((product) => (
                         <li style={{maxWidth: "312px"}} key={product.id}>
@@ -67,7 +64,7 @@ const WishlistComponent: React.FC<WishlistComponentProps> = ({
                         </li>
                     ))}
                 </ul>
-                <button className={styles.copyButton}>Скопировать ссылку на вишлист</button>
+                {/* <button className={styles.copyButton}>Скопировать ссылку на вишлист</button> */}
             </div>
         </section>
     );

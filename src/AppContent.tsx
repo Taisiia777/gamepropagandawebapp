@@ -16,7 +16,7 @@ import ReserveCodesPage from './pages/ReserveCodesPage';
 import SubscriptionPage from './pages/SubscriptionPage';
 import useScrollToTop from './hooks/useScrollToTop';
 import OrderPage from "./pages/OrderPage.tsx";
-
+import YourSubscriptionsPage from './pages/YourSubscriptionsPage.tsx';
 const AppContent: React.FC = () => {
     const [nickname, setNickname] = useState<string | null>(null);
     const [telegramId, setTelegramId] = useState<number | null>(null);
@@ -25,6 +25,7 @@ const AppContent: React.FC = () => {
     const dispatch = useDispatch(); // Инициализация dispatch для отправки действий
     useScrollToTop();
     console.log(nickname, telegramId)
+    
     useEffect(() => {
         if (window.Telegram?.WebApp) {
             const webApp = window.Telegram.WebApp;
@@ -46,16 +47,16 @@ const AppContent: React.FC = () => {
                 setNickname(initData.user.username);
                 setTelegramId(initData.user.id);
 
-                // Проверяем наличие пользователя в базе данных
+
                 axios.get(`${import.meta.env.VITE_NGROK_URL}/users/telegram/${initData.user.id}`, {
                     headers: {
-                        'ngrok-skip-browser-warning': '1', // Заголовок для игнорирования предупреждений ngrok
+                        'ngrok-skip-browser-warning': '1',
                     },
                 })
                     .then(response => {
                         const userData = response.data;
                         if (userData) {
-                            // Пользователь существует, заполняем все данные в userSlice
+                            // Пользователь существует, заполняем данные
                             dispatch(setUser({
                                 userId: userData.id,
                                 telegramId: userData.telegramId,
@@ -64,7 +65,10 @@ const AppContent: React.FC = () => {
                                 password: userData.password,
                                 verificationCode: userData.verificationCode,
                             }));
-                        } else {
+                        }
+                    })
+                    .catch(error => {
+                        if (error.response && error.response.status === 404) {
                             // Пользователь не найден, создаем нового
                             axios.post(`${import.meta.env.VITE_NGROK_URL}/users`, {
                                 nickname: initData.user.username,
@@ -77,22 +81,22 @@ const AppContent: React.FC = () => {
                                 },
                             }).then(response => {
                                 console.log('Новый пользователь создан:', response.data);
-                                // Обновляем userSlice с никнеймом и telegramId
+                                // Обновляем userSlice с данными нового пользователя
                                 dispatch(setUser({
-                                    userId: '',
+                                    userId: response.data.id,
                                     telegramId: response.data.telegramId,
                                     nickname: response.data.nickname,
                                     email: '',
+                                    emailCheck: '',
                                     password: '',
                                     verificationCode: ''
                                 }));
                             }).catch(error => {
                                 console.error('Ошибка при создании пользователя:', error);
                             });
+                        } else {
+                            console.error('Ошибка при проверке пользователя:', error);
                         }
-                    })
-                    .catch(error => {
-                        console.error('Ошибка при проверке пользователя:', error);
                     });
             }
 
@@ -108,7 +112,10 @@ const AppContent: React.FC = () => {
         exit: { opacity: 0, x: 10 },
         transition: { duration: 0.3, ease: 'easeInOut' },
     };
+    localStorage.setItem("filtersApplied", "false");
+    localStorage.setItem("isSubscriptionCategory", "false");
 
+    
     return (
         <AnimatePresence mode="wait">
             <motion.div
@@ -127,6 +134,7 @@ const AppContent: React.FC = () => {
                     <Route path="/account" element={<AccountPage />} />
                     <Route path="/codes" element={<ReserveCodesPage />} />
                     <Route path="/orders" element={<OrderPage />} />
+                    <Route path="/your-subscriptions" element={<YourSubscriptionsPage/>} />
                     <Route path="/subscriptions" element={<OrderPage />} />
                     <Route path="/subscriptions/:id" element={<SubscriptionPage />} />
                 </Routes>

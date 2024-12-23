@@ -28,13 +28,15 @@
 
 /* Убираем границу */
 .sortSelect {
+  background-color: #121212;
   appearance: none;
   color: #fff;
-  padding: 10px 40px 10px 10px;
+  padding: 10px 10px 10px 10px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   width: 141px;
+  border: none;
 }
 
 /* Убираем обводку при фокусе */
