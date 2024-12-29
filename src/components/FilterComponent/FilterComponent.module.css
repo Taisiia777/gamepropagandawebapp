@@ -1,4 +1,4 @@
-.filterContainer {
+/* .filterContainer {
     border-radius: 30px;
     background-color: rgba(38, 38, 38, 1);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -12,7 +12,6 @@
     font: 400 14px/26px Onest, -apple-system, Roboto, Helvetica, sans-serif;
     box-sizing: border-box;
     font-size: 14px;
-    /* Добавляем выравнивание по центру */
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
@@ -26,8 +25,8 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
-    z-index: 0; /* Отображение поверх всех элементов */
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 0; 
 }
 .filterLabel {
     color: rgba(144, 144, 144, 1);
@@ -35,38 +34,24 @@
     margin-top: 20px;
 }
 
-/* .filterSelect {
-    font-size: 14px;
 
-    border-radius: 10px;
-    border: 2px solid #333;
-    margin-top: 4px;
-    overflow: hidden;
-    color: #e7e7e7;
-    white-space: nowrap;
-    line-height: 2;
-    padding: 14px 17px;
-    background-color: #262626;
-    width: 100%;
-
-} */
 .filterSelect {
-    appearance: none; /* Убираем стандартный вид */
+    appearance: none; 
     -webkit-appearance: none;
     -moz-appearance: none;
-    font-family: Arial, sans-serif; /* Указываем шрифт */
-    font-size: 14px; /* Размер текста */
-    color: #e7e7e7; /* Цвет текста */
-    background-color: #262626; /* Цвет фона */
-    border: 2px solid #333; /* Рамка */
-    border-radius: 10px; /* Скругление */
-    padding: 14px 17px; /* Внутренние отступы */
-    width: 100%; /* Ширина */
-    box-sizing: border-box; /* Учитываем отступы в ширине */
-    cursor: pointer; /* Указываем интерактивность */
-    text-align: left; /* Выравнивание текста */
-    line-height: 1.5; /* Высота строки */
-    position: relative; /* Для стрелки */
+    font-family: Arial, sans-serif; 
+    font-size: 14px;
+    color: #e7e7e7;
+    background-color: #262626;
+    border: 2px solid #333; 
+    border-radius: 10px; 
+    padding: 14px 17px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    cursor: pointer; 
+    text-align: left; 
+    line-height: 1.5; 
+    position: relative; 
 }
 .priceRangeContainer {
     display: flex;
@@ -76,9 +61,9 @@
 }
 
 .priceInput {
-    appearance: none; /* Убираем стандартный вид */
-    -webkit-appearance: none; /* Для Safari */
-    -moz-appearance: textfield; /* Убираем стрелки в Firefox */
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: textfield; 
     border-radius: 10px;
     display: flex;
     gap: 4px;
@@ -92,9 +77,9 @@
 
 }
 .priceInput input{
-    appearance: none; /* Убираем стандартный вид */
-    -webkit-appearance: none; /* Для Safari */
-    -moz-appearance: textfield; /* Убираем стрелки в Firefox */
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: textfield; 
     background-color: #262626;
     border: none;
     width: 100px;
@@ -163,4 +148,149 @@
     border-width: 0;
 }
 
+ */
+ .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+  
+  .filterContainer {
+    position: fixed;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    width: 80% !important;
+    max-width: 340px !important;
+    background: #262626;
+    border-radius: 30px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filterLabel {
+    color: rgba(144, 144, 144, 1);
+    align-self: start;
+    margin-top: 20px;
+}
 
+
+.filterSelect {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-family: Arial, sans-serif; 
+    font-size: 14px;
+    color: #e7e7e7;
+    background-color: #262626;
+    border: 2px solid #333; 
+    border-radius: 10px; 
+    padding: 14px 17px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    cursor: pointer; 
+    text-align: left; 
+    line-height: 1.5; 
+    position: relative; 
+}
+.priceRangeContainer {
+    display: flex;
+    margin-top: 4px;
+    gap: 8px;
+    line-height: 2;
+}
+
+.priceInput {
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: textfield; 
+    border-radius: 10px;
+    display: flex;
+    gap: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid rgba(51, 51, 51, 1);
+    background-color: #262626;
+    color: #e7e7e7;
+
+}
+.priceInput input{
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: textfield; 
+    background-color: #262626;
+    border: none;
+    width: 100px;
+
+}
+
+.priceLabel {
+    font-size: 14px;
+
+    color: #e7e7e7;
+}
+
+.priceValue {
+    font-size: 14px;
+
+    color: #8e8e8e;
+}
+
+.filterImage {
+    aspect-ratio: 20;
+    object-fit: contain;
+    object-position: center;
+    width: 320px;
+    margin-top: 16px;
+}
+
+.applyButton {
+    align-self: stretch;
+    border-radius: 50px;
+    background-color: rgba(197, 255, 0, 1);
+    margin-top: 20px;
+    min-height: 50px;
+    font-size: 16px;
+    color: rgba(35, 35, 35, 1);
+    font-weight: 500;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 2;
+    padding: 12px 51px;
+    border: 1px solid rgba(197, 255, 0, 1);
+    cursor: pointer;
+}
+
+.resetButton {
+    color: #e7e7e7;
+    text-align: center;
+    font-size: 16px;
+    line-height: 2;
+    align-self: center;
+    margin-top: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

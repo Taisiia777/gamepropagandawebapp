@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_BASE_URL = "http://api.psplusdev.ru:4500";
+const API_BASE_URL = "https://api.gamepropaganda.com";
 
 // Обновленные типы в соответствии с API
 export interface SearchParams {

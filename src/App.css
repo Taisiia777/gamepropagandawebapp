@@ -3,12 +3,12 @@
 }
 #root {
   max-width: 1280px;
-  margin: 0 auto;
   padding: 0;
   text-align: center;
   height: 100%;
   background-color: #121212;
-
+  width: 100%;
+  margin: 0;
 }
 
 
